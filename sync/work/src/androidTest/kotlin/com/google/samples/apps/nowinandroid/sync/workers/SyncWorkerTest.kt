@@ -28,6 +28,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
 import kotlin.test.assertEquals
 
 @HiltAndroidTest
@@ -35,6 +36,9 @@ class SyncWorkerTest {
 
     @get:Rule(order = 0)
     val hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var workManager: WorkManager
 
     private val context get() = InstrumentationRegistry.getInstrumentation().context
 
@@ -47,6 +51,7 @@ class SyncWorkerTest {
 
         // Initialize WorkManager for instrumentation tests.
         WorkManagerTestInitHelper.initializeTestWorkManager(context, config)
+        hiltRule.inject()
     }
 
     @Test
@@ -54,7 +59,7 @@ class SyncWorkerTest {
         // Create request
         val request = SyncWorker.startUpSyncWork()
 
-        val workManager = WorkManager.getInstance(context)
+//        val workManager = WorkManager.getInstance(context)
         val testDriver = WorkManagerTestInitHelper.getTestDriver(context)!!
 
         // Enqueue and wait for result.

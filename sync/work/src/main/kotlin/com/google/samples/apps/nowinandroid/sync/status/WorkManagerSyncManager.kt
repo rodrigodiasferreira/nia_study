@@ -34,15 +34,14 @@ import javax.inject.Inject
  * [SyncManager] backed by [WorkInfo] from [WorkManager]
  */
 internal class WorkManagerSyncManager @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val workManager: WorkManager,
 ) : SyncManager {
     override val isSyncing: Flow<Boolean> =
-        WorkManager.getInstance(context).getWorkInfosForUniqueWorkFlow(SYNC_WORK_NAME)
+        workManager.getWorkInfosForUniqueWorkFlow(SYNC_WORK_NAME)
             .map(List<WorkInfo>::anyRunning)
             .conflate()
 
     override fun requestSync() {
-        val workManager = WorkManager.getInstance(context)
         // Run sync on app startup and ensure only one sync worker runs at any time
         workManager.enqueueUniqueWork(
             SYNC_WORK_NAME,
