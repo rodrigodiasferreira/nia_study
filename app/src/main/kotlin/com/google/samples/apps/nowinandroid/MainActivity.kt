@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.metrics.performance.JankStats
@@ -88,11 +89,14 @@ class MainActivity : ComponentActivity() {
 
         // Update the uiState
         lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState
-                    .onEach { uiState = it }
-                    .collect()
-            }
+            viewModel.uiState
+                .flowWithLifecycle(lifecycle)
+                .collect { uiState = it }
+//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.uiState
+//                    .onEach { uiState = it }
+//                    .collect()
+//            }
         }
 
         // Keep the splash screen on-screen until the UI state is loaded. This condition is
