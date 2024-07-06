@@ -16,6 +16,7 @@
 
 plugins {
     alias(libs.plugins.nowinandroid.jvm.library)
+//    alias(libs.plugins.nowinandroid.android.library)
 }
 
 dependencies {

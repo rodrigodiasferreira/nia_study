@@ -28,17 +28,21 @@ import javax.inject.Inject
  * [Application] class for NiA
  */
 @HiltAndroidApp
-class NiaApplication : Application(), ImageLoaderFactory {
+class NiaApplication : Application(), ImageLoaderFactory
+{
     @Inject
     lateinit var imageLoader: dagger.Lazy<ImageLoader>
-
     @Inject
     lateinit var profileVerifierLogger: ProfileVerifierLogger
+    @Inject
+    lateinit var sync: Sync
+
+
 
     override fun onCreate() {
         super.onCreate()
         // Initialize Sync; the system responsible for keeping data in the app up to date.
-        Sync.initialize(context = this)
+        sync.initialize()
         profileVerifierLogger()
     }
 

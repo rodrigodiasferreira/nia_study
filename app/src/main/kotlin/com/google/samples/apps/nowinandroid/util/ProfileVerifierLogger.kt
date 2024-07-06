@@ -34,7 +34,7 @@ import javax.inject.Inject
  *
  * For immediate compilation, call:
  * ```bash
- * adb shell cmd package compile -f -m speed-profile com.example.macrobenchmark.target
+ * adb -s d30f56f shell cmd package compile -f -m speed-profile com.google.samples.apps.nowinandroid com.example.macrobenchmark.target
  * ```
  * You can also trigger background optimizations:
  * ```bash
