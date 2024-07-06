@@ -26,6 +26,7 @@ import dagger.hilt.components.SingletonComponent
 internal abstract class NotificationsModule {
     @Binds
     abstract fun bindNotifier(
-        notifier: NoOpNotifier,
+//        notifier: NoOpNotifier,
+        notifier: SystemTrayNotifier, // => in order to show notifications
     ): Notifier
 }

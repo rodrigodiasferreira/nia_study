@@ -129,7 +129,8 @@ internal class OfflineFirstNewsRepository @Inject constructor(
                         useFilterTopicIds = true,
                         filterTopicIds = followedTopicIds,
                         useFilterNewsIds = true,
-                        filterNewsIds = changedIds.toSet() - existingNewsResourceIdsThatHaveChanged,
+                        filterNewsIds = changedIds.toSet()
+//                            - existingNewsResourceIdsThatHaveChanged, // => in order to show notifications //TODO need to check about the click
                     )
                         .first()
                         .map(PopulatedNewsResource::asExternalModel)
