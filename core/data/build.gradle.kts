@@ -17,7 +17,8 @@ plugins {
     alias(libs.plugins.nowinandroid.android.library)
     alias(libs.plugins.nowinandroid.android.library.jacoco)
     alias(libs.plugins.nowinandroid.android.hilt)
-    id("kotlinx-serialization")
+    alias(libs.plugins.kotlin.serialization)
+//    id("kotlinx-serialization")
 }
 
 android {
