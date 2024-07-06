@@ -20,6 +20,8 @@ import androidx.activity.ComponentActivity
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.Posture
+import androidx.compose.material3.adaptive.WindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -27,9 +29,11 @@ import androidx.compose.ui.test.DeviceConfigurationOverride
 import androidx.compose.ui.test.FontScale
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onRoot
+import androidx.window.core.layout.WindowSizeClass
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaNavigationBar
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaNavigationBarItem
+import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaNavigationSuiteScaffoldWrapper
 import com.google.samples.apps.nowinandroid.core.designsystem.icon.NiaIcons
 import com.google.samples.apps.nowinandroid.core.designsystem.theme.NiaTheme
 import com.google.samples.apps.nowinandroid.core.testing.util.DefaultRoborazziOptions
@@ -60,6 +64,29 @@ class NavigationScreenshotTests {
             }
         }
     }
+
+//    @Test
+//    fun niaNavigationSuiteScaffold_multipleThemes() {
+//        composeTestRule.captureMultiTheme("NiaNavigationSuiteScaffold") {
+//            Surface {
+//                NiaNavigationSuiteScaffoldWrapper()
+//            }
+//        }
+//    }
+//
+//    @Test
+//    fun niaNavigationSuiteScaffold_tablet_multipleThemes() {
+//        composeTestRule.captureMultiTheme("NiaNavigationSuiteScaffoldTablet") {
+//            Surface {
+//                NiaNavigationSuiteScaffoldWrapper(
+//                    WindowAdaptiveInfo(
+//                        windowSizeClass = WindowSizeClass(1200, 800),
+//                        windowPosture = Posture()
+//                    )
+//                )
+//            }
+//        }
+//    }
 
     @Test
     fun navigation_hugeFont() {

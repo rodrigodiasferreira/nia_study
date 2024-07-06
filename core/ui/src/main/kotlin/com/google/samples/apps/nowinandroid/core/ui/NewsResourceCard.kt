@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.core.ui
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
@@ -59,6 +60,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.google.samples.apps.nowinandroid.core.designsystem.R.drawable
+import com.google.samples.apps.nowinandroid.core.designsystem.component.DynamicAsyncImage
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaIconToggleButton
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaTopicTag
 import com.google.samples.apps.nowinandroid.core.designsystem.icon.NiaIcons
@@ -101,6 +103,13 @@ fun NewsResourceCardExpanded(
         Column {
             if (!userNewsResource.headerImageUrl.isNullOrEmpty()) {
                 Row {
+//                    DynamicAsyncImage(
+//                        imageUrl = userNewsResource.headerImageUrl,
+//                        contentDescription = null,
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .height(180.dp)
+//                    )
                     NewsResourceHeaderImage(userNewsResource.headerImageUrl)
                 }
             }
@@ -145,6 +154,7 @@ fun NewsResourceCardExpanded(
 fun NewsResourceHeaderImage(
     headerImageUrl: String?,
 ) {
+    Log.d("Rodrigo", "headerImageUrl: $headerImageUrl")
     var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
     val imageLoader = rememberAsyncImagePainter(
@@ -161,6 +171,7 @@ fun NewsResourceHeaderImage(
             .height(180.dp),
         contentAlignment = Alignment.Center,
     ) {
+        Log.d("Rodrigo", "isError.not(): ${isError.not()} && !isLocalInspection: ${!isLocalInspection} && !isLoading: ${!isLoading}")
         if (isLoading) {
             // Display a progress bar while loading
             CircularProgressIndicator(

@@ -52,6 +52,9 @@ fun NiaBackground(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
+//    val background by rememberUpdatedState(LocalBackgroundTheme.current)
+//    val color = background.color
+//    val tonalElevation = background.tonalElevation
     val color = LocalBackgroundTheme.current.color
     val tonalElevation = LocalBackgroundTheme.current.tonalElevation
     Surface(
@@ -175,7 +178,7 @@ fun BackgroundAndroid() {
 @Composable
 fun GradientBackgroundDefault() {
     NiaTheme(disableDynamicTheming = true) {
-        NiaGradientBackground(Modifier.size(100.dp), content = {})
+        NiaGradientBackground(Modifier.size(50.dp, 100.dp), content = {})
     }
 }
 

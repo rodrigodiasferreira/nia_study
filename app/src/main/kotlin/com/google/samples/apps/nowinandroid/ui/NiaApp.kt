@@ -154,6 +154,7 @@ internal fun NiaApp(
                 item(
                     selected = selected,
                     onClick = { appState.navigateToTopLevelDestination(destination) },
+                    hasUnread = hasUnread,
                     icon = {
                         Icon(
                             imageVector = destination.unselectedIcon,
@@ -167,10 +168,10 @@ internal fun NiaApp(
                         )
                     },
                     label = { Text(stringResource(destination.iconTextId)) },
-                    modifier =
-                    Modifier
-                        .testTag("NiaNavItem")
-                        .then(if (hasUnread) Modifier.notificationDot() else Modifier),
+//                    modifier =
+//                    Modifier
+//                        .testTag("NiaNavItem")
+//                        .then(if (hasUnread) Modifier.notificationDot() else Modifier),
                 )
             }
         },
@@ -246,24 +247,24 @@ internal fun NiaApp(
     }
 }
 
-private fun Modifier.notificationDot(): Modifier =
-    composed {
-        val tertiaryColor = MaterialTheme.colorScheme.tertiary
-        drawWithContent {
-            drawContent()
-            drawCircle(
-                tertiaryColor,
-                radius = 5.dp.toPx(),
-                // This is based on the dimensions of the NavigationBar's "indicator pill";
-                // however, its parameters are private, so we must depend on them implicitly
-                // (NavigationBarTokens.ActiveIndicatorWidth = 64.dp)
-                center = center + Offset(
-                    64.dp.toPx() * .45f,
-                    32.dp.toPx() * -.45f - 6.dp.toPx(),
-                ),
-            )
-        }
-    }
+//private fun Modifier.notificationDot(): Modifier =
+//    composed {
+//        val tertiaryColor = MaterialTheme.colorScheme.tertiary
+//        drawWithContent {
+//            drawContent()
+//            drawCircle(
+//                tertiaryColor,
+//                radius = 5.dp.toPx(),
+//                // This is based on the dimensions of the NavigationBar's "indicator pill";
+//                // however, its parameters are private, so we must depend on them implicitly
+//                // (NavigationBarTokens.ActiveIndicatorWidth = 64.dp)
+//                center = center + Offset(
+//                    64.dp.toPx() * .45f,
+//                    32.dp.toPx() * -.45f - 6.dp.toPx(),
+//                ),
+//            )
+//        }
+//    }
 
 private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
     this?.hierarchy?.any {

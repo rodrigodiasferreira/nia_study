@@ -16,6 +16,8 @@
 
 package com.google.samples.apps.nowinandroid.core.designsystem.component
 
+import android.graphics.Color
+import android.util.Log
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -28,6 +30,7 @@ import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -58,7 +61,8 @@ fun NiaLoadingWheel(
     val infiniteTransition = rememberInfiniteTransition(label = "wheel transition")
 
     // Specifies the float animation for slowly drawing out the lines on entering
-    val startValue = if (LocalInspectionMode.current) 0F else 1F
+//    val startValue = if (LocalInspectionMode.current) 0F else 1F
+    val startValue = 1F
     val floatAnimValues = (0 until NUM_OF_LINES).map { remember { Animatable(startValue) } }
     LaunchedEffect(floatAnimValues) {
         (0 until NUM_OF_LINES).map { index ->
@@ -71,6 +75,14 @@ fun NiaLoadingWheel(
                         delayMillis = 40 * index,
                     ),
                 )
+//                floatAnimValues[index].animateTo(
+//                    targetValue = 0F,
+//                    animationSpec = tween(
+//                        durationMillis = 3600,
+//                        easing = FastOutSlowInEasing,
+//                        delayMillis = 300 * index,
+//                    ),
+//                )
             }
         }
     }
@@ -101,6 +113,7 @@ fun NiaLoadingWheel(
                 },
                 repeatMode = RepeatMode.Restart,
                 initialStartOffset = StartOffset(ROTATION_TIME / NUM_OF_LINES / 2 * index),
+//                initialStartOffset = StartOffset((ROTATION_TIME / NUM_OF_LINES / 2 * index) - 250),
             ),
             label = "wheel color animation",
         )
@@ -116,6 +129,7 @@ fun NiaLoadingWheel(
             .testTag("loadingWheel"),
     ) {
         repeat(NUM_OF_LINES) { index ->
+            Log.d("Rodrigo", "floatAnimValues[$index].value: ${floatAnimValues[index].value}")
             rotate(degrees = index * 30f) {
                 drawLine(
                     color = colorAnimValues[index].value,

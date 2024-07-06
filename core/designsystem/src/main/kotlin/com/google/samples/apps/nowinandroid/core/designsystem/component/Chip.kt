@@ -75,6 +75,7 @@ fun NiaFilterChip(
             selected = selected,
             borderColor = MaterialTheme.colorScheme.onBackground,
             selectedBorderColor = MaterialTheme.colorScheme.onBackground,
+//            selectedBorderColor = MaterialTheme.colorScheme.onPrimaryContainer,
             disabledBorderColor = MaterialTheme.colorScheme.onBackground.copy(
                 alpha = NiaChipDefaults.DISABLED_CHIP_CONTENT_ALPHA,
             ),
@@ -102,16 +103,54 @@ fun NiaFilterChip(
             selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
             selectedLabelColor = MaterialTheme.colorScheme.onBackground,
             selectedLeadingIconColor = MaterialTheme.colorScheme.onBackground,
+//            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+//            selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
     )
 }
 
 @ThemePreviews
 @Composable
-fun ChipPreview() {
+fun SelectedChipPreview() {
     NiaTheme {
         NiaBackground(modifier = Modifier.size(80.dp, 20.dp)) {
             NiaFilterChip(selected = true, onSelectedChange = {}) {
+                Text("Chip")
+            }
+        }
+    }
+}
+
+@ThemePreviews
+@Composable
+fun SelectedDisabledChipPreview() {
+    NiaTheme {
+        NiaBackground(modifier = Modifier.size(80.dp, 20.dp)) {
+            NiaFilterChip(selected = true, enabled = false, onSelectedChange = {}) {
+                Text("Chip")
+            }
+        }
+    }
+}
+
+@ThemePreviews
+@Composable
+fun NotSelectedChipPreview() {
+    NiaTheme {
+        NiaBackground(modifier = Modifier.size(80.dp, 20.dp)) {
+            NiaFilterChip(selected = false, onSelectedChange = {}) {
+                Text("Chip")
+            }
+        }
+    }
+}
+
+@ThemePreviews
+@Composable
+fun NotSelectedDisabledChipPreview() {
+    NiaTheme {
+        NiaBackground(modifier = Modifier.size(80.dp, 20.dp)) {
+            NiaFilterChip(selected = false, enabled = false, onSelectedChange = {}) {
                 Text("Chip")
             }
         }

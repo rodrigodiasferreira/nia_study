@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.core.designsystem.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
@@ -29,6 +30,7 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.NavigationRailItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.Posture
 import androidx.compose.material3.adaptive.WindowAdaptiveInfo
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.ExperimentalMaterial3AdaptiveNavigationSuiteApi
@@ -39,8 +41,15 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.window.core.layout.WindowSizeClass
 import com.google.samples.apps.nowinandroid.core.designsystem.icon.NiaIcons
 import com.google.samples.apps.nowinandroid.core.designsystem.theme.NiaTheme
 
@@ -251,6 +260,7 @@ class NiaNavigationSuiteScope internal constructor(
         selected: Boolean,
         onClick: () -> Unit,
         modifier: Modifier = Modifier,
+        hasUnread: Boolean = false,
         icon: @Composable () -> Unit,
         selectedIcon: @Composable () -> Unit = icon,
         label: @Composable (() -> Unit)? = null,
@@ -266,89 +276,157 @@ class NiaNavigationSuiteScope internal constructor(
         },
         label = label,
         colors = navigationSuiteItemColors,
-        modifier = modifier,
+        modifier = modifier
+            .testTag("NiaNavItem")
+            .then(if (hasUnread) Modifier.notificationDot() else Modifier),
     )
 }
 
+val items = listOf("For you", "Saved", "Interests")
+private val itemsSelected = listOf(false, true, false)
+private val itemsHasUnread = listOf(false, false, true)
+val icons = listOf(
+    NiaIcons.UpcomingBorder,
+    NiaIcons.BookmarksBorder,
+    NiaIcons.Grid3x3,
+)
+val selectedIcons = listOf(
+    NiaIcons.Upcoming,
+    NiaIcons.Bookmarks,
+    NiaIcons.Grid3x3,
+)
+
+//@ThemePreviews
+//@Composable
+//fun NiaNavigationBarPreview() {
+//    NiaTheme {
+//        NiaNavigationBar {
+//            items.forEachIndexed { index, item ->
+//                NiaNavigationBarItem(
+//                    icon = {
+//                        Icon(
+//                            imageVector = icons[index],
+//                            contentDescription = item,
+//                        )
+//                    },
+//                    selectedIcon = {
+//                        Icon(
+//                            imageVector = selectedIcons[index],
+//                            contentDescription = item,
+//                        )
+//                    },
+//                    label = { Text(item) },
+//                    selected = index == 0,
+//                    onClick = { },
+//                )
+//            }
+//        }
+//    }
+//}
+
+private fun Modifier.notificationDot(): Modifier =
+    composed {
+        val tertiaryColor = MaterialTheme.colorScheme.tertiary
+        drawWithContent {
+            drawContent()
+            drawCircle(
+                tertiaryColor,
+                radius = 5.dp.toPx(),
+                // This is based on the dimensions of the NavigationBar's "indicator pill";
+                // however, its parameters are private, so we must depend on them implicitly
+                // (NavigationBarTokens.ActiveIndicatorWidth = 64.dp)
+                center = center + Offset(
+                    64.dp.toPx() * .45f,
+                    32.dp.toPx() * -.45f - 6.dp.toPx(),
+                ),
+            )
+        }
+    }
+
+
 @ThemePreviews
 @Composable
-fun NiaNavigationBarPreview() {
-    val items = listOf("For you", "Saved", "Interests")
-    val icons = listOf(
-        NiaIcons.UpcomingBorder,
-        NiaIcons.BookmarksBorder,
-        NiaIcons.Grid3x3,
-    )
-    val selectedIcons = listOf(
-        NiaIcons.Upcoming,
-        NiaIcons.Bookmarks,
-        NiaIcons.Grid3x3,
-    )
-
+fun NiaNavigationSuiteScaffoldPreview() {
     NiaTheme {
-        NiaNavigationBar {
+        NiaNavigationSuiteScaffoldWrapper()
+    }
+}
+
+@Preview(
+    name = "Nia Navigation Rail Dark theme",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    device = Devices.PIXEL_TABLET
+)
+@Composable
+fun NiaRailNavigationSuiteScaffoldPreview() {
+    NiaTheme {
+        NiaNavigationSuiteScaffoldWrapper(
+            WindowAdaptiveInfo(
+                windowSizeClass = WindowSizeClass(1200, 800),
+                windowPosture = Posture()
+            )
+        )
+    }
+}
+
+@Composable
+fun NiaNavigationSuiteScaffoldWrapper(
+    windowAdaptiveInfo: WindowAdaptiveInfo = currentWindowAdaptiveInfo(),
+) {
+    NiaNavigationSuiteScaffold(
+        navigationSuiteItems = {
             items.forEachIndexed { index, item ->
-                NiaNavigationBarItem(
+                item(
+                    selected = itemsSelected[index],
+                    onClick = {},
+                    hasUnread = itemsHasUnread[index],
                     icon = {
                         Icon(
                             imageVector = icons[index],
-                            contentDescription = item,
+                            contentDescription = null,
                         )
                     },
                     selectedIcon = {
                         Icon(
                             imageVector = selectedIcons[index],
-                            contentDescription = item,
+                            contentDescription = null,
                         )
                     },
                     label = { Text(item) },
-                    selected = index == 0,
-                    onClick = { },
                 )
             }
-        }
-    }
+        },
+        windowAdaptiveInfo = windowAdaptiveInfo,
+    ) {}
 }
 
-@ThemePreviews
-@Composable
-fun NiaNavigationRailPreview() {
-    val items = listOf("For you", "Saved", "Interests")
-    val icons = listOf(
-        NiaIcons.UpcomingBorder,
-        NiaIcons.BookmarksBorder,
-        NiaIcons.Grid3x3,
-    )
-    val selectedIcons = listOf(
-        NiaIcons.Upcoming,
-        NiaIcons.Bookmarks,
-        NiaIcons.Grid3x3,
-    )
-
-    NiaTheme {
-        NiaNavigationRail {
-            items.forEachIndexed { index, item ->
-                NiaNavigationRailItem(
-                    icon = {
-                        Icon(
-                            imageVector = icons[index],
-                            contentDescription = item,
-                        )
-                    },
-                    selectedIcon = {
-                        Icon(
-                            imageVector = selectedIcons[index],
-                            contentDescription = item,
-                        )
-                    },
-                    label = { Text(item) },
-                    selected = index == 0,
-                    onClick = { },
-                )
-            }
-        }
-    }
-}
+//@ThemePreviews
+//@Composable
+//fun NiaNavigationRailPreview() {
+//    NiaTheme {
+//        NiaNavigationRail {
+//            items.forEachIndexed { index, item ->
+//                NiaNavigationRailItem(
+//                    icon = {
+//                        Icon(
+//                            imageVector = icons[index],
+//                            contentDescription = item,
+//                        )
+//                    },
+//                    selectedIcon = {
+//                        Icon(
+//                            imageVector = selectedIcons[index],
+//                            contentDescription = item,
+//                        )
+//                    },
+//                    label = { Text(item) },
+//                    selected = index == 0,
+//                    onClick = { },
+//                )
+//            }
+//        }
+//    }
+//}
 
 /**
  * Now in Android navigation default values.

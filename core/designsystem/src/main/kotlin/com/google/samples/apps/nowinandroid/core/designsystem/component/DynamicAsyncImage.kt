@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.core.designsystem.component
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -34,6 +35,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter.State.Error
@@ -47,7 +49,7 @@ import com.google.samples.apps.nowinandroid.core.designsystem.theme.LocalTintThe
  */
 @Composable
 fun DynamicAsyncImage(
-    imageUrl: String,
+    imageUrl: String?,
     contentDescription: String?,
     modifier: Modifier = Modifier,
     placeholder: Painter = painterResource(R.drawable.core_designsystem_ic_placeholder_default),
@@ -67,6 +69,7 @@ fun DynamicAsyncImage(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
+        Log.d("Rodrigo", "isError.not(): ${isError.not()} && !isLocalInspection: ${!isLocalInspection} && !isLoading: ${!isLoading}")
         if (isLoading && !isLocalInspection) {
             // Display a progress bar while loading
             CircularProgressIndicator(
@@ -77,10 +80,20 @@ fun DynamicAsyncImage(
             )
         }
         Image(
+//            modifier = modifier,
             contentScale = ContentScale.Crop,
             painter = if (isError.not() && !isLocalInspection) imageLoader else placeholder,
             contentDescription = contentDescription,
             colorFilter = if (iconTint != Unspecified) ColorFilter.tint(iconTint) else null,
         )
     }
+}
+
+@Preview
+@Composable
+private fun DynamicAsyncImagePreview() {
+    DynamicAsyncImage(
+        imageUrl = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1VWQmqQu6wDswls9f_5NpEQnq4eR57g2NwzWvhKItcKtV6rb_Cyo75XSyL6vvmCIo4tzQn-8taNagEp7QG0KU1L4yMqwbYozNMzBMEFxEN2XintAhy5nLI4RQDaOXr8dgiIFdGOBMdl577Ndelzc0tDBzjI6mz7e4MF8_Tn09KWguZi6I-bS5NbJn/w1200-h630-p-k-no-nu/unnamed%20%2816%29.png",
+        contentDescription = null
+    )
 }

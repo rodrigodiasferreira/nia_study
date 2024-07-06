@@ -75,22 +75,7 @@ fun NiaIconToggleButton(
 @Composable
 fun IconButtonPreview() {
     NiaTheme {
-        NiaIconToggleButton(
-            checked = true,
-            onCheckedChange = { },
-            icon = {
-                Icon(
-                    imageVector = NiaIcons.BookmarkBorder,
-                    contentDescription = null,
-                )
-            },
-            checkedIcon = {
-                Icon(
-                    imageVector = NiaIcons.Bookmark,
-                    contentDescription = null,
-                )
-            },
-        )
+        NiaIconToggleExample(checked = true)
     }
 }
 
@@ -98,23 +83,28 @@ fun IconButtonPreview() {
 @Composable
 fun IconButtonPreviewUnchecked() {
     NiaTheme {
-        NiaIconToggleButton(
-            checked = false,
-            onCheckedChange = { },
-            icon = {
-                Icon(
-                    imageVector = NiaIcons.BookmarkBorder,
-                    contentDescription = null,
-                )
-            },
-            checkedIcon = {
-                Icon(
-                    imageVector = NiaIcons.Bookmark,
-                    contentDescription = null,
-                )
-            },
-        )
+        NiaIconToggleExample(checked = false)
     }
+}
+
+@Composable
+private fun NiaIconToggleExample(checked: Boolean) {
+    NiaIconToggleButton(
+        checked = checked,
+        onCheckedChange = { },
+        icon = {
+            Icon(
+                imageVector = NiaIcons.BookmarkBorder,
+                contentDescription = null,
+            )
+        },
+        checkedIcon = {
+            Icon(
+                imageVector = NiaIcons.Bookmark,
+                contentDescription = null,
+            )
+        },
+    )
 }
 
 /**
