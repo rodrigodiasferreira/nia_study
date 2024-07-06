@@ -20,9 +20,10 @@ plugins {
     alias(libs.plugins.nowinandroid.android.library)
     alias(libs.plugins.nowinandroid.android.library.jacoco)
     alias(libs.plugins.nowinandroid.android.hilt)
-//    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.serialization)
 //    id("kotlinx-serialization")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+//    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.secrets)
 }
 
 android {
@@ -64,9 +65,9 @@ secrets {
 }
 
 dependencies {
-    api(libs.kotlinx.datetime)
-    api(projects.core.common)
-    api(projects.core.model)
+    implementation(libs.kotlinx.datetime)
+    implementation(projects.core.common)
+    implementation(projects.core.model)
 
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.svg)

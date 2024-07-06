@@ -103,6 +103,7 @@ dependencies {
     implementation(libs.androidx.window.core)
     implementation(libs.kotlinx.coroutines.guava)
     implementation(libs.coil.kt)
+    implementation(libs.kotlinx.datetime)
 
     ksp(libs.hilt.compiler)
 
