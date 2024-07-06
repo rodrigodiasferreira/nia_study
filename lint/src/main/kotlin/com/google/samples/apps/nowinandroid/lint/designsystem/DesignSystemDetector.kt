@@ -26,6 +26,7 @@ import com.android.tools.lint.detector.api.Scope
 import com.android.tools.lint.detector.api.Severity
 import org.jetbrains.uast.UCallExpression
 import org.jetbrains.uast.UElement
+import org.jetbrains.uast.UMethod
 import org.jetbrains.uast.UQualifiedReferenceExpression
 
 /**
@@ -37,12 +38,15 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
     override fun getApplicableUastTypes(): List<Class<out UElement>> = listOf(
         UCallExpression::class.java,
         UQualifiedReferenceExpression::class.java,
+//        UMethod::class.java,
     )
 
     override fun createUastHandler(context: JavaContext): UElementHandler =
         object : UElementHandler() {
             override fun visitCallExpression(node: UCallExpression) {
                 val name = node.methodName ?: return
+//                if (name == "MaterialTheme")
+//                println("name: $name, METHOD_NAMES[name]: ${METHOD_NAMES[name]}")
                 val preferredName = METHOD_NAMES[name] ?: return
                 reportIssue(context, node, name, preferredName)
             }
@@ -52,6 +56,13 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
                 val preferredName = RECEIVER_NAMES[name] ?: return
                 reportIssue(context, node, name, preferredName)
             }
+
+//            override fun visitMethod(node: UMethod) {
+////                if (node.name == "MaterialTheme")
+//                println("name: ${node.name}, METHOD_NAMES[name]: ${METHOD_NAMES[node.name]}")
+//                val preferredName = METHOD_NAMES[node.name] ?: return
+//                reportIssue(context, node, node.name, preferredName)
+//            }
         }
 
     companion object {

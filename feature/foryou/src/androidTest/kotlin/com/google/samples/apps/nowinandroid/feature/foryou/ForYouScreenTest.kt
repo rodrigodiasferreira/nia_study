@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.feature.foryou
 
+import android.annotation.SuppressLint
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.ui.test.assertHasClickAction
@@ -49,6 +50,7 @@ class ForYouScreenTest {
         )
     }
 
+    @SuppressLint("UnusedBoxWithConstraintsScope") //TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun circularProgressIndicator_whenScreenIsLoading_exists() {
         composeTestRule.setContent {
@@ -75,6 +77,8 @@ class ForYouScreenTest {
             .assertExists()
     }
 
+
+    @SuppressLint("UnusedBoxWithConstraintsScope") //TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun circularProgressIndicator_whenScreenIsSyncing_exists() {
         composeTestRule.setContent {
@@ -101,6 +105,7 @@ class ForYouScreenTest {
             .assertExists()
     }
 
+    @SuppressLint("UnusedBoxWithConstraintsScope") //TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun topicSelector_whenNoTopicsSelected_showsTopicChipsAndDisabledDoneButton() {
         val testData = followableTopicTestData.map { it.copy(isFollowed = false) }
@@ -146,6 +151,7 @@ class ForYouScreenTest {
             .assertHasClickAction()
     }
 
+    @SuppressLint("UnusedBoxWithConstraintsScope") //TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun topicSelector_whenSomeTopicsSelected_showsTopicChipsAndEnabledDoneButton() {
         composeTestRule.setContent {
@@ -193,6 +199,7 @@ class ForYouScreenTest {
             .assertHasClickAction()
     }
 
+    @SuppressLint("UnusedBoxWithConstraintsScope") //TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun feed_whenInterestsSelectedAndLoading_showsLoadingIndicator() {
         composeTestRule.setContent {
@@ -220,6 +227,7 @@ class ForYouScreenTest {
             .assertExists()
     }
 
+    @SuppressLint("UnusedBoxWithConstraintsScope") //TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun feed_whenNoInterestsSelectionAndLoading_showsLoadingIndicator() {
         composeTestRule.setContent {
