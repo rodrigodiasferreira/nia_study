@@ -25,11 +25,11 @@ android {
 
 dependencies {
     implementation(kotlin("test"))
-    api(libs.androidx.compose.ui.test)
-    api(projects.core.analytics)
-    api(projects.core.data)
-    api(projects.core.model)
-    api(projects.core.notifications)
+    implementation(libs.androidx.compose.ui.test)
+    implementation(projects.core.analytics)
+    implementation(projects.core.data)
+    implementation(projects.core.model)
+    implementation(projects.core.notifications)
 
     debugApi(libs.androidx.compose.ui.testManifest)
 
