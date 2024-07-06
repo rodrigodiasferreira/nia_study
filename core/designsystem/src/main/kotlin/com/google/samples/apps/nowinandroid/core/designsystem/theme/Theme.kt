@@ -16,8 +16,6 @@
 
 package com.google.samples.apps.nowinandroid.core.designsystem.theme
 
-import android.os.Build
-import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +29,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.google.samples.apps.nowinandroid.core.android_os_utils.AndroidOsUtils.isSosOnwards
 
 /**
  * Light default theme color scheme
@@ -247,5 +246,4 @@ fun NiaTheme(
     }
 }
 
-@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)
-fun supportsDynamicTheming() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+fun supportsDynamicTheming() = isSosOnwards()

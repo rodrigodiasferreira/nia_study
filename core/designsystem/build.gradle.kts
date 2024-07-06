@@ -30,6 +30,8 @@ android {
 dependencies {
     lintPublish(projects.lint)
 
+    implementation(projects.core.androidOsUtils)
+
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.foundation.layout)
     implementation(libs.androidx.compose.material.iconsExtended)
