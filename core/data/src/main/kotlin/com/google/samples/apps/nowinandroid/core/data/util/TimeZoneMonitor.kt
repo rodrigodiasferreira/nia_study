@@ -24,6 +24,7 @@ import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import androidx.tracing.trace
 import com.google.samples.apps.nowinandroid.core.network.Dispatcher
+import com.google.samples.apps.nowinandroid.core.network.NiaDispatchers.Default
 import com.google.samples.apps.nowinandroid.core.network.NiaDispatchers.IO
 import com.google.samples.apps.nowinandroid.core.network.di.ApplicationScope
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -55,7 +56,7 @@ interface TimeZoneMonitor {
 @Singleton
 internal class TimeZoneBroadcastMonitor @Inject constructor(
     @ApplicationContext private val context: Context,
-    @ApplicationScope appScope: CoroutineScope,
+    @ApplicationScope(Default) appScope: CoroutineScope,
     @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
 ) : TimeZoneMonitor {
 

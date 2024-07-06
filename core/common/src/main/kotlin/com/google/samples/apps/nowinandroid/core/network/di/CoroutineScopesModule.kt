@@ -17,7 +17,9 @@
 package com.google.samples.apps.nowinandroid.core.network.di
 
 import com.google.samples.apps.nowinandroid.core.network.Dispatcher
+import com.google.samples.apps.nowinandroid.core.network.NiaDispatchers
 import com.google.samples.apps.nowinandroid.core.network.NiaDispatchers.Default
+import com.google.samples.apps.nowinandroid.core.network.NiaDispatchers.IO
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,15 +32,22 @@ import javax.inject.Singleton
 
 @Retention(AnnotationRetention.RUNTIME)
 @Qualifier
-annotation class ApplicationScope
+annotation class ApplicationScope(val niaDispatcher: NiaDispatchers)
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal object CoroutineScopesModule {
     @Provides
     @Singleton
-    @ApplicationScope
-    fun providesCoroutineScope(
+    @ApplicationScope(Default)
+    fun providesDefaultApplicationCoroutineScope(
         @Dispatcher(Default) dispatcher: CoroutineDispatcher,
+    ): CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
+
+    @Provides
+    @Singleton
+    @ApplicationScope(IO)
+    fun providesIoApplicationCoroutineScope(
+        @Dispatcher(IO) dispatcher: CoroutineDispatcher,
     ): CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
 }

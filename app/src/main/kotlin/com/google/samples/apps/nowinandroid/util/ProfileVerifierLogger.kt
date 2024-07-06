@@ -18,6 +18,7 @@ package com.google.samples.apps.nowinandroid.util
 
 import android.util.Log
 import androidx.profileinstaller.ProfileVerifier
+import com.google.samples.apps.nowinandroid.core.network.NiaDispatchers.Default
 import com.google.samples.apps.nowinandroid.core.network.di.ApplicationScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.guava.await
@@ -49,7 +50,7 @@ import javax.inject.Inject
  * @see androidx.profileinstaller.ProfileVerifier.CompilationStatus.ResultCode
  */
 class ProfileVerifierLogger @Inject constructor(
-    @ApplicationScope private val scope: CoroutineScope,
+    @ApplicationScope(Default) private val scope: CoroutineScope,
 ) {
     companion object {
         private const val TAG = "ProfileInstaller"
