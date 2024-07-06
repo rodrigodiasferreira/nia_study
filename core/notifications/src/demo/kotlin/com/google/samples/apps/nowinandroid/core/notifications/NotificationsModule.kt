@@ -27,6 +27,7 @@ internal abstract class NotificationsModule {
     @Binds
     abstract fun bindNotifier(
 //        notifier: NoOpNotifier,
-        notifier: SystemTrayNotifier, // => in order to show notifications
+        // => in order to show notifications
+        notifier: SystemTrayNotifier,
     ): Notifier
 }
