@@ -18,11 +18,6 @@ package com.google.samples.apps.nowinandroid.sync.di
 
 import android.content.Context
 import androidx.work.WorkManager
-import com.google.samples.apps.nowinandroid.core.data.util.SyncManager
-import com.google.samples.apps.nowinandroid.sync.status.StubSyncSubscriber
-import com.google.samples.apps.nowinandroid.sync.status.SyncSubscriber
-import com.google.samples.apps.nowinandroid.sync.status.WorkManagerSyncManager
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +26,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object SyncModuleMain {
+internal object WorkManagerModule {
     @Provides
     internal fun providesWorkManagerInstance(
         @ApplicationContext context: Context,

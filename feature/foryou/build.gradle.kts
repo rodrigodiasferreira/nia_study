@@ -32,6 +32,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
     implementation(projects.core.analytics)
+    implementation(projects.core.model)
 
     testImplementation(libs.hilt.android.testing)
     testImplementation(libs.robolectric)

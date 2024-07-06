@@ -24,8 +24,8 @@ android {
 }
 
 dependencies {
-    api(projects.core.data)
-    api(projects.core.model)
+    implementation(projects.core.data)
+    implementation(projects.core.model)
 
     implementation(libs.javax.inject)
     implementation(libs.kotlinx.coroutines.guava)

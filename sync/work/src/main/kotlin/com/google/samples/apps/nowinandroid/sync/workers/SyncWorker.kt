@@ -64,6 +64,7 @@ internal class SyncWorker @AssistedInject constructor(
         appContext.syncForegroundInfo()
 
     override suspend fun doWork(): Result = withContext(ioDispatcher) {
+//        setForeground(getForegroundInfo()) Test on Android 12 or later
         traceAsync("Sync", 0) {
             analyticsHelper.logSyncStarted()
 
