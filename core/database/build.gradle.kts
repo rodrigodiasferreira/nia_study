@@ -33,6 +33,7 @@ dependencies {
     api(projects.core.model)
 
 //    implementation(libs.kotlinx.datetime) //Can be commented as on model it is using api: api(libs.kotlinx.datetime)
+    implementation(libs.kotlinx.datetime) //Re-adding in order to use all implementation, instead of api
 
     androidTestImplementation(projects.core.testing)
 }

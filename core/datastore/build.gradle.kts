@@ -39,6 +39,8 @@ dependencies {
 
     implementation(projects.core.common)
 
+    implementation(libs.protobuf.kotlin.lite)
+
     testImplementation(projects.core.datastoreTest)
     testImplementation(libs.kotlinx.coroutines.test)
 }

@@ -36,5 +36,7 @@ dependencies {
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
 
+    implementation(libs.kotlinx.datetime)
+
     androidTestImplementation(projects.core.testing)
 }

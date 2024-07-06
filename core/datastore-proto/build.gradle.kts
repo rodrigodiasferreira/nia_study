@@ -26,6 +26,7 @@ android {
 // Setup protobuf configuration, generating lite Java and Kotlin classes
 protobuf {
     protoc {
+//        println("Rodrigo: libs.protobuf.protoc.get().toString(): ${libs.protobuf.protoc.get()}")
         artifact = libs.protobuf.protoc.get().toString()
     }
     generateProtoTasks {
@@ -43,13 +44,16 @@ protobuf {
 }
 
 androidComponents.beforeVariants {
+
     android.sourceSets.register(it.name) {
+//        println("Rodrigo: generated/source/proto/: it.name: ${it.name}")
         val buildDir = layout.buildDirectory.get().asFile
+
         java.srcDir(buildDir.resolve("generated/source/proto/${it.name}/java"))
         kotlin.srcDir(buildDir.resolve("generated/source/proto/${it.name}/kotlin"))
     }
 }
 
 dependencies {
-    api(libs.protobuf.kotlin.lite)
+    implementation(libs.protobuf.kotlin.lite)
 }
