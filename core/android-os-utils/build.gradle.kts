@@ -7,7 +7,7 @@ android {
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    namespace = "com.google.samples.apps.nowinandroid.core.android_os_utils"
+    namespace = "com.google.samples.apps.nowinandroid.core.androidosutils"
 }
 dependencies {
     implementation(libs.androidx.annotation.jvm)

@@ -1,4 +1,4 @@
-package com.google.samples.apps.nowinandroid.core.android_os_utils
+package com.google.samples.apps.nowinandroid.core.androidosutils
 
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
