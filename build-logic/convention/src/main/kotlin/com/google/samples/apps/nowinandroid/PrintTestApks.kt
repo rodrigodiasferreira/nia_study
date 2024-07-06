@@ -38,6 +38,7 @@ import java.io.File
 
 internal fun Project.configurePrintApksTask(extension: AndroidComponentsExtension<*, *, *>) {
     extension.onVariants { variant ->
+        println("Rodrigo: variant.name: ${variant.name}")
         if (variant is HasAndroidTest) {
             val loader = variant.artifacts.getBuiltArtifactsLoader()
             val artifact = variant.androidTest?.artifacts?.get(SingleArtifact.APK)

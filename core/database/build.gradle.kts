@@ -32,7 +32,7 @@ android {
 dependencies {
     api(projects.core.model)
 
-    implementation(libs.kotlinx.datetime)
+//    implementation(libs.kotlinx.datetime) //Can be commented as on model it is using api: api(libs.kotlinx.datetime)
 
     androidTestImplementation(projects.core.testing)
 }
