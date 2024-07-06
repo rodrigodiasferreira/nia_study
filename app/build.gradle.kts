@@ -104,6 +104,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.guava)
     implementation(libs.coil.kt)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.androidx.compose.material3)
 
     ksp(libs.hilt.compiler)
 

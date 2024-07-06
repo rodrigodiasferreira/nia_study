@@ -28,9 +28,9 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.domain)
     implementation(projects.core.ui)
+    implementation(libs.androidx.compose.material3)
 
     testImplementation(projects.core.testing)
 
     androidTestImplementation(projects.core.testing)
 }
-

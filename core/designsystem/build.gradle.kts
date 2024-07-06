@@ -30,14 +30,14 @@ android {
 dependencies {
     lintPublish(projects.lint)
 
-    api(libs.androidx.compose.foundation)
-    api(libs.androidx.compose.foundation.layout)
-    api(libs.androidx.compose.material.iconsExtended)
-    api(libs.androidx.compose.material3)
-    api(libs.androidx.compose.material3.adaptive)
-    api(libs.androidx.compose.material3.navigationSuite)
-    api(libs.androidx.compose.runtime)
-    api(libs.androidx.compose.ui.util)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.foundation.layout)
+    implementation(libs.androidx.compose.material.iconsExtended)
+    implementation(libs.androidx.compose.material3) //TODO Maybe it should be kept the api
+    implementation(libs.androidx.compose.material3.adaptive)
+    implementation(libs.androidx.compose.material3.navigationSuite)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.ui.util)
 
     implementation(libs.coil.kt.compose)
 

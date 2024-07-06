@@ -35,7 +35,7 @@ dependencies {
     implementation(libs.androidx.browser)
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
-
+    implementation(libs.androidx.compose.material3)
     implementation(libs.kotlinx.datetime)
 
     androidTestImplementation(projects.core.testing)
