@@ -44,3 +44,6 @@ _sandbox
 
 # Android Studio captures folder
 captures/
+
+# Kotlin
+.kotlin

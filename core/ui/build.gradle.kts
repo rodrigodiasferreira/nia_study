@@ -20,9 +20,6 @@ plugins {
 }
 
 android {
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
     namespace = "com.google.samples.apps.nowinandroid.core.ui"
 }
 
@@ -38,6 +35,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.kotlinx.datetime)
 
+    androidTestImplementation(libs.bundles.androidx.compose.ui.test)
     androidTestImplementation(projects.core.testing)
     androidTestImplementation(libs.androidx.compose.ui.test)
 }

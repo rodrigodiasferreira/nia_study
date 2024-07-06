@@ -209,8 +209,8 @@ fun NiaTheme(
     val emptyGradientColors = GradientColors(container = colorScheme.surfaceColorAtElevation(2.dp))
     val defaultGradientColors = GradientColors(
         top = colorScheme.inverseOnSurface,
-//        bottom = colorScheme.primaryContainer,
-        bottom = colorScheme.onPrimaryContainer,
+        bottom = colorScheme.primaryContainer,
+//        bottom = colorScheme.onPrimaryContainer,
         container = colorScheme.surface,
     )
     val gradientColors = when {

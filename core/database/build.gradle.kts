@@ -22,10 +22,6 @@ plugins {
 }
 
 android {
-    defaultConfig {
-        testInstrumentationRunner =
-            "com.google.samples.apps.nowinandroid.core.testing.NiaTestRunner"
-    }
     namespace = "com.google.samples.apps.nowinandroid.core.database"
 }
 
@@ -38,6 +34,7 @@ dependencies {
     androidTestImplementation(projects.core.testing)
     androidTestImplementation((kotlin("test")))
     androidTestImplementation(libs.junit)
-    androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 }

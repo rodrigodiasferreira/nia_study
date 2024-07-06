@@ -362,7 +362,7 @@ fun NiaRailNavigationSuiteScaffoldPreview() {
     NiaTheme {
         NiaNavigationSuiteScaffoldWrapper(
             WindowAdaptiveInfo(
-                windowSizeClass = WindowSizeClass(1200, 800),
+                windowSizeClass = WindowSizeClass.compute(1200f, 800f),
                 windowPosture = Posture()
             )
         )

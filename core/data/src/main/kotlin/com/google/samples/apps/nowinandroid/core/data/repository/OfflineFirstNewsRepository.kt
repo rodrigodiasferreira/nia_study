@@ -113,8 +113,8 @@ internal class OfflineFirstNewsRepository @Inject constructor(
                 if (isFirstSync) {
                     // When we first retrieve news, mark everything viewed, so that we aren't
                     // overwhelmed with all historical news.
-//                    niaPreferencesDataSource.setNewsResourcesViewed(changedIds, true) //In order to pass on unit test
-                    niaPreferencesDataSource.setNewsResourcesViewed(changedIds, false)
+                    niaPreferencesDataSource.setNewsResourcesViewed(changedIds, true) //In order to pass on unit test
+//                    niaPreferencesDataSource.setNewsResourcesViewed(changedIds, false)
                 }
 
                 // Obtain the news resources which have changed from the network and upsert them locally
