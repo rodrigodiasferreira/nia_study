@@ -37,6 +37,9 @@ dependencies {
     testImplementation(libs.robolectric)
     testImplementation(projects.core.testing)
     testImplementation(projects.core.screenshotTesting)
+
+    testImplementation(libs.kotlinx.datetime)
+
     testDemoImplementation(libs.roborazzi)
 
     androidTestImplementation(projects.core.testing)

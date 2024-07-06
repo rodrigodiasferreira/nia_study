@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.samples.apps.nowinandroid.core.data.repository.TopicsRepository
+import com.google.samples.apps.nowinandroid.core.data.repository.UserDataRepository
 import com.google.samples.apps.nowinandroid.core.data.repository.UserNewsResourceRepository
 import com.google.samples.apps.nowinandroid.core.data.test.repository.FakeUserDataRepository
 import com.google.samples.apps.nowinandroid.core.data.util.NetworkMonitor
@@ -101,7 +102,8 @@ class SnackbarScreenshotTests {
     lateinit var timeZoneMonitor: TimeZoneMonitor
 
     @Inject
-    lateinit var userDataRepository: FakeUserDataRepository
+//    lateinit var userDataRepository: FakeUserDataRepository
+    lateinit var userDataRepository: UserDataRepository
 
     @Inject
     lateinit var topicsRepository: TopicsRepository

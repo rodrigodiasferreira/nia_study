@@ -50,6 +50,7 @@ class TestNiaNetworkDataSource : NiaNetworkDataSource {
         CollectionType.NewsResources to allNewsResources
             .mapToChangeList(idGetter = NetworkNewsResource::id),
     )
+//        .withDefault { _ -> allTopics.mapToChangeList(idGetter = NetworkTopic::id) }
 
     override suspend fun getTopics(ids: List<String>?): List<NetworkTopic> =
         allTopics.matchIds(
@@ -64,7 +65,7 @@ class TestNiaNetworkDataSource : NiaNetworkDataSource {
         )
 
     override suspend fun getTopicChangeList(after: Int?): List<NetworkChangeList> =
-        changeLists.getValue(CollectionType.Topics).after(after)
+        changeLists[CollectionType.Topics]!!.after(after)
 
     override suspend fun getNewsResourceChangeList(after: Int?): List<NetworkChangeList> =
         changeLists.getValue(CollectionType.NewsResources).after(after)

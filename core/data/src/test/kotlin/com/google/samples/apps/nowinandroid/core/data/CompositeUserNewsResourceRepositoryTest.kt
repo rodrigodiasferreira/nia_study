@@ -121,7 +121,7 @@ class CompositeUserNewsResourceRepositoryTest {
         // Construct the test user data with bookmarks and followed topics.
         val userData = emptyUserData.copy(
             bookmarkedNewsResources = setOf(sampleNewsResources[0].id, sampleNewsResources[2].id),
-            followedTopics = setOf(sampleTopic1.id),
+//            followedTopics = setOf(sampleTopic1.id), //No need to set followed topic
         )
 
         userDataRepository.setUserData(userData)

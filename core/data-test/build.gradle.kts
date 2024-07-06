@@ -26,4 +26,11 @@ dependencies {
     api(projects.core.data)
 
     implementation(libs.hilt.android.testing)
+
+    implementation(projects.core.datastore)
+    implementation(projects.core.model)
+    implementation(projects.core.common)
+    implementation(projects.core.database)
+    implementation(projects.core.network)
+    implementation(libs.kotlinx.datetime)
 }

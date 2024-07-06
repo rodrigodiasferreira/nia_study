@@ -112,6 +112,7 @@ class OfflineFirstTopicsRepositoryTest {
             synchronizer.updateChangeListVersions {
                 copy(topicVersion = 10)
             }
+            synchronizer.getChangeListVersions()
 
             subject.syncWith(synchronizer)
 

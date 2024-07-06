@@ -30,5 +30,6 @@ dependencies {
     implementation(libs.javax.inject)
     implementation(libs.kotlinx.coroutines.guava)
 
+    implementation(projects.core.testing)
     testImplementation(projects.core.testing)
 }

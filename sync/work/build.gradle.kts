@@ -35,6 +35,9 @@ dependencies {
     implementation(projects.core.analytics)
     implementation(projects.core.data)
 
+    implementation(projects.core.common)
+    implementation(projects.core.datastore)
+
     prodImplementation(libs.firebase.cloud.messaging)
     prodImplementation(platform(libs.firebase.bom))
 

@@ -135,6 +135,10 @@ dependencies {
     androidTestImplementation(libs.hilt.android.testing)
 
     baselineProfile(projects.benchmarks)
+
+    testImplementation(kotlin("test"))
+    androidTestImplementation(kotlin("test"))
+
 }
 
 baselineProfile {
