@@ -1,3 +1,5 @@
+import java.util.Properties
+
 /*
  * Copyright 2022 The Android Open Source Project
  *
@@ -18,7 +20,8 @@ plugins {
     alias(libs.plugins.nowinandroid.android.library)
     alias(libs.plugins.nowinandroid.android.library.jacoco)
     alias(libs.plugins.nowinandroid.android.hilt)
-    id("kotlinx-serialization")
+//    alias(libs.plugins.kotlin.serialization)
+//    id("kotlinx-serialization")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
@@ -32,10 +35,32 @@ android {
             isIncludeAndroidResources = true
         }
     }
+    defaultConfig {
+        val properties = Properties()
+//        println("Rodrigo: project: ${project.name}")
+//        println("Rodrigo: rootProject: ${project.rootProject.name}")
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        buildConfigField("String", "WHATEVER_PROP", "${properties.get("WHATEVER_PROP")}")
+    }
 }
 
+//secrets {
+//    defaultPropertiesFileName = "secrets.defaults.properties"
+//}
+
 secrets {
+    // Change the properties file from the default "local.properties" in your root project
+    // to another properties file in your root project.
+    propertiesFileName = "secrets.properties"
+
+    // A properties file containing default secret values. This file can be checked in version
+    // control.
     defaultPropertiesFileName = "secrets.defaults.properties"
+
+    // Configure which keys should be ignored by the plugin by providing regular expressions.
+    // "sdk.dir" is ignored by default.
+    ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+    ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
 }
 
 dependencies {
