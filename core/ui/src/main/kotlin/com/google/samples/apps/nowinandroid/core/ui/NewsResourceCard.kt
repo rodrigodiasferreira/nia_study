@@ -154,7 +154,7 @@ fun NewsResourceCardExpanded(
 fun NewsResourceHeaderImage(
     headerImageUrl: String?,
 ) {
-    Log.d("Rodrigo", "headerImageUrl: $headerImageUrl")
+//    Log.d("Rodrigo", "headerImageUrl: $headerImageUrl")
     var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
     val imageLoader = rememberAsyncImagePainter(
@@ -171,7 +171,7 @@ fun NewsResourceHeaderImage(
             .height(180.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Log.d("Rodrigo", "isError.not(): ${isError.not()} && !isLocalInspection: ${!isLocalInspection} && !isLoading: ${!isLoading}")
+//        Log.d("Rodrigo", "isError.not(): ${isError.not()} && !isLocalInspection: ${!isLocalInspection} && !isLoading: ${!isLoading}")
         if (isLoading) {
             // Display a progress bar while loading
             CircularProgressIndicator(

@@ -129,7 +129,7 @@ fun NiaLoadingWheel(
             .testTag("loadingWheel"),
     ) {
         repeat(NUM_OF_LINES) { index ->
-            Log.d("Rodrigo", "floatAnimValues[$index].value: ${floatAnimValues[index].value}")
+//            Log.d("Rodrigo", "floatAnimValues[$index].value: ${floatAnimValues[index].value}")
             rotate(degrees = index * 30f) {
                 drawLine(
                     color = colorAnimValues[index].value,

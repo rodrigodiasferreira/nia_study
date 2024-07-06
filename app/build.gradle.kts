@@ -106,6 +106,8 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.androidx.compose.material3)
 
+    implementation(libs.androidx.metrics)
+
     ksp(libs.hilt.compiler)
 
     debugImplementation(libs.androidx.compose.ui.testManifest)

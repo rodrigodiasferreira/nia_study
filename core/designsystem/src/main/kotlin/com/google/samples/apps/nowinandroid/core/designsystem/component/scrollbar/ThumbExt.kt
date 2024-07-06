@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar
 
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
@@ -79,11 +80,16 @@ private inline fun rememberDraggableScroller(
     val itemCount by rememberUpdatedState(itemsAvailable)
 
     LaunchedEffect(percentage) {
+        Log.v("Rodrigo", "if (percentage.isNaN()) return@LaunchedEffect")
         if (percentage.isNaN()) return@LaunchedEffect
         val indexToFind = (itemCount * percentage).roundToInt()
+        Log.d("Rodrigo", "val indexToFind: $indexToFind = (itemCount: $itemCount * percentage: $percentage).roundToInt()")
         scroll(indexToFind)
     }
     return remember {
-        { newPercentage -> percentage = newPercentage }
+        { newPercentage ->
+            Log.d("Rodrigo", "newPercentage: $newPercentage")
+            percentage = newPercentage
+        }
     }
 }

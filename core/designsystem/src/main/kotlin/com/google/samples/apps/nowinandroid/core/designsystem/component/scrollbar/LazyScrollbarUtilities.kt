@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar
 
+import android.util.Log
 import androidx.compose.foundation.gestures.ScrollableState
 import kotlin.math.abs
 
@@ -52,6 +53,7 @@ internal inline fun <LazyState : ScrollableState, LazyStateItem> LazyState.inter
 
     val itemOffset = offset(firstItem).toFloat()
     val offsetPercentage = abs(itemOffset) / firstItemSize
+    Log.v("Rodrigo", "offsetPercentage: $offsetPercentage")
 
     val nextItem = nextItemOnMainAxis(firstItem) ?: return firstItemIndex + offsetPercentage
 

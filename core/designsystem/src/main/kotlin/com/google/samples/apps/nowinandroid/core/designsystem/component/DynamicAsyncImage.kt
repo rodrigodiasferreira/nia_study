@@ -69,7 +69,7 @@ fun DynamicAsyncImage(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        Log.d("Rodrigo", "isError.not(): ${isError.not()} && !isLocalInspection: ${!isLocalInspection} && !isLoading: ${!isLoading}")
+//        Log.d("Rodrigo", "isError.not(): ${isError.not()} && !isLocalInspection: ${!isLocalInspection} && !isLoading: ${!isLoading}")
         if (isLoading && !isLocalInspection) {
             // Display a progress bar while loading
             CircularProgressIndicator(

@@ -27,10 +27,10 @@ android {
 }
 
 dependencies {
-    api(libs.androidx.metrics)
-    api(projects.core.analytics)
-    api(projects.core.designsystem)
-    api(projects.core.model)
+    implementation(libs.androidx.metrics)
+    implementation(projects.core.analytics)
+    implementation(projects.core.designsystem)
+    implementation(projects.core.model)
 
     implementation(libs.androidx.browser)
     implementation(libs.coil.kt)

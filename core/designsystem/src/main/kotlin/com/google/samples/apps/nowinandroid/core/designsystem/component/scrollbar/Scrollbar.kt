@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar
 
+import android.util.Log
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.Orientation.Horizontal
 import androidx.compose.foundation.gestures.Orientation.Vertical
@@ -83,14 +84,20 @@ class ScrollbarState {
     /**
      * Returns the thumb size of the scrollbar as a percentage of the total track size
      */
-    val thumbSizePercent
-        get() = unpackFloat1(packedValue)
+    val thumbSizePercent: Float
+        get() {
+            Log.v("Rodrigo", "thumbSizePercent: ${unpackFloat1(packedValue)}")
+            return unpackFloat1(packedValue)
+        }
 
     /**
      * Returns the distance the thumb has traveled as a percentage of total track size
      */
-    val thumbMovedPercent
-        get() = unpackFloat2(packedValue)
+    val thumbMovedPercent: Float
+        get() {
+            Log.v("Rodrigo", "thumbMovedPercent: ${unpackFloat2(packedValue)}")
+            return unpackFloat2(packedValue)
+        }
 
     /**
      * Returns the max distance the thumb can travel as a percentage of total track size
@@ -226,6 +233,21 @@ fun Scrollbar(
             }
             .onGloballyPositioned { coordinates ->
                 val scrollbarStartCoordinate = orientation.valueOf(coordinates.positionInRoot())
+                Log.d(
+                    "Rodrigo",
+                    "scrollbarStartCoordinate: $scrollbarStartCoordinate, scrollbarStartCoordinate + orientation.valueOf(coordinates.size): ${
+                        scrollbarStartCoordinate + orientation.valueOf(coordinates.size)
+                    }"
+                )
+                Log.d(
+                    "Rodrigo",
+                    "coordinates.positionInRoot(): ${coordinates.positionInRoot()}"
+                )
+                Log.d(
+                    "Rodrigo",
+                    "coordinates.size: ${coordinates.size}"
+                )
+
                 track = ScrollbarTrack(
                     max = scrollbarStartCoordinate,
                     min = scrollbarStartCoordinate + orientation.valueOf(coordinates.size),
@@ -236,25 +258,78 @@ fun Scrollbar(
                 detectTapGestures(
                     onPress = { offset ->
                         try {
+                            Log.v("Rodrigo", "detectTapGestures: pressed: offset: $offset")
                             // Wait for a long press before scrolling
                             withTimeout(viewConfiguration.longPressTimeoutMillis) {
+                                Log.v(
+                                    "Rodrigo",
+                                    "detectTapGestures: pressed: offset: $offset, before: tryAwaitRelease()"
+                                )
                                 tryAwaitRelease()
+                                Log.d(
+                                    "Rodrigo",
+                                    "detectTapGestures: pressed: offset: $offset, after: tryAwaitRelease()"
+                                )
                             }
+                            Log.d(
+                                "Rodrigo",
+                                "detectTapGestures: pressed: offset: $offset, after: outside: tryAwaitRelease()"
+                            )
                         } catch (e: TimeoutCancellationException) {
                             // Start the press triggered scroll
+                            Log.w(
+                                "Rodrigo",
+                                "detectTapGestures: pressed: offset: $offset, TimeoutCancellationException",
+                                e
+                            )
+                            Log.e(
+                                "Rodrigo",
+                                "detectTapGestures: pressed: offset: $offset, TimeoutCancellationException",
+                                e
+                            )
                             val initialPress = PressInteraction.Press(offset)
-                            interactionSource?.tryEmit(initialPress)
+                            val interationSourceEmissionResult =
+                                interactionSource?.tryEmit(initialPress)
+                            Log.i(
+                                "Rodrigo",
+                                "detectTapGestures: pressed: initialPress.pressPosition: ${initialPress.pressPosition}, TimeoutCancellationException",
+                                e
+                            )
+                            Log.i(
+                                "Rodrigo",
+                                "detectTapGestures: pressed: interationSourceEmissionResult: $interationSourceEmissionResult, TimeoutCancellationException",
+                                e
+                            )
 
                             pressedOffset = offset
-                            interactionSource?.tryEmit(
-                                when {
-                                    tryAwaitRelease() -> PressInteraction.Release(initialPress)
-                                    else -> PressInteraction.Cancel(initialPress)
-                                },
+
+                            val pressInteractionReleasedOrCancelled = when {
+                                tryAwaitRelease() -> PressInteraction.Release(initialPress)
+                                else -> PressInteraction.Cancel(initialPress)
+                            }
+                            Log.w(
+                                "Rodrigo",
+                                "detectTapGestures: pressed: initialPress.pressPosition: ${initialPress.pressPosition}, TimeoutCancellationException: pressInteractionReleasedOrCancelled: $pressInteractionReleasedOrCancelled",
+                            )
+
+
+                            Log.w(
+                                "Rodrigo",
+                                "detectTapGestures: pressed: pressedOffset: $pressedOffset, TimeoutCancellationException: pressInteractionReleasedOrCancelled: $pressInteractionReleasedOrCancelled",
+                            )
+                            interactionSource?.tryEmit(pressInteractionReleasedOrCancelled)
+                            pressedOffset = offset
+                            Log.i(
+                                "Rodrigo",
+                                "detectTapGestures: pressed: after: interactionSource?.tryEmit(pressInteractionReleasedOrCancelled: $pressInteractionReleasedOrCancelled)",
                             )
 
                             // End the press
                             pressedOffset = Offset.Unspecified
+                            Log.i(
+                                "Rodrigo",
+                                "detectTapGestures: pressed: after: pressedOffset = Offset.Unspecified: $pressedOffset)",
+                            )
                         }
                     },
                 )
@@ -263,21 +338,28 @@ fun Scrollbar(
             .pointerInput(Unit) {
                 var dragInteraction: DragInteraction.Start? = null
                 val onDragStart: (Offset) -> Unit = { offset ->
+                    Log.d("Rodrigo", "DragGestures: onDragStart: offset: $offset")
                     val start = DragInteraction.Start()
                     dragInteraction = start
                     interactionSource?.tryEmit(start)
                     draggedOffset = offset
                 }
                 val onDragEnd: () -> Unit = {
+                    Log.i("Rodrigo", "DragGestures: onDragEnd")
                     dragInteraction?.let { interactionSource?.tryEmit(DragInteraction.Stop(it)) }
                     draggedOffset = Offset.Unspecified
                 }
                 val onDragCancel: () -> Unit = {
+                    Log.e("Rodrigo", "DragGestures: onDragCancel")
                     dragInteraction?.let { interactionSource?.tryEmit(DragInteraction.Cancel(it)) }
                     draggedOffset = Offset.Unspecified
                 }
                 val onDrag: (change: PointerInputChange, dragAmount: Float) -> Unit =
                     onDrag@{ _, delta ->
+                        Log.e(
+                            "Rodrigo",
+                            "DragGestures: draggedOffset: $draggedOffset, delta: $delta"
+                        )
                         if (draggedOffset == Offset.Unspecified) return@onDrag
                         draggedOffset = when (orientation) {
                             Orientation.Vertical -> draggedOffset.copy(
@@ -315,22 +397,31 @@ fun Scrollbar(
                 a = state.thumbSizePercent * track.size,
                 b = minThumbSize.toPx(),
             )
+            Log.d("Rodrigo", "ScrollBar: MeasureAndPlace: thumbSizePx: $thumbSizePx, state.thumbSizePercent: ${state.thumbSizePercent}, track.size: ${track.size}")
 
             val trackSizePx = when (state.thumbTrackSizePercent) {
                 0f -> track.size
                 else -> (track.size - thumbSizePx) / state.thumbTrackSizePercent
             }
+            Log.d("Rodrigo", "ScrollBar: MeasureAndPlace: trackSizePx: $trackSizePx, state.thumbTrackSizePercent: ${state.thumbTrackSizePercent}")
 
             val thumbTravelPercent = max(
                 a = min(
                     a = when {
-                        interactionThumbTravelPercent.isNaN() -> state.thumbMovedPercent
-                        else -> interactionThumbTravelPercent
+                        interactionThumbTravelPercent.isNaN() -> {
+                            Log.w("Rodrigo", "ScrollBar: MeasureAndPlace: state.thumbMovedPercent: ${state.thumbMovedPercent}")
+                            state.thumbMovedPercent
+                        }
+                        else -> {
+                            Log.e("Rodrigo", "ScrollBar: MeasureAndPlace: interactionThumbTravelPercent: $interactionThumbTravelPercent")
+                            interactionThumbTravelPercent
+                        }
                     },
                     b = state.thumbTrackSizePercent,
                 ),
                 b = 0f,
             )
+            Log.i("Rodrigo", "ScrollBar: MeasureAndPlace: thumbTravelPercent: $thumbTravelPercent, interactionThumbTravelPercent: $interactionThumbTravelPercent, state.thumbMovedPercent: ${state.thumbMovedPercent}, state.thumbTrackSizePercent: ${state.thumbTrackSizePercent}")
 
             val thumbMovedPx = trackSizePx * thumbTravelPercent
 
@@ -370,6 +461,7 @@ fun Scrollbar(
     // Process presses
     LaunchedEffect(Unit) {
         snapshotFlow { pressedOffset }.collect { pressedOffset ->
+            Log.v("Rodrigo", "LongPress Thumb Movement: pressedOffset: $pressedOffset")
             // Press ended, reset interactionThumbTravelPercent
             if (pressedOffset == Offset.Unspecified) {
                 interactionThumbTravelPercent = Float.NaN
@@ -377,10 +469,13 @@ fun Scrollbar(
             }
 
             var currentThumbMovedPercent = state.thumbMovedPercent
+            Log.d("Rodrigo", "LongPress Thumb Movement: currentThumbMovedPercent: $currentThumbMovedPercent")
             val destinationThumbMovedPercent = track.thumbPosition(
                 dimension = orientation.valueOf(pressedOffset),
             )
+            Log.d("Rodrigo", "LongPress Thumb Movement: destinationThumbMovedPercent: $destinationThumbMovedPercent")
             val isPositive = currentThumbMovedPercent < destinationThumbMovedPercent
+            Log.d("Rodrigo", "LongPress Thumb Movement: isPositive: $isPositive")
             val delta = SCROLLBAR_PRESS_DELTA_PCT * if (isPositive) 1f else -1f
 
             while (currentThumbMovedPercent != destinationThumbMovedPercent) {
@@ -395,6 +490,7 @@ fun Scrollbar(
                         b = destinationThumbMovedPercent,
                     )
                 }
+                Log.i("Rodrigo", "LongPress Thumb Movement: currentThumbMovedPercent: $currentThumbMovedPercent")
                 onThumbMoved(currentThumbMovedPercent)
                 interactionThumbTravelPercent = currentThumbMovedPercent
                 delay(SCROLLBAR_PRESS_DELAY_MS)

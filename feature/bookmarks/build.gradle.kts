@@ -28,6 +28,9 @@ dependencies {
     implementation(projects.core.data)
     implementation(libs.androidx.compose.material3)
 
+    implementation(projects.core.analytics)
+    implementation(projects.core.model)
+
     testImplementation(projects.core.testing)
 
     androidTestImplementation(projects.core.testing)

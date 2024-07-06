@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar
 
+import android.util.Log
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
@@ -116,7 +117,9 @@ fun LazyGridState.scrollbarState(
             val firstIndex = min(
                 a = interpolateFirstItemIndex(
                     visibleItems = visibleItemsInfo,
-                    itemSize = { layoutInfo.orientation.valueOf(it.size) },
+                    itemSize = {
+                        layoutInfo.orientation.valueOf(it.size)
+                               },
                     offset = { layoutInfo.orientation.valueOf(it.offset) },
                     nextItemOnMainAxis = { first ->
                         when (layoutInfo.orientation) {
@@ -185,13 +188,28 @@ fun LazyStaggeredGridState.scrollbarState(
             if (itemsAvailable == 0) return@snapshotFlow null
 
             val visibleItemsInfo = layoutInfo.visibleItemsInfo
+
+            Log.v("Rodrigo", "itemsAvailable: $itemsAvailable")
+
+            visibleItemsInfo.forEach {
+                Log.v(
+                    "Rodrigo",
+                    "index: ${it.index}, lane: ${it.lane}, offset: ${it.offset}, size: ${it.size}, key: ${it.key}, contentType: ${it.contentType}",
+                )
+            }
+
             if (visibleItemsInfo.isEmpty()) return@snapshotFlow null
 
             val firstIndex = min(
                 a = interpolateFirstItemIndex(
                     visibleItems = visibleItemsInfo,
-                    itemSize = { layoutInfo.orientation.valueOf(it.size) },
-                    offset = { layoutInfo.orientation.valueOf(it.offset) },
+                    itemSize = {
+                        Log.e("Rodrigo", "index: ${it.index}, lane: ${it.lane}, offset: ${it.offset}, size: ${it.size}, key: ${it.key}, contentType: ${it.contentType}")
+                        layoutInfo.orientation.valueOf(it.size)
+                               },
+                    offset = {
+                        Log.w("Rodrigo", "index: ${it.index}, lane: ${it.lane}, offset: ${it.offset}, size: ${it.size}, key: ${it.key}, contentType: ${it.contentType}")
+                        layoutInfo.orientation.valueOf(it.offset) },
                     nextItemOnMainAxis = { first ->
                         visibleItemsInfo.find { it != first && it.lane == first.lane }
                     },
@@ -201,6 +219,9 @@ fun LazyStaggeredGridState.scrollbarState(
             )
             if (firstIndex.isNaN()) return@snapshotFlow null
 
+            Log.v("Rodrigo", "layoutInfo.viewportStartOffset: ${layoutInfo.viewportStartOffset}")
+            Log.v("Rodrigo", "layoutInfo.viewportEndOffset: ${layoutInfo.viewportEndOffset}")
+
             val itemsVisible = visibleItemsInfo.floatSumOf { itemInfo ->
                 itemVisibilityPercentage(
                     itemSize = layoutInfo.orientation.valueOf(itemInfo.size),
@@ -209,6 +230,8 @@ fun LazyStaggeredGridState.scrollbarState(
                     viewportEndOffset = layoutInfo.viewportEndOffset,
                 )
             }
+            Log.e("Rodrigo", "itemsVisible: $itemsVisible")
+
 
             val thumbTravelPercent = min(
                 a = firstIndex / itemsAvailable,
