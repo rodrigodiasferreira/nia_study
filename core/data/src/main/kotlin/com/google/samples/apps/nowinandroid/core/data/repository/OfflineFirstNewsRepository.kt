@@ -16,6 +16,9 @@
 
 package com.google.samples.apps.nowinandroid.core.data.repository
 
+import android.icu.util.TimeUnit
+import android.os.Build.VERSION.SDK_INT
+import android.util.Log
 import com.google.samples.apps.nowinandroid.core.data.Synchronizer
 import com.google.samples.apps.nowinandroid.core.data.changeListSync
 import com.google.samples.apps.nowinandroid.core.data.model.asEntity
@@ -55,13 +58,27 @@ internal class OfflineFirstNewsRepository @Inject constructor(
 
     override fun getNewsResources(
         query: NewsResourceQuery,
-    ): Flow<List<NewsResource>> = newsResourceDao.getNewsResources(
-        useFilterTopicIds = query.filterTopicIds != null,
-        filterTopicIds = query.filterTopicIds ?: emptySet(),
-        useFilterNewsIds = query.filterNewsIds != null,
-        filterNewsIds = query.filterNewsIds ?: emptySet(),
-    )
-        .map { it.map(PopulatedNewsResource::asExternalModel) }
+    ): Flow<List<NewsResource>> {
+//        val currentTime = System.nanoTime()
+//        val bla = newsResourceDao.getNewsResources(
+//            useFilterTopicIds = query.filterTopicIds != null,
+//            filterTopicIds = query.filterTopicIds ?: emptySet(),
+//            useFilterNewsIds = query.filterNewsIds != null,
+//            filterNewsIds = query.filterNewsIds ?: emptySet(),
+//        )
+//        val after = System.nanoTime()
+//        if (SDK_INT >= 24)
+//            Log.i("Rodrigo", "Time: ${(after - currentTime)}ns")
+
+//        return bla.map { it.map(PopulatedNewsResource::asExternalModel) }
+        return newsResourceDao.getNewsResources(
+            useFilterTopicIds = query.filterTopicIds != null,
+            filterTopicIds = query.filterTopicIds ?: emptySet(),
+            useFilterNewsIds = query.filterNewsIds != null,
+            filterNewsIds = query.filterNewsIds ?: emptySet(),
+        )
+            .map { it.map(PopulatedNewsResource::asExternalModel) }
+    }
 
     override suspend fun syncWith(synchronizer: Synchronizer): Boolean {
         var isFirstSync = false

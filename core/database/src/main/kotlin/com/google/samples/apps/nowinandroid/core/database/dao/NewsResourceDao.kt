@@ -25,6 +25,7 @@ import androidx.room.Upsert
 import com.google.samples.apps.nowinandroid.core.database.model.NewsResourceEntity
 import com.google.samples.apps.nowinandroid.core.database.model.NewsResourceTopicCrossRef
 import com.google.samples.apps.nowinandroid.core.database.model.PopulatedNewsResource
+import com.google.samples.apps.nowinandroid.core.database.model.TopicEntity
 import com.google.samples.apps.nowinandroid.core.model.data.NewsResource
 import kotlinx.coroutines.flow.Flow
 
@@ -64,6 +65,37 @@ interface NewsResourceDao {
         useFilterNewsIds: Boolean = false,
         filterNewsIds: Set<String> = emptySet(),
     ): Flow<List<PopulatedNewsResource>>
+
+//TODO Double check after studying data module
+//    @Transaction
+//    @Query(
+//        value = """
+//            SELECT * FROM (SELECT * FROM news_resources
+//            WHERE
+//                CASE WHEN :useFilterNewsIds
+//                    THEN id IN (:filterNewsIds)
+//                    ELSE 1
+//                END
+//             AND
+//                CASE WHEN :useFilterTopicIds
+//                    THEN id IN
+//                        (
+//                            SELECT news_resource_id FROM news_resources_topics
+//                            WHERE topic_id IN (:filterTopicIds)
+//                        )
+//                    ELSE 1
+//                END) as news
+//            INNER JOIN topics
+//                ON news.id = topics.
+//            ORDER BY publish_date DESC
+//    """,
+//    )
+//    fun getNewsResources(
+//        useFilterTopicIds: Boolean = false,
+//        filterTopicIds: Set<String> = emptySet(),
+//        useFilterNewsIds: Boolean = false,
+//        filterNewsIds: Set<String> = emptySet(),
+//    ): Flow<Map<NewsResourceEntity, List<TopicEntity>>>
 
     /**
      * Fetches ids of news resources that match the query parameters

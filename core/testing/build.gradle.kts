@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    api(kotlin("test"))
+    implementation(kotlin("test"))
     api(libs.androidx.compose.ui.test)
     api(projects.core.analytics)
     api(projects.core.data)

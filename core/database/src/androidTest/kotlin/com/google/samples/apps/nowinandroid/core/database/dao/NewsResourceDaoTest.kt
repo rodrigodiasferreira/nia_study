@@ -113,7 +113,7 @@ class NewsResourceDaoTest {
 
         val savedNewsResourceEntities = newsResourceDao.getNewsResources(
             useFilterNewsIds = true,
-            filterNewsIds = setOf("3", "0"),
+            filterNewsIds = setOf("0", "3"),
         )
             .first()
 

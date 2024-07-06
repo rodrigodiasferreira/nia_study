@@ -27,6 +27,9 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -105,12 +108,13 @@ fun NiaTabRow(
 @Composable
 fun TabsPreview() {
     NiaTheme {
-        val titles = listOf("Topics", "People")
-        NiaTabRow(selectedTabIndex = 0) {
+        var selectedTabIndexState by remember { mutableIntStateOf(0) }
+        val titles = listOf("Topics", "People", "rodrigo")
+        NiaTabRow(selectedTabIndex = selectedTabIndexState) {
             titles.forEachIndexed { index, title ->
                 NiaTab(
-                    selected = index == 0,
-                    onClick = { },
+                    selected = index == selectedTabIndexState,
+                    onClick = { selectedTabIndexState = index },
                     text = { Text(text = title) },
                 )
             }

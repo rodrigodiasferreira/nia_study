@@ -50,6 +50,17 @@ fun PopulatedNewsResource.asExternalModel() = NewsResource(
     topics = topics.map(TopicEntity::asExternalModel),
 )
 
+//fun Map<NewsResourceEntity, List<TopicEntity>>.asExternalModel() = NewsResource(
+//    id = entity.id,
+//    title = entity.title,
+//    content = entity.content,
+//    url = entity.url,
+//    headerImageUrl = entity.headerImageUrl,
+//    publishDate = entity.publishDate,
+//    type = entity.type,
+//    topics = topics.map(TopicEntity::asExternalModel),
+//)
+
 fun PopulatedNewsResource.asFtsEntity() = NewsResourceFtsEntity(
     newsResourceId = entity.id,
     title = entity.title,
