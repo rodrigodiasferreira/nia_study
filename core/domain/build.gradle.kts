@@ -28,6 +28,7 @@ dependencies {
     api(projects.core.model)
 
     implementation(libs.javax.inject)
+    implementation(libs.kotlinx.coroutines.guava)
 
     testImplementation(projects.core.testing)
 }
