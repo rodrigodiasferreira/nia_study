@@ -32,4 +32,6 @@ dependencies {
 
     implementation(projects.core.testing)
     testImplementation(projects.core.testing)
+
+    testImplementation(libs.kotlinx.coroutines.test)
 }
