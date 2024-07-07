@@ -51,3 +51,11 @@ plugins {
     alias(libs.plugins.module.graph) apply true
     alias(libs.plugins.jetbrains.kotlin.android) apply false // Plugin applied to allow module graph generation
 }
+
+tasks.register("executeUnitAndInstrumentedTests") {
+    dependsOn(
+        ":lint:test",
+        ":core:executeUnitAndInstrumentedTests",
+        ":feature:executeUnitAndInstrumentedTests",
+    )
+}
