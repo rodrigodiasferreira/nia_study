@@ -25,15 +25,5 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.data)
-    implementation(libs.androidx.compose.material3)
-
-    implementation(projects.core.analytics)
-    implementation(projects.core.model)
-
-    testImplementation(projects.core.testing)
-
     androidTestImplementation(libs.bundles.androidx.compose.ui.test)
-    androidTestImplementation(projects.core.testing)
-    testImplementation(libs.kotlinx.coroutines.test)
 }
