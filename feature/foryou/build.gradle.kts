@@ -37,11 +37,13 @@ dependencies {
     testImplementation(libs.hilt.android.testing)
     testImplementation(libs.robolectric)
     testImplementation(projects.core.testing)
+    testDemoImplementation(projects.core.screenshotTesting)
     testImplementation(projects.core.screenshotTesting)
 
     testImplementation(libs.kotlinx.datetime)
 
     testDemoImplementation(libs.roborazzi)
 
+    androidTestImplementation(libs.bundles.androidx.compose.ui.test)
     androidTestImplementation(projects.core.testing)
 }

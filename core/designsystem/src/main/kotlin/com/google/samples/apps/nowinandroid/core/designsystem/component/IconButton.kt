@@ -88,7 +88,7 @@ fun IconButtonPreviewUnchecked() {
 }
 
 @Composable
-private fun NiaIconToggleExample(checked: Boolean) {
+fun NiaIconToggleExample(checked: Boolean) {
     NiaIconToggleButton(
         checked = checked,
         onCheckedChange = { },

@@ -15,7 +15,7 @@ out/
 build/
 
 # Local configuration file (sdk path, etc)
-local.properties
+#local.properties
 #secrets.properties
 
 # Eclipse project files
@@ -44,3 +44,6 @@ _sandbox
 
 # Android Studio captures folder
 captures/
+
+# Kotlin
+.kotlin

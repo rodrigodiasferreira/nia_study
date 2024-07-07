@@ -49,15 +49,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -220,13 +215,14 @@ internal fun NiaApp(
                 }
 
                 Box(
-                    modifier = if (shouldShowTopAppBar) {
-                        Modifier.consumeWindowInsets(
-                            WindowInsets.safeDrawing.only(WindowInsetsSides.Top),
-                        )
-                    } else {
-                        Modifier
-                    },
+                    // Workaround for https://issuetracker.google.com/338478720
+                    modifier = Modifier.consumeWindowInsets(
+                        if (shouldShowTopAppBar) {
+                            WindowInsets.safeDrawing.only(WindowInsetsSides.Top)
+                        } else {
+                            WindowInsets(0, 0, 0, 0)
+                        },
+                    ),
                 ) {
                     NiaNavHost(
                         appState = appState,
@@ -247,7 +243,7 @@ internal fun NiaApp(
     }
 }
 
-//private fun Modifier.notificationDot(): Modifier =
+// private fun Modifier.notificationDot(): Modifier =
 //    composed {
 //        val tertiaryColor = MaterialTheme.colorScheme.tertiary
 //        drawWithContent {

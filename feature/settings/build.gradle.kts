@@ -31,8 +31,10 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
     implementation(projects.core.model)
+    implementation(projects.core.analytics)
 
     testImplementation(projects.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
 
-    androidTestImplementation(projects.core.testing)
+    androidTestImplementation(libs.bundles.androidx.compose.ui.test)
 }

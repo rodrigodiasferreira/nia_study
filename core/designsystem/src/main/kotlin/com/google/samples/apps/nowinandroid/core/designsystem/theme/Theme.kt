@@ -29,7 +29,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.google.samples.apps.nowinandroid.core.android_os_utils.AndroidOsUtils.isSosOnwards
+import com.google.samples.apps.nowinandroid.core.androidosutils.AndroidOsUtils.isSosOnwards
 
 /**
  * Light default theme color scheme
@@ -209,8 +209,8 @@ fun NiaTheme(
     val emptyGradientColors = GradientColors(container = colorScheme.surfaceColorAtElevation(2.dp))
     val defaultGradientColors = GradientColors(
         top = colorScheme.inverseOnSurface,
-//        bottom = colorScheme.primaryContainer,
-        bottom = colorScheme.onPrimaryContainer,
+        bottom = colorScheme.primaryContainer,
+//        bottom = colorScheme.onPrimaryContainer,
         container = colorScheme.surface,
     )
     val gradientColors = when {

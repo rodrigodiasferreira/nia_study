@@ -34,6 +34,9 @@ dependencies {
     implementation(projects.core.model)
 
     testImplementation(projects.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
 
+    androidTestImplementation(libs.bundles.androidx.compose.ui.test)
     androidTestImplementation(projects.core.testing)
+    androidTestImplementation(libs.kotlinx.datetime)
 }

@@ -237,15 +237,15 @@ fun Scrollbar(
                     "Rodrigo",
                     "scrollbarStartCoordinate: $scrollbarStartCoordinate, scrollbarStartCoordinate + orientation.valueOf(coordinates.size): ${
                         scrollbarStartCoordinate + orientation.valueOf(coordinates.size)
-                    }"
+                    }",
                 )
                 Log.d(
                     "Rodrigo",
-                    "coordinates.positionInRoot(): ${coordinates.positionInRoot()}"
+                    "coordinates.positionInRoot(): ${coordinates.positionInRoot()}",
                 )
                 Log.d(
                     "Rodrigo",
-                    "coordinates.size: ${coordinates.size}"
+                    "coordinates.size: ${coordinates.size}",
                 )
 
                 track = ScrollbarTrack(
@@ -263,29 +263,29 @@ fun Scrollbar(
                             withTimeout(viewConfiguration.longPressTimeoutMillis) {
                                 Log.v(
                                     "Rodrigo",
-                                    "detectTapGestures: pressed: offset: $offset, before: tryAwaitRelease()"
+                                    "detectTapGestures: pressed: offset: $offset, before: tryAwaitRelease()",
                                 )
                                 tryAwaitRelease()
                                 Log.d(
                                     "Rodrigo",
-                                    "detectTapGestures: pressed: offset: $offset, after: tryAwaitRelease()"
+                                    "detectTapGestures: pressed: offset: $offset, after: tryAwaitRelease()",
                                 )
                             }
                             Log.d(
                                 "Rodrigo",
-                                "detectTapGestures: pressed: offset: $offset, after: outside: tryAwaitRelease()"
+                                "detectTapGestures: pressed: offset: $offset, after: outside: tryAwaitRelease()",
                             )
                         } catch (e: TimeoutCancellationException) {
                             // Start the press triggered scroll
                             Log.w(
                                 "Rodrigo",
                                 "detectTapGestures: pressed: offset: $offset, TimeoutCancellationException",
-                                e
+                                e,
                             )
                             Log.e(
                                 "Rodrigo",
                                 "detectTapGestures: pressed: offset: $offset, TimeoutCancellationException",
-                                e
+                                e,
                             )
                             val initialPress = PressInteraction.Press(offset)
                             val interationSourceEmissionResult =
@@ -293,12 +293,12 @@ fun Scrollbar(
                             Log.i(
                                 "Rodrigo",
                                 "detectTapGestures: pressed: initialPress.pressPosition: ${initialPress.pressPosition}, TimeoutCancellationException",
-                                e
+                                e,
                             )
                             Log.i(
                                 "Rodrigo",
                                 "detectTapGestures: pressed: interationSourceEmissionResult: $interationSourceEmissionResult, TimeoutCancellationException",
-                                e
+                                e,
                             )
 
                             pressedOffset = offset
@@ -311,8 +311,6 @@ fun Scrollbar(
                                 "Rodrigo",
                                 "detectTapGestures: pressed: initialPress.pressPosition: ${initialPress.pressPosition}, TimeoutCancellationException: pressInteractionReleasedOrCancelled: $pressInteractionReleasedOrCancelled",
                             )
-
-
                             Log.w(
                                 "Rodrigo",
                                 "detectTapGestures: pressed: pressedOffset: $pressedOffset, TimeoutCancellationException: pressInteractionReleasedOrCancelled: $pressInteractionReleasedOrCancelled",
@@ -358,7 +356,7 @@ fun Scrollbar(
                     onDrag@{ _, delta ->
                         Log.e(
                             "Rodrigo",
-                            "DragGestures: draggedOffset: $draggedOffset, delta: $delta"
+                            "DragGestures: draggedOffset: $draggedOffset, delta: $delta",
                         )
                         if (draggedOffset == Offset.Unspecified) return@onDrag
                         draggedOffset = when (orientation) {

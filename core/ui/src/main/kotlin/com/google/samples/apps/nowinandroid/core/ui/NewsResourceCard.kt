@@ -16,7 +16,6 @@
 
 package com.google.samples.apps.nowinandroid.core.ui
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
@@ -60,7 +59,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.google.samples.apps.nowinandroid.core.designsystem.R.drawable
-import com.google.samples.apps.nowinandroid.core.designsystem.component.DynamicAsyncImage
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaIconToggleButton
 import com.google.samples.apps.nowinandroid.core.designsystem.component.NiaTopicTag
 import com.google.samples.apps.nowinandroid.core.designsystem.icon.NiaIcons

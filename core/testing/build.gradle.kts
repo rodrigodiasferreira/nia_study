@@ -15,7 +15,6 @@
  */
 plugins {
     alias(libs.plugins.nowinandroid.android.library)
-    alias(libs.plugins.nowinandroid.android.library.compose)
     alias(libs.plugins.nowinandroid.android.hilt)
 }
 
@@ -24,19 +23,16 @@ android {
 }
 
 dependencies {
-    implementation(kotlin("test"))
+    implementation(libs.kotlinx.coroutines.test)
     implementation(libs.androidx.compose.ui.test)
     implementation(projects.core.analytics)
+    implementation(projects.core.common)
     implementation(projects.core.data)
     implementation(projects.core.model)
     implementation(projects.core.notifications)
 
-    debugApi(libs.androidx.compose.ui.testManifest)
 
     implementation(libs.androidx.test.rules)
     implementation(libs.hilt.android.testing)
-    implementation(libs.kotlinx.coroutines.test)
     implementation(libs.kotlinx.datetime)
-    implementation(projects.core.common)
-    implementation(projects.core.designsystem)
 }

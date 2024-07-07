@@ -21,10 +21,8 @@ import com.google.samples.apps.nowinandroid.core.data.repository.UserDataReposit
 import com.google.samples.apps.nowinandroid.core.model.data.FollowableTopic
 import com.google.samples.apps.nowinandroid.core.model.data.SearchResult
 import com.google.samples.apps.nowinandroid.core.model.data.UserData
-import com.google.samples.apps.nowinandroid.core.model.data.UserNewsResource
 import com.google.samples.apps.nowinandroid.core.model.data.UserSearchResult
 import com.google.samples.apps.nowinandroid.core.model.data.mapToUserNewsResources
-import com.google.samples.apps.nowinandroid.core.testing.repository.TestSearchContentsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
@@ -47,7 +45,7 @@ class GetSearchContentsUseCase @Inject constructor(
 private fun Flow<SearchResult>.mapToUserSearchResult(userDataStream: Flow<UserData>): Flow<UserSearchResult> =
     combine(userDataStream) { searchResult, userData ->
 //        val bla = TestSearchContentsRepository()
-//        bla.addTopics(searchResult.topics) //TODO Won't show warning @VisibleForTesting shows
+//        bla.addTopics(searchResult.topics) // TODO Won't show warning @VisibleForTesting shows
         UserSearchResult(
             topics = searchResult.topics.map { topic ->
                 FollowableTopic(
