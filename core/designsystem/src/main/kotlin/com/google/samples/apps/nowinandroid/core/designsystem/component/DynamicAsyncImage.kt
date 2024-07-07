@@ -16,7 +16,6 @@
 
 package com.google.samples.apps.nowinandroid.core.designsystem.component
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -94,6 +93,6 @@ fun DynamicAsyncImage(
 private fun DynamicAsyncImagePreview() {
     DynamicAsyncImage(
         imageUrl = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh1VWQmqQu6wDswls9f_5NpEQnq4eR57g2NwzWvhKItcKtV6rb_Cyo75XSyL6vvmCIo4tzQn-8taNagEp7QG0KU1L4yMqwbYozNMzBMEFxEN2XintAhy5nLI4RQDaOXr8dgiIFdGOBMdl577Ndelzc0tDBzjI6mz7e4MF8_Tn09KWguZi6I-bS5NbJn/w1200-h630-p-k-no-nu/unnamed%20%2816%29.png",
-        contentDescription = null
+        contentDescription = null,
     )
 }

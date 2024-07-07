@@ -57,7 +57,7 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
             }
 
 //            override fun visitMethod(node: UMethod) {
-////                if (node.name == "MaterialTheme")
+//                if (node.name == "MaterialTheme")
 //                println("name: ${node.name}, METHOD_NAMES[name]: ${METHOD_NAMES[node.name]}")
 //                val preferredName = METHOD_NAMES[node.name] ?: return
 //                reportIssue(context, node, node.name, preferredName)

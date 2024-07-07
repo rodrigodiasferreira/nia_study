@@ -35,7 +35,7 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.foundation.layout)
     implementation(libs.androidx.compose.material.iconsExtended)
-    implementation(libs.androidx.compose.material3) //TODO Maybe it should be kept the api
+    implementation(libs.androidx.compose.material3) // TODO Maybe it should be kept the api
     implementation(libs.androidx.compose.material3.adaptive)
     implementation(libs.androidx.compose.material3.navigationSuite)
     implementation(libs.androidx.compose.runtime)

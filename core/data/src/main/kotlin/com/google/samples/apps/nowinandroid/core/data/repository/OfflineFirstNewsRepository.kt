@@ -16,9 +16,6 @@
 
 package com.google.samples.apps.nowinandroid.core.data.repository
 
-import android.icu.util.TimeUnit
-import android.os.Build.VERSION.SDK_INT
-import android.util.Log
 import com.google.samples.apps.nowinandroid.core.data.Synchronizer
 import com.google.samples.apps.nowinandroid.core.data.changeListSync
 import com.google.samples.apps.nowinandroid.core.data.model.asEntity
@@ -97,23 +94,23 @@ internal class OfflineFirstNewsRepository @Inject constructor(
                 val hasOnboarded = userData.shouldHideOnboarding
                 val followedTopicIds = userData.followedTopics
 
-                val existingNewsResourceIdsThatHaveChanged = when {
-                    hasOnboarded -> newsResourceDao.getNewsResourceIds(
-                        useFilterTopicIds = true,
-                        filterTopicIds = followedTopicIds,
-                        useFilterNewsIds = true,
-                        filterNewsIds = changedIds.toSet(),
-                    )
-                        .first()
-                        .toSet()
-                    // No need to retrieve anything if notifications won't be sent
-                    else -> emptySet()
-                }
+//                val existingNewsResourceIdsThatHaveChanged = when {
+//                    hasOnboarded -> newsResourceDao.getNewsResourceIds(
+//                        useFilterTopicIds = true,
+//                        filterTopicIds = followedTopicIds,
+//                        useFilterNewsIds = true,
+//                        filterNewsIds = changedIds.toSet(),
+//                    )
+//                        .first()
+//                        .toSet()
+//                    // No need to retrieve anything if notifications won't be sent
+//                    else -> emptySet()
+//                }
 
                 if (isFirstSync) {
                     // When we first retrieve news, mark everything viewed, so that we aren't
                     // overwhelmed with all historical news.
-                    niaPreferencesDataSource.setNewsResourcesViewed(changedIds, true) //In order to pass on unit test
+                    niaPreferencesDataSource.setNewsResourcesViewed(changedIds, true) // In order to pass on unit test
 //                    niaPreferencesDataSource.setNewsResourcesViewed(changedIds, false)
                 }
 
@@ -147,8 +144,8 @@ internal class OfflineFirstNewsRepository @Inject constructor(
                         useFilterTopicIds = true,
                         filterTopicIds = followedTopicIds,
                         useFilterNewsIds = true,
-                        filterNewsIds = changedIds.toSet()
-//                            - existingNewsResourceIdsThatHaveChanged, // => in order to show notifications //TODO need to check about the click
+                        filterNewsIds = changedIds.toSet(),
+//                            - existingNewsResourceIdsThatHaveChanged, // => in order to show notifications // TODO need to check about the click
                     )
                         .first()
                         .map(PopulatedNewsResource::asExternalModel)

@@ -119,7 +119,7 @@ fun LazyGridState.scrollbarState(
                     visibleItems = visibleItemsInfo,
                     itemSize = {
                         layoutInfo.orientation.valueOf(it.size)
-                               },
+                    },
                     offset = { layoutInfo.orientation.valueOf(it.offset) },
                     nextItemOnMainAxis = { first ->
                         when (layoutInfo.orientation) {
@@ -204,12 +204,19 @@ fun LazyStaggeredGridState.scrollbarState(
                 a = interpolateFirstItemIndex(
                     visibleItems = visibleItemsInfo,
                     itemSize = {
-                        Log.e("Rodrigo", "index: ${it.index}, lane: ${it.lane}, offset: ${it.offset}, size: ${it.size}, key: ${it.key}, contentType: ${it.contentType}")
+                        Log.e(
+                            "Rodrigo",
+                            "index: ${it.index}, lane: ${it.lane}, offset: ${it.offset}, size: ${it.size}, key: ${it.key}, contentType: ${it.contentType}",
+                        )
                         layoutInfo.orientation.valueOf(it.size)
-                               },
+                    },
                     offset = {
-                        Log.w("Rodrigo", "index: ${it.index}, lane: ${it.lane}, offset: ${it.offset}, size: ${it.size}, key: ${it.key}, contentType: ${it.contentType}")
-                        layoutInfo.orientation.valueOf(it.offset) },
+                        Log.w(
+                            "Rodrigo",
+                            "index: ${it.index}, lane: ${it.lane}, offset: ${it.offset}, size: ${it.size}, key: ${it.key}, contentType: ${it.contentType}",
+                        )
+                        layoutInfo.orientation.valueOf(it.offset)
+                    },
                     nextItemOnMainAxis = { first ->
                         visibleItemsInfo.find { it != first && it.lane == first.lane }
                     },
@@ -231,7 +238,6 @@ fun LazyStaggeredGridState.scrollbarState(
                 )
             }
             Log.e("Rodrigo", "itemsVisible: $itemsVisible")
-
 
             val thumbTravelPercent = min(
                 a = firstIndex / itemsAvailable,

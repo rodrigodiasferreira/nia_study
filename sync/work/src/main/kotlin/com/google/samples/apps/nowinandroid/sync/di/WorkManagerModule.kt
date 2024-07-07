@@ -31,5 +31,4 @@ internal object WorkManagerModule {
     internal fun providesWorkManagerInstance(
         @ApplicationContext context: Context,
     ): WorkManager = WorkManager.getInstance(context)
-
 }

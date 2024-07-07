@@ -20,7 +20,6 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.SpringSpec
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.Orientation.Horizontal
 import androidx.compose.foundation.gestures.Orientation.Vertical
@@ -83,9 +82,8 @@ fun ScrollableState.DraggableScrollbar(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     Scrollbar(
-        modifier = modifier
-//            .background(color = Color.Blue)
-        ,
+        modifier = modifier,
+//            .background(color = Color.Blue),
         orientation = orientation,
         interactionSource = interactionSource,
         state = state,

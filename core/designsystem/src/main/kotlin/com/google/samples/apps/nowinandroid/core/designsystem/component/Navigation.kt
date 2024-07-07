@@ -296,9 +296,9 @@ val selectedIcons = listOf(
     NiaIcons.Grid3x3,
 )
 
-//@ThemePreviews
-//@Composable
-//fun NiaNavigationBarPreview() {
+// @ThemePreviews
+// @Composable
+// fun NiaNavigationBarPreview() {
 //    NiaTheme {
 //        NiaNavigationBar {
 //            items.forEachIndexed { index, item ->
@@ -322,7 +322,7 @@ val selectedIcons = listOf(
 //            }
 //        }
 //    }
-//}
+// }
 
 private fun Modifier.notificationDot(): Modifier =
     composed {
@@ -343,7 +343,6 @@ private fun Modifier.notificationDot(): Modifier =
         }
     }
 
-
 @ThemePreviews
 @Composable
 fun NiaNavigationSuiteScaffoldPreview() {
@@ -355,7 +354,7 @@ fun NiaNavigationSuiteScaffoldPreview() {
 @Preview(
     name = "Nia Navigation Rail Dark theme",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    device = Devices.PIXEL_TABLET
+    device = Devices.PIXEL_TABLET,
 )
 @Composable
 fun NiaRailNavigationSuiteScaffoldPreview() {
@@ -363,8 +362,8 @@ fun NiaRailNavigationSuiteScaffoldPreview() {
         NiaNavigationSuiteScaffoldWrapper(
             WindowAdaptiveInfo(
                 windowSizeClass = WindowSizeClass.compute(1200f, 800f),
-                windowPosture = Posture()
-            )
+                windowPosture = Posture(),
+            ),
         )
     }
 }
@@ -400,9 +399,9 @@ fun NiaNavigationSuiteScaffoldWrapper(
     ) {}
 }
 
-//@ThemePreviews
-//@Composable
-//fun NiaNavigationRailPreview() {
+// @ThemePreviews
+// @Composable
+// fun NiaNavigationRailPreview() {
 //    NiaTheme {
 //        NiaNavigationRail {
 //            items.forEachIndexed { index, item ->
@@ -426,7 +425,7 @@ fun NiaNavigationSuiteScaffoldWrapper(
 //            }
 //        }
 //    }
-//}
+// }
 
 /**
  * Now in Android navigation default values.
