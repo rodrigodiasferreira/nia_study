@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-//@file:Suppress("ktlint:standard:max-line-length")
+@file:Suppress("ktlint:standard:max-line-length")
 
 package com.google.samples.apps.nowinandroid.feature.settings
 
