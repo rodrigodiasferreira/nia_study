@@ -85,6 +85,7 @@ class NiaAppScreenSizesScreenshotTests {
     /**
      * Use a test activity to set the content on.
      */
+    // TODO remove the HiltComponentActivity when the issue is solved: https://github.com/google/dagger/issues/3394
     @get:Rule(order = 2)
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 

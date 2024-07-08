@@ -315,6 +315,20 @@ private fun TopicToolbar(
     }
 }
 
+@Preview
+@Composable
+private fun TopicToolbarWithoutBackFollowingPreview(
+    @PreviewParameter(FollowableTopicPreviewParameterProvider::class)
+    followableTopic: FollowableTopic,
+) {
+    NiaTheme {
+        TopicToolbar(
+            uiState = followableTopic,
+            showBackButton = false,
+        )
+    }
+}
+
 @DevicePreviews
 @Composable
 fun TopicScreenPopulated(

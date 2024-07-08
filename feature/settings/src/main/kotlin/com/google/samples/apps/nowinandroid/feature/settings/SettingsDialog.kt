@@ -52,7 +52,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
@@ -97,6 +96,7 @@ fun SettingsDialog(
 ) {
     val configuration = LocalConfiguration.current
 
+    // TODO Remove the usePlatformDefaultWidth = false
     /**
      * usePlatformDefaultWidth = false is use as a temporary fix to allow
      * height recalculation during recomposition. This, however, causes
@@ -105,7 +105,7 @@ fun SettingsDialog(
      * https://issuetracker.google.com/issues/221643630
      */
     AlertDialog(
-        properties = DialogProperties(usePlatformDefaultWidth = false),
+//        properties = DialogProperties(usePlatformDefaultWidth = false),
         modifier = Modifier.widthIn(max = configuration.screenWidthDp.dp - 80.dp),
         onDismissRequest = { onDismiss() },
         title = {
@@ -245,6 +245,27 @@ fun SettingsDialogThemeChooserRow(
         Spacer(Modifier.width(8.dp))
         Text(text)
     }
+}
+
+@Preview
+@Composable
+private fun SettingsDialogThemeChooserRowSelectedPreview() {
+    SettingsDialogThemeChooserRowPreview(true)
+}
+
+@Preview
+@Composable
+private fun SettingsDialogThemeChooserRowUnSelectedPreview() {
+    SettingsDialogThemeChooserRowPreview(false)
+}
+
+@Composable
+private fun SettingsDialogThemeChooserRowPreview(selected: Boolean) {
+    SettingsDialogThemeChooserRow(
+        text = "Radio Button",
+        selected = selected,
+        onClick = {},
+    )
 }
 
 @OptIn(ExperimentalLayoutApi::class)

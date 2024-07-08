@@ -27,16 +27,10 @@ android {
 
 dependencies {
     implementation(libs.accompanist.permissions)
-    implementation(projects.core.data)
     implementation(projects.core.domain)
-    implementation(libs.androidx.compose.material3)
-
-    implementation(projects.core.analytics)
-    implementation(projects.core.model)
 
     testImplementation(libs.hilt.android.testing)
     testImplementation(libs.robolectric)
-    testImplementation(projects.core.testing)
     testDemoImplementation(projects.core.screenshotTesting)
     testImplementation(projects.core.screenshotTesting)
 
@@ -45,5 +39,4 @@ dependencies {
     testDemoImplementation(libs.roborazzi)
 
     androidTestImplementation(libs.bundles.androidx.compose.ui.test)
-    androidTestImplementation(projects.core.testing)
 }
