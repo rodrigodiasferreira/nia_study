@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.feature.topic
 
+import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
@@ -313,6 +314,21 @@ private fun TopicToolbar(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun TopicToolbarWithoutBackFollowingPreview(
+    @PreviewParameter(FollowableTopicPreviewParameterProvider::class)
+    followableTopic: FollowableTopic,
+) {
+    NiaTheme {
+        TopicToolbar(
+            uiState = followableTopic,
+            showBackButton = false,
+        )
+    }
+
 }
 
 @DevicePreviews
