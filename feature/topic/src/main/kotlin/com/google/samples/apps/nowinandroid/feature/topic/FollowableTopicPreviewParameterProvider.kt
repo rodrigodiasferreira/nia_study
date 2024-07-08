@@ -28,6 +28,6 @@ import com.google.samples.apps.nowinandroid.core.ui.PreviewParameterData.topics
  */
 class FollowableTopicPreviewParameterProvider : PreviewParameterProvider<FollowableTopic> {
     override val values: Sequence<FollowableTopic> = sequenceOf(
-        FollowableTopic(topic = topics[0], isFollowed = true)
+        FollowableTopic(topic = topics[0], isFollowed = true),
     )
 }

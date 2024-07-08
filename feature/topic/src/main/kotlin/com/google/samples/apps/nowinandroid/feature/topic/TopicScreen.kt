@@ -16,7 +16,6 @@
 
 package com.google.samples.apps.nowinandroid.feature.topic
 
-import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
@@ -328,7 +327,6 @@ private fun TopicToolbarWithoutBackFollowingPreview(
             showBackButton = false,
         )
     }
-
 }
 
 @DevicePreviews
