@@ -41,6 +41,7 @@ class GetFollowableTopicsUseCase @Inject constructor(
         userDataRepository.userData,
         topicsRepository.getTopics(),
     ) { userData, topics ->
+//        Log.d("Rodrigo", "topics: ${topics.joinToString(",", "[", "]")}")
         val followedTopics = topics
             .map { topic ->
                 FollowableTopic(

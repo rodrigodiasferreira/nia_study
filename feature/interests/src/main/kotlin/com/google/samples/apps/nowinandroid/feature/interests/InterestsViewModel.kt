@@ -39,7 +39,7 @@ class InterestsViewModel @Inject constructor(
     getFollowableTopics: GetFollowableTopicsUseCase,
 ) : ViewModel() {
 
-    val selectedTopicId: StateFlow<String?> = savedStateHandle.getStateFlow(TOPIC_ID_ARG, null)
+    private val selectedTopicId: StateFlow<String?> = savedStateHandle.getStateFlow(TOPIC_ID_ARG, null)
 
     val uiState: StateFlow<InterestsUiState> = combine(
         selectedTopicId,
