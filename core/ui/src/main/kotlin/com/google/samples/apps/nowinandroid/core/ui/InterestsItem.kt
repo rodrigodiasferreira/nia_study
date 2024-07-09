@@ -49,7 +49,7 @@ fun InterestsItem(
     onFollowButtonClick: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
-    description: String = "balbalbalablabl",
+    description: String = "",
     isSelected: Boolean = false,
 ) {
     ListItem(
