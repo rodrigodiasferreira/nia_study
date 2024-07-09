@@ -34,11 +34,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.DraggableScrollbar
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.rememberDraggableScroller
 import com.google.samples.apps.nowinandroid.core.designsystem.component.scrollbar.scrollbarState
+import com.google.samples.apps.nowinandroid.core.designsystem.theme.NiaTheme
 import com.google.samples.apps.nowinandroid.core.model.data.FollowableTopic
+import com.google.samples.apps.nowinandroid.core.ui.FollowableTopicsPreviewParameterProvider
 import com.google.samples.apps.nowinandroid.core.ui.InterestsItem
 
 @Composable
@@ -99,6 +103,23 @@ fun TopicsTabContent(
             onThumbMoved = scrollableState.rememberDraggableScroller(
                 itemsAvailable = topics.size,
             ),
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun TopicsTabContentPreview(
+    @PreviewParameter(FollowableTopicsPreviewParameterProvider::class)
+    topics: List<FollowableTopic>,
+) {
+    NiaTheme {
+        TopicsTabContent(
+            topics = topics,
+            onTopicClick = {},
+            onFollowButtonClick = { _, _ -> },
+            selectedTopicId = "4",
+            highlightSelectedTopic = true,
         )
     }
 }

@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:Suppress("ktlint:standard:max-line-length")
-
 package com.google.samples.apps.nowinandroid.feature.topic
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -24,10 +22,10 @@ import com.google.samples.apps.nowinandroid.core.ui.PreviewParameterData.topics
 
 /**
  * This [PreviewParameterProvider](https://developer.android.com/reference/kotlin/androidx/compose/ui/tooling/preview/PreviewParameterProvider)
- * provides list of [SearchResultUiState] for Composable previews.
+ * provides list of [FollowableTopic] for Composable previews.
  */
-class FollowableTopicPreviewParameterProvider : PreviewParameterProvider<FollowableTopic> {
-    override val values: Sequence<FollowableTopic> = sequenceOf(
-        FollowableTopic(topic = topics[0], isFollowed = true),
-    )
-}
+//class FollowableTopicPreviewParameterProvider : PreviewParameterProvider<FollowableTopic> {
+//    override val values: Sequence<FollowableTopic> = sequenceOf(
+//        FollowableTopic(topic = topics[0], isFollowed = true),
+//    )
+//}

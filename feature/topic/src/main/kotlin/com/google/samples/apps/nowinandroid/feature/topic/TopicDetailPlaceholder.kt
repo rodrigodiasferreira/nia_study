@@ -39,7 +39,7 @@ import com.google.samples.apps.nowinandroid.core.designsystem.theme.NiaTheme
 fun TopicDetailPlaceholder(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = Color.Blue),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         shape = RoundedCornerShape(24.dp, 24.dp, 0.dp, 0.dp),
     ) {
         Column(
