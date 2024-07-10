@@ -25,7 +25,6 @@ import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridScope
@@ -48,7 +47,7 @@ import com.google.samples.apps.nowinandroid.core.model.data.UserNewsResource
 
 private val itemPlacementAnimationSpec: FiniteAnimationSpec<IntOffset> = spring(
     stiffness = Spring.StiffnessMediumLow,
-    visibilityThreshold = IntOffset.VisibilityThreshold
+    visibilityThreshold = IntOffset.VisibilityThreshold,
 )
 
 /**
