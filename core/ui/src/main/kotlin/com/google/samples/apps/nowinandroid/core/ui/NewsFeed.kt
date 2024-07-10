@@ -21,6 +21,10 @@ import android.net.Uri
 import androidx.annotation.ColorInt
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VisibilityThreshold
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
@@ -36,16 +40,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.google.samples.apps.nowinandroid.core.analytics.LocalAnalyticsHelper
 import com.google.samples.apps.nowinandroid.core.designsystem.theme.NiaTheme
 import com.google.samples.apps.nowinandroid.core.model.data.UserNewsResource
 
+private val itemPlacementAnimationSpec: FiniteAnimationSpec<IntOffset> = spring(
+    stiffness = Spring.StiffnessMediumLow,
+    visibilityThreshold = IntOffset.VisibilityThreshold
+)
+
 /**
  * An extension on [LazyListScope] defining a feed with news resources.
  * Depending on the [feedState], this might emit no items.
  */
-@OptIn(ExperimentalFoundationApi::class)
 fun LazyStaggeredGridScope.newsFeed(
     feedState: NewsFeedUiState,
     onNewsResourcesCheckedChanged: (String, Boolean) -> Unit,
@@ -87,7 +96,11 @@ fun LazyStaggeredGridScope.newsFeed(
                     onTopicClick = onTopicClick,
                     modifier = Modifier
                         .padding(horizontal = 8.dp)
-                        .animateItemPlacement(),
+                        .animateItem(
+                            fadeInSpec = null,
+                            placementSpec = itemPlacementAnimationSpec,
+                            fadeOutSpec = null,
+                        ),
                 )
             }
         }
@@ -96,7 +109,8 @@ fun LazyStaggeredGridScope.newsFeed(
 
 fun launchCustomChromeTab(context: Context, uri: Uri, @ColorInt toolbarColor: Int) {
     val customTabBarColor = CustomTabColorSchemeParams.Builder()
-        .setToolbarColor(toolbarColor).build()
+        .setToolbarColor(toolbarColor)
+        .build()
     val customTabsIntent = CustomTabsIntent.Builder()
         .setDefaultColorSchemeParams(customTabBarColor)
         .build()

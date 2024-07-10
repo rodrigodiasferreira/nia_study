@@ -38,7 +38,7 @@ import com.google.samples.apps.nowinandroid.ui.interests2pane.interestsListDetai
 @Composable
 fun NiaNavHost(
     appState: NiaAppState,
-    onShowSnackbar: suspend (String, String?) -> Boolean,
+    onShowSnackBar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
     startDestination: String = FOR_YOU_ROUTE,
 ) {
@@ -51,7 +51,7 @@ fun NiaNavHost(
         forYouScreen(onTopicClick = navController::navigateToInterests)
         bookmarksScreen(
             onTopicClick = navController::navigateToInterests,
-            onShowSnackbar = onShowSnackbar,
+            onShowSnackBar = onShowSnackBar,
         )
         searchScreen(
             onBackClick = navController::popBackStack,
