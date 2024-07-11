@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.feature.search
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
@@ -62,6 +63,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -105,6 +107,17 @@ internal fun SearchRoute(
     val recentSearchQueriesUiState by searchViewModel.recentSearchQueriesUiState.collectAsStateWithLifecycle()
     val searchResultUiState by searchViewModel.searchResultUiState.collectAsStateWithLifecycle()
     val searchQuery by searchViewModel.searchQuery.collectAsStateWithLifecycle()
+//    val density = LocalDensity.current
+//    val bottomInset by remember {
+//        mutableStateOf(
+//            with(density) {
+//                WindowInsets.safeDrawing.getBottom(this).toDp()
+//            },
+//        )
+//    }
+//    val bottomInset = with(LocalDensity.current) {
+//        WindowInsets.safeDrawing.getBottom(this).toDp()
+//    }
     SearchScreen(
         modifier = modifier,
         searchQuery = searchQuery,
@@ -119,6 +132,7 @@ internal fun SearchRoute(
         onBackClick = onBackClick,
         onInterestsClick = onInterestsClick,
         onTopicClick = onTopicClick,
+//        bottomInset = bottomInset,
     )
 }
 
@@ -137,16 +151,26 @@ internal fun SearchScreen(
     onBackClick: () -> Unit = {},
     onInterestsClick: () -> Unit = {},
     onTopicClick: (String) -> Unit = {},
+//    bottomInset: Dp = 0.dp,
 ) {
     TrackScreenViewEvent(screenName = "Search")
     Column(modifier = modifier) {
+        Log.d("Rodrigo", "WindowInsets.safeDrawing.getTop(LocalDensity.current): ${WindowInsets.safeDrawing.getTop(LocalDensity.current)}")
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
+//        with(LocalDensity.current) {
+//            Spacer(Modifier.height(67.toDp()))
+//        }
         SearchToolbar(
             onBackClick = onBackClick,
             onSearchQueryChanged = onSearchQueryChanged,
             onSearchTriggered = onSearchTriggered,
             searchQuery = searchQuery,
         )
+//        LazyColumn (modifier = Modifier.weight(1f)) {
+//            items(100) { index ->
+//                Text ("$index")
+//            }
+//        }
         when (searchResultUiState) {
             SearchResultUiState.Loading,
             SearchResultUiState.LoadFailed,
@@ -185,6 +209,7 @@ internal fun SearchScreen(
                     }
                 } else {
                     SearchResultBody(
+//                        modifier = Modifier.weight(1f),
                         searchQuery = searchQuery,
                         topics = searchResultUiState.topics,
                         newsResources = searchResultUiState.newsResources,
@@ -197,7 +222,16 @@ internal fun SearchScreen(
                 }
             }
         }
-        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
+        Log.d("Rodrigo", "WindowInsets.safeDrawing.getBottom(LocalDensity.current): ${WindowInsets.safeDrawing.getBottom(LocalDensity.current)}")
+//        Log.d("Rodrigo", "bottomInset: $bottomInset")
+        // Useless // TODO upload to google
+//        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
+//        with (LocalDensity.current) {
+//        Spacer(
+//            Modifier
+//                .height(336.dp),
+//        )
+//        }
     }
 }
 
@@ -282,6 +316,7 @@ private fun SearchResultBody(
     searchQuery: String,
     topics: List<FollowableTopic>,
     newsResources: List<UserNewsResource>,
+    modifier: Modifier = Modifier,
     onSearchTriggered: (String) -> Unit,
     onTopicClick: (String) -> Unit,
     onNewsResourcesCheckedChanged: (String, Boolean) -> Unit,
@@ -290,7 +325,7 @@ private fun SearchResultBody(
 ) {
     val state = rememberLazyStaggeredGridState()
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
     ) {
         LazyVerticalStaggeredGrid(

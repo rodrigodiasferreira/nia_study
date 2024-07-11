@@ -17,8 +17,11 @@
 package com.google.samples.apps.nowinandroid.core.designsystem.component
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -40,18 +43,26 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.layout.onPlaced
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
 import com.google.samples.apps.nowinandroid.core.designsystem.icon.NiaIcons
 import com.google.samples.apps.nowinandroid.core.designsystem.theme.NiaTheme
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * Now in Android navigation bar item with icon and label content slots. Wraps Material 3
@@ -184,6 +195,8 @@ fun NiaNavigationRail(
     )
 }
 
+private var insetsBottomBarToBeConsumed: StateFlow<Int>? = null
+
 /**
  * Now in Android navigation suite scaffold with item and content slots.
  * Wraps Material 3 [NavigationSuiteScaffold].
@@ -204,6 +217,7 @@ fun NiaNavigationSuiteScaffold(
     windowAdaptiveInfo: WindowAdaptiveInfo = currentWindowAdaptiveInfo(),
     content: @Composable () -> Unit,
 ) {
+
     val layoutType = NavigationSuiteScaffoldDefaults
         .calculateFromAdaptiveInfo(windowAdaptiveInfo)
     val navigationSuiteItemColors = NavigationSuiteItemColors(
@@ -234,7 +248,13 @@ fun NiaNavigationSuiteScaffold(
             NiaNavigationSuiteScope(
                 navigationSuiteScope = this,
                 navigationSuiteItemColors = navigationSuiteItemColors,
-            ).run(navigationSuiteItems)
+            )
+//            .also {
+//                insetsBottomBarToBeConsumed = it.insetsBottomBarToBeConsumed
+//                Log.w("Rodrigo", "it.insetsBottomBarToBeConsumed: ${it.insetsBottomBarToBeConsumed.value}")
+//                Log.w("Rodrigo", "insetsBottomBarToBeConsumed: $insetsBottomBarToBeConsumed")
+//            }
+                .run(navigationSuiteItems)
         },
         layoutType = layoutType,
         containerColor = Color.Transparent,
@@ -242,7 +262,23 @@ fun NiaNavigationSuiteScaffold(
             navigationBarContentColor = NiaNavigationDefaults.navigationContentColor(),
             navigationRailContainerColor = Color.Transparent,
         ),
-        modifier = modifier,
+        modifier = modifier
+//            .layout { measurable, constraints ->
+//                val placeable = measurable.measure(constraints)
+//                Log.d("Rodrigo", "placeable.height: ${placeable.height}")
+//                Log.d("Rodrigo", "placeable.width: ${placeable.width}")
+//                layout(placeable.width, placeable.height) {
+//                    placeable.placeRelative(0, 0)
+//                }
+//            }
+//            .onPlaced {
+//                viewM
+//            }
+//            .consumeWindowInsets(
+//                PaddingValues(
+//                    bottom = with(LocalDensity.current) { insetsBottomBarToBeConsumed.toDp() },
+//                ),
+//            ),
     ) {
         content()
     }
@@ -256,6 +292,8 @@ class NiaNavigationSuiteScope internal constructor(
     private val navigationSuiteScope: NavigationSuiteScope,
     private val navigationSuiteItemColors: NavigationSuiteItemColors,
 ) {
+//    private val _insetsBottomBarToBeConsumed = MutableStateFlow(0)
+//    val insetsBottomBarToBeConsumed = _insetsBottomBarToBeConsumed.asStateFlow()
     fun item(
         selected: Boolean,
         onClick: () -> Unit,
@@ -279,6 +317,29 @@ class NiaNavigationSuiteScope internal constructor(
         modifier = modifier
             .testTag("NiaNavItem")
             .then(if (hasUnread) Modifier.notificationDot() else Modifier),
+//            .layout { measurable, constraints ->
+//                val placeable = measurable.measure(constraints)
+//                Log.d(
+//                    "Rodrigo",
+//                    "navigationSuiteScope: placeable.height: ${placeable.height}",
+//                )
+//                Log.d("Rodrigo", "navigationSuiteScope: placeable.width: ${placeable.width}")
+////                _insetsBottomBarToBeConsumed.value = placeable.height
+//                modifier.consumeWindowInsets(
+//                    PaddingValues(
+//                        bottom = placeable.height.toDp(),
+//                    ),
+//                )
+//
+//                layout(placeable.width, placeable.height) {
+//                    placeable.placeRelative(0, 0)
+//                }
+//            },
+//            .consumeWindowInsets(
+//                PaddingValues(
+//                    bottom = with(LocalDensity.current) { insetsBottomBarToBeConsumed.toDp() },
+//                ),
+//            ),
     )
 }
 

@@ -16,10 +16,14 @@
 
 package com.google.samples.apps.nowinandroid.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
@@ -50,9 +54,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.unit.LayoutDirection.Ltr
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -115,6 +125,8 @@ fun NiaApp(
     }
 }
 
+private var bottomBarHeight = 0
+
 @Composable
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -163,6 +175,36 @@ internal fun NiaApp(
                         )
                     },
                     label = { Text(stringResource(destination.iconTextId)) },
+                    modifier = modifier.onSizeChanged { size ->
+                        bottomBarHeight = size.height
+                    },
+//                        .layout { measurable, constraints ->
+//                        val placeable = measurable.measure(constraints)
+//                        Log.d(
+//                            "Rodrigo",
+//                            "navigationSuiteScope: placeable.height: ${placeable.height}",
+//                        )
+//                        Log.d("Rodrigo", "navigationSuiteScope: placeable.width: ${placeable.width}")
+////                _insetsBottomBarToBeConsumed.value = placeable.height
+//                        bottomBarHeight = placeable.height.toDp() // TODO upload to google
+//                        Log.d("Rodrigo", "insetSbrubles: $bottomBarHeight")
+////                        modifier.consumeWindowInsets(
+////                            PaddingValues(
+////                                bottom = placeable.height.toDp(),
+////                            ),
+////                        )
+//
+//
+//                        layout(placeable.width, placeable.height) {
+//                            placeable.placeRelative(0, 0)
+//                        }
+//                    },
+//                        .windowInsetsBottomHeight(WindowInsets.safeDrawing),
+//                    .consumeWindowInsets(
+//                        PaddingValues(
+//                            bottom = insetSbrubles.also { Log.d("Rodrigo", "insetSbrubles.it: $it") },
+//                        ),
+//                    ),
 //                    modifier =
 //                    Modifier
 //                        .testTag("NiaNavItem")
@@ -171,6 +213,37 @@ internal fun NiaApp(
             }
         },
         windowAdaptiveInfo = windowAdaptiveInfo,
+        modifier = modifier
+//            .layout { measurable, constraints ->
+//                val placeable = measurable.measure(constraints)
+//                Log.d(
+//                    "Rodrigo",
+//                    "navigationSuiteScope: aaaaaaaaaaaaaaaaaaaaaaaaaaplaceable.height: ${placeable.height}",
+//                )
+//                Log.d(
+//                    "Rodrigo",
+//                    "navigationSuiteScope: aaaaaaaaaaaaaaaaaaaaaaaplaceable.width: ${placeable.width}"
+//                )
+////                _insetsBottomBarToBeConsumed.value = placeable.height
+////            insetSbrubles = placeable.height.toDp()
+////            Log.d("Rodrigo", "insetSbrubles: $insetSbrubles")
+////                        modifier.consumeWindowInsets(
+////                            PaddingValues(
+////                                bottom = placeable.height.toDp(),
+////                            ),
+////                        )
+//
+//                layout(placeable.width, placeable.height) {
+//                    placeable.placeRelative(0, 0)
+//                }
+//            }
+//            .windowInsetsBottomHeight(WindowInsets.safeDrawing)
+//            .consumeWindowInsets(
+//                PaddingValues(
+//                bottom = insetSbrubles.also { Log.d("Rodrigo", "insetSbrubles.itit: $it") },
+////                    bottom = with(LocalDensity.current) { 140.toDp() },
+//                ),
+//            ),
     ) {
         Scaffold(
             modifier = modifier.semantics {
@@ -181,16 +254,32 @@ internal fun NiaApp(
             contentWindowInsets = WindowInsets(0, 0, 0, 0),
             snackbarHost = { SnackbarHost(snackbarHostState) },
         ) { padding ->
+            Log.d("Rodrigo", "app padding Top: ${padding.calculateTopPadding()}, Bottom: ${padding.calculateBottomPadding()}, Left: ${padding.calculateLeftPadding(Ltr)}, Right: ${padding.calculateRightPadding(Ltr)}")
+            val windowInsetsToBeConsumed = PaddingValues(
+                start = padding.calculateStartPadding(LocalLayoutDirection.current),
+                top = padding.calculateTopPadding(),
+                end = padding.calculateEndPadding(LocalLayoutDirection.current),
+                bottom = padding.calculateBottomPadding() + with (LocalDensity.current) { bottomBarHeight.toDp() },
+            )
             Column(
                 Modifier
                     .fillMaxSize()
                     .padding(padding)
-                    .consumeWindowInsets(padding)
+                    .consumeWindowInsets(windowInsetsToBeConsumed) // TODO upload to google
                     .windowInsetsPadding(
-                        WindowInsets.safeDrawing.only(
-                            WindowInsetsSides.Horizontal,
-                        ),
-                    ),
+                        WindowInsets.safeDrawing
+//                            .only(
+//                            WindowInsetsSides.Horizontal,
+//                        ),
+                    )
+//                    .padding(
+//                        top = 0.dp,
+//                        start = 0.dp,
+//                        end = 0.dp,
+//                        bottom = with(LocalDensity.current) {
+//                            (588 - 140).toDp()
+//                        },
+//                    ),
             ) {
                 // Show the top app bar on top level destinations.
                 val destination = appState.currentTopLevelDestination
