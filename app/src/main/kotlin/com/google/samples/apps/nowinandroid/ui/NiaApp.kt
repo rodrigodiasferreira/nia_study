@@ -226,7 +226,7 @@ internal fun NiaApp(
                 ) {
                     NiaNavHost(
                         appState = appState,
-                        onShowSnackbar = { message, action ->
+                        onShowSnackBar = { message, action ->
                             snackbarHostState.showSnackbar(
                                 message = message,
                                 actionLabel = action,
