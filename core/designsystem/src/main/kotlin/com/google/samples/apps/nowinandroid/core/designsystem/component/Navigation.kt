@@ -17,11 +17,8 @@
 package com.google.samples.apps.nowinandroid.core.designsystem.component
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -43,26 +40,19 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
-import androidx.compose.ui.layout.onPlaced
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowSizeClass
 import com.google.samples.apps.nowinandroid.core.designsystem.icon.NiaIcons
 import com.google.samples.apps.nowinandroid.core.designsystem.theme.NiaTheme
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * Now in Android navigation bar item with icon and label content slots. Wraps Material 3
@@ -217,7 +207,6 @@ fun NiaNavigationSuiteScaffold(
     windowAdaptiveInfo: WindowAdaptiveInfo = currentWindowAdaptiveInfo(),
     content: @Composable () -> Unit,
 ) {
-
     val layoutType = NavigationSuiteScaffoldDefaults
         .calculateFromAdaptiveInfo(windowAdaptiveInfo)
     val navigationSuiteItemColors = NavigationSuiteItemColors(
@@ -262,7 +251,7 @@ fun NiaNavigationSuiteScaffold(
             navigationBarContentColor = NiaNavigationDefaults.navigationContentColor(),
             navigationRailContainerColor = Color.Transparent,
         ),
-        modifier = modifier
+        modifier = modifier,
 //            .layout { measurable, constraints ->
 //                val placeable = measurable.measure(constraints)
 //                Log.d("Rodrigo", "placeable.height: ${placeable.height}")
@@ -324,7 +313,7 @@ class NiaNavigationSuiteScope internal constructor(
 //                    "navigationSuiteScope: placeable.height: ${placeable.height}",
 //                )
 //                Log.d("Rodrigo", "navigationSuiteScope: placeable.width: ${placeable.width}")
-////                _insetsBottomBarToBeConsumed.value = placeable.height
+// //                _insetsBottomBarToBeConsumed.value = placeable.height
 //                modifier.consumeWindowInsets(
 //                    PaddingValues(
 //                        bottom = placeable.height.toDp(),
