@@ -67,6 +67,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -74,6 +75,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -154,7 +156,12 @@ internal fun SearchScreen(
 ) {
     TrackScreenViewEvent(screenName = "Search")
     Column(modifier = modifier) {
-        Log.d("Rodrigo", "WindowInsets.safeDrawing.getTop(LocalDensity.current): ${WindowInsets.safeDrawing.getTop(LocalDensity.current)}")
+        Log.d(
+            "Rodrigo",
+            "WindowInsets.safeDrawing.getTop(LocalDensity.current): ${
+                WindowInsets.safeDrawing.getTop(LocalDensity.current)
+            }",
+        )
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
 //        with(LocalDensity.current) {
 //            Spacer(Modifier.height(67.toDp()))
@@ -221,7 +228,12 @@ internal fun SearchScreen(
                 }
             }
         }
-        Log.d("Rodrigo", "WindowInsets.safeDrawing.getBottom(LocalDensity.current): ${WindowInsets.safeDrawing.getBottom(LocalDensity.current)}")
+        Log.d(
+            "Rodrigo",
+            "WindowInsets.safeDrawing.getBottom(LocalDensity.current): ${
+                WindowInsets.safeDrawing.getBottom(LocalDensity.current)
+            }",
+        )
 //        Log.d("Rodrigo", "bottomInset: $bottomInset")
         // Useless // TODO upload to google
 //        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
@@ -243,7 +255,8 @@ fun EmptySearchResultBody(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 48.dp),
     ) {
-        val message = stringResource(id = searchR.string.feature_search_result_not_found, searchQuery)
+        val message =
+            stringResource(id = searchR.string.feature_search_result_not_found, searchQuery)
         val start = message.indexOf(searchQuery)
         Text(
             text = AnnotatedString(
@@ -270,13 +283,23 @@ fun EmptySearchResultBody(
                     fontWeight = FontWeight.Bold,
                 ),
             ) {
-                pushStringAnnotation(tag = interests, annotation = interests)
-                append(interests)
+                withLink(
+                    LinkAnnotation.Clickable(
+                        tag = interests,
+                        style = SpanStyle(
+                            textDecoration = TextDecoration.Underline,
+                            fontWeight = FontWeight.Bold,
+                        ),
+                        linkInteractionListener = { onInterestsClick() },
+                    ),
+                ) {
+                    append(interests)
+                }
             }
             append(" ")
             append(stringResource(id = searchR.string.feature_search_to_browse_topics))
         }
-        ClickableText(
+        Text(
             text = tryAnotherSearchString,
             style = MaterialTheme.typography.bodyLarge.merge(
                 TextStyle(
@@ -287,11 +310,7 @@ fun EmptySearchResultBody(
             modifier = Modifier
                 .padding(start = 36.dp, end = 36.dp, bottom = 24.dp)
                 .clickable {},
-        ) { offset ->
-            tryAnotherSearchString.getStringAnnotations(start = offset, end = offset)
-                .firstOrNull()
-                ?.let { onInterestsClick() }
-        }
+        )
     }
 }
 
