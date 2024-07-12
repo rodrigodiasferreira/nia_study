@@ -24,20 +24,16 @@ import com.google.samples.apps.nowinandroid.feature.bookmarks.BookmarksRoute
 
 const val BOOKMARKS_ROUTE = "bookmarks_route"
 
-private var navOptionsBookmark: NavOptions? = null
-
 // TODO Upload fix to Google
-fun NavController.navigateToBookmarks(navOptions: NavOptions) = navigate(BOOKMARKS_ROUTE, navOptions).also {
-    navOptionsBookmark = navOptions
-}
+fun NavController.navigateToBookmarks(navOptions: NavOptions) = navigate(BOOKMARKS_ROUTE, navOptions)
 
 fun NavGraphBuilder.bookmarksScreen(
-    onTopicClick: (String, NavOptions?) -> Unit,
+    onTopicClick: (String) -> Unit,
     onShowSnackBar: suspend (String, String?) -> Boolean,
 ) {
     composable(route = BOOKMARKS_ROUTE) {
         BookmarksRoute(
-            onTopicClick = { onTopicClick(it, navOptionsBookmark) },
+            onTopicClick = onTopicClick,
             onShowSnackBar = onShowSnackBar,
         )
     }

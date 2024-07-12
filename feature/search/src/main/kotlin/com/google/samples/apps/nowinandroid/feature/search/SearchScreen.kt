@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.feature.search
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +32,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,7 +41,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -62,10 +61,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -73,6 +74,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -105,6 +107,17 @@ internal fun SearchRoute(
     val recentSearchQueriesUiState by searchViewModel.recentSearchQueriesUiState.collectAsStateWithLifecycle()
     val searchResultUiState by searchViewModel.searchResultUiState.collectAsStateWithLifecycle()
     val searchQuery by searchViewModel.searchQuery.collectAsStateWithLifecycle()
+//    val density = LocalDensity.current
+//    val bottomInset by remember {
+//        mutableStateOf(
+//            with(density) {
+//                WindowInsets.safeDrawing.getBottom(this).toDp()
+//            },
+//        )
+//    }
+//    val bottomInset = with(LocalDensity.current) {
+//        WindowInsets.safeDrawing.getBottom(this).toDp()
+//    }
     SearchScreen(
         modifier = modifier,
         searchQuery = searchQuery,
@@ -119,6 +132,7 @@ internal fun SearchRoute(
         onBackClick = onBackClick,
         onInterestsClick = onInterestsClick,
         onTopicClick = onTopicClick,
+//        bottomInset = bottomInset,
     )
 }
 
@@ -137,16 +151,31 @@ internal fun SearchScreen(
     onBackClick: () -> Unit = {},
     onInterestsClick: () -> Unit = {},
     onTopicClick: (String) -> Unit = {},
+//    bottomInset: Dp = 0.dp,
 ) {
     TrackScreenViewEvent(screenName = "Search")
     Column(modifier = modifier) {
+        Log.d(
+            "Rodrigo",
+            "WindowInsets.safeDrawing.getTop(LocalDensity.current): ${
+                WindowInsets.safeDrawing.getTop(LocalDensity.current)
+            }",
+        )
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
+//        with(LocalDensity.current) {
+//            Spacer(Modifier.height(67.toDp()))
+//        }
         SearchToolbar(
             onBackClick = onBackClick,
             onSearchQueryChanged = onSearchQueryChanged,
             onSearchTriggered = onSearchTriggered,
             searchQuery = searchQuery,
         )
+//        LazyColumn (modifier = Modifier.weight(1f)) {
+//            items(100) { index ->
+//                Text ("$index")
+//            }
+//        }
         when (searchResultUiState) {
             SearchResultUiState.Loading,
             SearchResultUiState.LoadFailed,
@@ -185,6 +214,7 @@ internal fun SearchScreen(
                     }
                 } else {
                     SearchResultBody(
+//                        modifier = Modifier.weight(1f),
                         searchQuery = searchQuery,
                         topics = searchResultUiState.topics,
                         newsResources = searchResultUiState.newsResources,
@@ -197,7 +227,21 @@ internal fun SearchScreen(
                 }
             }
         }
-        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
+        Log.d(
+            "Rodrigo",
+            "WindowInsets.safeDrawing.getBottom(LocalDensity.current): ${
+                WindowInsets.safeDrawing.getBottom(LocalDensity.current)
+            }",
+        )
+//        Log.d("Rodrigo", "bottomInset: $bottomInset")
+        // Useless // TODO upload to google
+//        Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.safeDrawing))
+//        with (LocalDensity.current) {
+//        Spacer(
+//            Modifier
+//                .height(336.dp),
+//        )
+//        }
     }
 }
 
@@ -210,7 +254,8 @@ fun EmptySearchResultBody(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(horizontal = 48.dp),
     ) {
-        val message = stringResource(id = searchR.string.feature_search_result_not_found, searchQuery)
+        val message =
+            stringResource(id = searchR.string.feature_search_result_not_found, searchQuery)
         val start = message.indexOf(searchQuery)
         Text(
             text = AnnotatedString(
@@ -237,13 +282,23 @@ fun EmptySearchResultBody(
                     fontWeight = FontWeight.Bold,
                 ),
             ) {
-                pushStringAnnotation(tag = interests, annotation = interests)
-                append(interests)
+                withLink(
+                    LinkAnnotation.Clickable(
+                        tag = interests,
+                        style = SpanStyle(
+                            textDecoration = TextDecoration.Underline,
+                            fontWeight = FontWeight.Bold,
+                        ),
+                        linkInteractionListener = { onInterestsClick() },
+                    ),
+                ) {
+                    append(interests)
+                }
             }
             append(" ")
             append(stringResource(id = searchR.string.feature_search_to_browse_topics))
         }
-        ClickableText(
+        Text(
             text = tryAnotherSearchString,
             style = MaterialTheme.typography.bodyLarge.merge(
                 TextStyle(
@@ -254,11 +309,7 @@ fun EmptySearchResultBody(
             modifier = Modifier
                 .padding(start = 36.dp, end = 36.dp, bottom = 24.dp)
                 .clickable {},
-        ) { offset ->
-            tryAnotherSearchString.getStringAnnotations(start = offset, end = offset)
-                .firstOrNull()
-                ?.let { onInterestsClick() }
-        }
+        )
     }
 }
 
@@ -282,6 +333,7 @@ private fun SearchResultBody(
     searchQuery: String,
     topics: List<FollowableTopic>,
     newsResources: List<UserNewsResource>,
+    modifier: Modifier = Modifier,
     onSearchTriggered: (String) -> Unit,
     onTopicClick: (String) -> Unit,
     onNewsResourcesCheckedChanged: (String, Boolean) -> Unit,
@@ -290,7 +342,7 @@ private fun SearchResultBody(
 ) {
     val state = rememberLazyStaggeredGridState()
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
     ) {
         LazyVerticalStaggeredGrid(
@@ -306,6 +358,7 @@ private fun SearchResultBody(
             if (topics.isNotEmpty()) {
                 item(
                     span = StaggeredGridItemSpan.FullLine,
+                    contentType = "section",
                 ) {
                     Text(
                         text = buildAnnotatedString {
@@ -322,6 +375,7 @@ private fun SearchResultBody(
                         // Append a prefix to distinguish a key for news resources
                         key = "topic-$topicId",
                         span = StaggeredGridItemSpan.FullLine,
+                        contentType = "topic",
                     ) {
                         InterestsItem(
                             name = followableTopic.topic.name,
@@ -342,6 +396,7 @@ private fun SearchResultBody(
             if (newsResources.isNotEmpty()) {
                 item(
                     span = StaggeredGridItemSpan.FullLine,
+                    contentType = "section",
                 ) {
                     Text(
                         text = buildAnnotatedString {

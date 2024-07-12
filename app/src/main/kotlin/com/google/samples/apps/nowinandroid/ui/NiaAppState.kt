@@ -135,6 +135,20 @@ class NiaAppState(
             TimeZone.currentSystemDefault(),
         )
 
+    fun topLevelNavOptions(shouldRestoreState: Boolean = true) = navOptions {
+        // Pop up to the start destination of the graph to
+        // avoid building up a large stack of destinations
+        // on the back stack as users select items
+        popUpTo(navController.graph.findStartDestination().id) {
+            saveState = true
+        }
+        // Avoid multiple copies of the same destination when
+        // reselecting the same item
+        launchSingleTop = true
+        // Restore state when reselecting a previously selected item
+        restoreState = shouldRestoreState
+    }
+
     /**
      * UI logic for navigating to a top level destination in the app. Top level destinations have
      * only one copy of the destination of the back stack, and save and restore state whenever you
@@ -144,29 +158,15 @@ class NiaAppState(
      */
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         trace("Navigation: ${topLevelDestination.name}") {
-            val topLevelNavOptions = navOptions {
-                // Pop up to the start destination of the graph to
-                // avoid building up a large stack of destinations
-                // on the back stack as users select items
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-                // Avoid multiple copies of the same destination when
-                // reselecting the same item
-                launchSingleTop = true
-                // Restore state when reselecting a previously selected item
-                restoreState = true
-            }
-
             when (topLevelDestination) {
-                FOR_YOU -> navController.navigateToForYou(topLevelNavOptions)
-                BOOKMARKS -> navController.navigateToBookmarks(topLevelNavOptions)
-                INTERESTS -> navController.navigateToInterests(null, topLevelNavOptions)
+                FOR_YOU -> navController.navigateToForYou(topLevelNavOptions())
+                BOOKMARKS -> navController.navigateToBookmarks(topLevelNavOptions())
+                INTERESTS -> navController.navigateToInterests(null, topLevelNavOptions())
             }
         }
     }
 
-    fun navigateToSearch() = navController.navigateToSearch()
+    fun navigateToSearch() = navController.navigateToSearch(topLevelNavOptions())
 }
 
 /**

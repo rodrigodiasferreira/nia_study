@@ -48,15 +48,15 @@ fun NiaNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        forYouScreen(onTopicClick = navController::navigateToInterests)
+        forYouScreen(onTopicClick = { navController.navigateToInterests(it, appState.topLevelNavOptions(false)) })
         bookmarksScreen(
-            onTopicClick = navController::navigateToInterests,
+            onTopicClick = { navController.navigateToInterests(it, appState.topLevelNavOptions(false)) },
             onShowSnackBar = onShowSnackBar,
         )
         searchScreen(
             onBackClick = navController::popBackStack,
             onInterestsClick = { appState.navigateToTopLevelDestination(INTERESTS) },
-            onTopicClick = navController::navigateToInterests,
+            onTopicClick = { navController.navigateToInterests(it, appState.topLevelNavOptions(false)) },
         )
         interestsListDetailScreen()
     }
