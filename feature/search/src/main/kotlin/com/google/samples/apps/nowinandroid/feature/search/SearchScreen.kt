@@ -359,6 +359,7 @@ private fun SearchResultBody(
             if (topics.isNotEmpty()) {
                 item(
                     span = StaggeredGridItemSpan.FullLine,
+                    contentType = "section",
                 ) {
                     Text(
                         text = buildAnnotatedString {
@@ -375,6 +376,7 @@ private fun SearchResultBody(
                         // Append a prefix to distinguish a key for news resources
                         key = "topic-$topicId",
                         span = StaggeredGridItemSpan.FullLine,
+                        contentType = "topic",
                     ) {
                         InterestsItem(
                             name = followableTopic.topic.name,
@@ -395,6 +397,7 @@ private fun SearchResultBody(
             if (newsResources.isNotEmpty()) {
                 item(
                     span = StaggeredGridItemSpan.FullLine,
+                    contentType = "section"
                 ) {
                     Text(
                         text = buildAnnotatedString {
