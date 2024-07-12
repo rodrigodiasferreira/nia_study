@@ -41,7 +41,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -397,7 +396,7 @@ private fun SearchResultBody(
             if (newsResources.isNotEmpty()) {
                 item(
                     span = StaggeredGridItemSpan.FullLine,
-                    contentType = "section"
+                    contentType = "section",
                 ) {
                     Text(
                         text = buildAnnotatedString {

@@ -24,7 +24,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
@@ -159,8 +158,6 @@ class NiaAppState(
      */
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         trace("Navigation: ${topLevelDestination.name}") {
-
-
             when (topLevelDestination) {
                 FOR_YOU -> navController.navigateToForYou(topLevelNavOptions())
                 BOOKMARKS -> navController.navigateToBookmarks(topLevelNavOptions())
@@ -168,7 +165,6 @@ class NiaAppState(
             }
         }
     }
-
 
     fun navigateToSearch() = navController.navigateToSearch(topLevelNavOptions())
 }
