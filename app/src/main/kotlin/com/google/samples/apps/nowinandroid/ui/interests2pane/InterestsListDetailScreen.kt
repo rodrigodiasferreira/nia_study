@@ -94,7 +94,7 @@ internal fun InterestsListDetailScreen(
     viewModel: Interests2PaneViewModel = hiltViewModel(),
 //    onTopicIdPassed: (String?) -> Unit = {},
 
-    ) {
+) {
 //    viewModel.onTopicClick(selectedTopicId)
     val selectedTopicId by viewModel.selectedTopicId.collectAsStateWithLifecycle()
     Log.d(

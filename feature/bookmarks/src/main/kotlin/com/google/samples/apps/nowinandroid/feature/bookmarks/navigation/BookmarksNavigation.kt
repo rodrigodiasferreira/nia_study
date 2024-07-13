@@ -24,12 +24,12 @@ import com.google.samples.apps.nowinandroid.feature.bookmarks.BookmarksRoute
 
 const val BOOKMARKS_ROUTE: String = "bookmarks_route"
 
-//@Serializable
-//object Bookmarks
+// @Serializable
+// object Bookmarks
 
 // TODO Upload fix to Google
 fun NavController.navigateToBookmarks(navOptions: NavOptions) = navigate(BOOKMARKS_ROUTE, navOptions)
-//fun NavController.navigateToBookmarks(navOptions: NavOptions) = navigate(Bookmarks, navOptions)
+// fun NavController.navigateToBookmarks(navOptions: NavOptions) = navigate(Bookmarks, navOptions)
 
 fun NavGraphBuilder.bookmarksScreen(
     onTopicClick: (String) -> Unit,
