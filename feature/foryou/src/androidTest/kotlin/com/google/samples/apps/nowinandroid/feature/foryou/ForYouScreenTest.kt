@@ -50,24 +50,21 @@ class ForYouScreenTest {
         )
     }
 
-    @SuppressLint("UnusedBoxWithConstraintsScope") // TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun circularProgressIndicator_whenScreenIsLoading_exists() {
         composeTestRule.setContent {
-            BoxWithConstraints {
-                ForYouScreen(
-                    isSyncing = false,
-                    onboardingUiState = OnboardingUiState.Loading,
-                    feedState = NewsFeedUiState.Loading,
-                    deepLinkedUserNewsResource = null,
-                    onTopicCheckedChanged = { _, _ -> },
-                    onTopicClick = {},
-                    saveFollowedTopics = {},
-                    onNewsResourcesCheckedChanged = { _, _ -> },
-                    onNewsResourceViewed = {},
-                    onDeepLinkOpened = {},
-                )
-            }
+            ForYouScreen(
+                isSyncing = false,
+                onboardingUiState = OnboardingUiState.Loading,
+                feedState = NewsFeedUiState.Loading,
+                deepLinkedUserNewsResource = null,
+                onTopicCheckedChanged = { _, _ -> },
+                onTopicClick = {},
+                saveFollowedTopics = {},
+                onNewsResourcesCheckedChanged = { _, _ -> },
+                onNewsResourceViewed = {},
+                onDeepLinkOpened = {},
+            )
         }
 
         composeTestRule
@@ -77,24 +74,21 @@ class ForYouScreenTest {
             .assertExists()
     }
 
-    @SuppressLint("UnusedBoxWithConstraintsScope") // TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun circularProgressIndicator_whenScreenIsSyncing_exists() {
         composeTestRule.setContent {
-            BoxWithConstraints {
-                ForYouScreen(
-                    isSyncing = true,
-                    onboardingUiState = OnboardingUiState.NotShown,
-                    feedState = NewsFeedUiState.Success(emptyList()),
-                    deepLinkedUserNewsResource = null,
-                    onTopicCheckedChanged = { _, _ -> },
-                    onTopicClick = {},
-                    saveFollowedTopics = {},
-                    onNewsResourcesCheckedChanged = { _, _ -> },
-                    onNewsResourceViewed = {},
-                    onDeepLinkOpened = {},
-                )
-            }
+            ForYouScreen(
+                isSyncing = true,
+                onboardingUiState = OnboardingUiState.NotShown,
+                feedState = NewsFeedUiState.Success(emptyList()),
+                deepLinkedUserNewsResource = null,
+                onTopicCheckedChanged = { _, _ -> },
+                onTopicClick = {},
+                saveFollowedTopics = {},
+                onNewsResourcesCheckedChanged = { _, _ -> },
+                onNewsResourceViewed = {},
+                onDeepLinkOpened = {},
+            )
         }
 
         composeTestRule
@@ -104,30 +98,27 @@ class ForYouScreenTest {
             .assertExists()
     }
 
-    @SuppressLint("UnusedBoxWithConstraintsScope") // TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun topicSelector_whenNoTopicsSelected_showsTopicChipsAndDisabledDoneButton() {
         val testData = followableTopicTestData.map { it.copy(isFollowed = false) }
 
         composeTestRule.setContent {
-            BoxWithConstraints {
-                ForYouScreen(
-                    isSyncing = false,
-                    onboardingUiState = OnboardingUiState.Shown(
-                        topics = testData,
-                    ),
-                    feedState = NewsFeedUiState.Success(
-                        feed = emptyList(),
-                    ),
-                    deepLinkedUserNewsResource = null,
-                    onTopicCheckedChanged = { _, _ -> },
-                    onTopicClick = {},
-                    saveFollowedTopics = {},
-                    onNewsResourcesCheckedChanged = { _, _ -> },
-                    onNewsResourceViewed = {},
-                    onDeepLinkOpened = {},
-                )
-            }
+            ForYouScreen(
+                isSyncing = false,
+                onboardingUiState = OnboardingUiState.Shown(
+                    topics = testData,
+                ),
+                feedState = NewsFeedUiState.Success(
+                    feed = emptyList(),
+                ),
+                deepLinkedUserNewsResource = null,
+                onTopicCheckedChanged = { _, _ -> },
+                onTopicClick = {},
+                saveFollowedTopics = {},
+                onNewsResourcesCheckedChanged = { _, _ -> },
+                onNewsResourceViewed = {},
+                onDeepLinkOpened = {},
+            )
         }
 
         testData.forEach { testTopic ->
@@ -150,32 +141,27 @@ class ForYouScreenTest {
             .assertHasClickAction()
     }
 
-    @SuppressLint("UnusedBoxWithConstraintsScope") // TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun topicSelector_whenSomeTopicsSelected_showsTopicChipsAndEnabledDoneButton() {
         composeTestRule.setContent {
-            BoxWithConstraints {
-                ForYouScreen(
-                    isSyncing = false,
-                    onboardingUiState =
-                    OnboardingUiState.Shown(
-                        // Follow one topic
-                        topics = followableTopicTestData.mapIndexed { index, testTopic ->
-                            testTopic.copy(isFollowed = index == 1)
-                        },
-                    ),
-                    feedState = NewsFeedUiState.Success(
-                        feed = emptyList(),
-                    ),
-                    deepLinkedUserNewsResource = null,
-                    onTopicCheckedChanged = { _, _ -> },
-                    onTopicClick = {},
-                    saveFollowedTopics = {},
-                    onNewsResourcesCheckedChanged = { _, _ -> },
-                    onNewsResourceViewed = {},
-                    onDeepLinkOpened = {},
-                )
-            }
+            ForYouScreen(
+                isSyncing = false,
+                onboardingUiState =
+                OnboardingUiState.Shown(
+                    // Follow one topic
+                    topics = followableTopicTestData,
+                ),
+                feedState = NewsFeedUiState.Success(
+                    feed = emptyList(),
+                ),
+                deepLinkedUserNewsResource = null,
+                onTopicCheckedChanged = { _, _ -> },
+                onTopicClick = {},
+                saveFollowedTopics = {},
+                onNewsResourcesCheckedChanged = { _, _ -> },
+                onNewsResourceViewed = {},
+                onDeepLinkOpened = {},
+            )
         }
 
         followableTopicTestData.forEach { testTopic ->
@@ -198,25 +184,22 @@ class ForYouScreenTest {
             .assertHasClickAction()
     }
 
-    @SuppressLint("UnusedBoxWithConstraintsScope") // TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun feed_whenInterestsSelectedAndLoading_showsLoadingIndicator() {
         composeTestRule.setContent {
-            BoxWithConstraints {
-                ForYouScreen(
-                    isSyncing = false,
-                    onboardingUiState =
-                    OnboardingUiState.Shown(topics = followableTopicTestData),
-                    feedState = NewsFeedUiState.Loading,
-                    deepLinkedUserNewsResource = null,
-                    onTopicCheckedChanged = { _, _ -> },
-                    onTopicClick = {},
-                    saveFollowedTopics = {},
-                    onNewsResourcesCheckedChanged = { _, _ -> },
-                    onNewsResourceViewed = {},
-                    onDeepLinkOpened = {},
-                )
-            }
+            ForYouScreen(
+                isSyncing = false,
+                onboardingUiState =
+                OnboardingUiState.Shown(topics = followableTopicTestData),
+                feedState = NewsFeedUiState.Loading,
+                deepLinkedUserNewsResource = null,
+                onTopicCheckedChanged = { _, _ -> },
+                onTopicClick = {},
+                saveFollowedTopics = {},
+                onNewsResourcesCheckedChanged = { _, _ -> },
+                onNewsResourceViewed = {},
+                onDeepLinkOpened = {},
+            )
         }
 
         composeTestRule
@@ -226,24 +209,21 @@ class ForYouScreenTest {
             .assertExists()
     }
 
-    @SuppressLint("UnusedBoxWithConstraintsScope") // TODO Need to check about this, maybe remove the BoxWithConstraints
     @Test
     fun feed_whenNoInterestsSelectionAndLoading_showsLoadingIndicator() {
         composeTestRule.setContent {
-            BoxWithConstraints {
-                ForYouScreen(
-                    isSyncing = false,
-                    onboardingUiState = OnboardingUiState.NotShown,
-                    feedState = NewsFeedUiState.Loading,
-                    deepLinkedUserNewsResource = null,
-                    onTopicCheckedChanged = { _, _ -> },
-                    onTopicClick = {},
-                    saveFollowedTopics = {},
-                    onNewsResourcesCheckedChanged = { _, _ -> },
-                    onNewsResourceViewed = {},
-                    onDeepLinkOpened = {},
-                )
-            }
+            ForYouScreen(
+                isSyncing = false,
+                onboardingUiState = OnboardingUiState.NotShown,
+                feedState = NewsFeedUiState.Loading,
+                deepLinkedUserNewsResource = null,
+                onTopicCheckedChanged = { _, _ -> },
+                onTopicClick = {},
+                saveFollowedTopics = {},
+                onNewsResourcesCheckedChanged = { _, _ -> },
+                onNewsResourceViewed = {},
+                onDeepLinkOpened = {},
+            )
         }
 
         composeTestRule
