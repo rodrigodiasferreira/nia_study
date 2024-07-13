@@ -31,7 +31,6 @@ dependencies {
 
     testImplementation(libs.hilt.android.testing)
     testImplementation(libs.robolectric)
-    testDemoImplementation(projects.core.screenshotTesting)
     testImplementation(projects.core.screenshotTesting)
 
     testImplementation(libs.kotlinx.datetime)

@@ -100,10 +100,10 @@ import com.google.samples.apps.nowinandroid.core.model.data.UserNewsResource
 import com.google.samples.apps.nowinandroid.core.ui.DevicePreviews
 import com.google.samples.apps.nowinandroid.core.ui.NewsFeedUiState
 import com.google.samples.apps.nowinandroid.core.ui.TrackScreenViewEvent
-import com.google.samples.apps.nowinandroid.core.ui.TrackScrollJank
 import com.google.samples.apps.nowinandroid.core.ui.UserNewsResourcePreviewParameterProvider
 import com.google.samples.apps.nowinandroid.core.ui.launchCustomChromeTab
 import com.google.samples.apps.nowinandroid.core.ui.newsFeed
+import com.google.samples.apps.nowinandroid.core.ui.trackJank
 
 @Composable
 internal fun ForYouRoute(
@@ -157,7 +157,8 @@ internal fun ForYouScreen(
     val scrollbarState = state.scrollbarState(
         itemsAvailable = itemsAvailable,
     )
-    TrackScrollJank(scrollableState = state, stateName = "forYou:feed")
+//    TrackScrollJank(scrollableState = state, stateName = "forYou:feed")
+    state.trackJank(stateName = "forYou:feed")
 
     Box(
         modifier = modifier
@@ -324,7 +325,8 @@ private fun TopicSelection(
     val lazyGridState = rememberLazyGridState()
     val topicSelectionTestTag = "forYou:topicSelection"
 
-    TrackScrollJank(scrollableState = lazyGridState, stateName = topicSelectionTestTag)
+//    TrackScrollJank(scrollableState = lazyGridState, stateName = topicSelectionTestTag)
+    lazyGridState.trackJank(stateName = topicSelectionTestTag)
 
     Box(
         modifier = modifier
