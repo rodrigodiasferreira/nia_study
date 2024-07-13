@@ -83,6 +83,7 @@ fun NiaApp(
     appState: NiaAppState,
     modifier: Modifier = Modifier,
     windowAdaptiveInfo: WindowAdaptiveInfo = currentWindowAdaptiveInfo(),
+//    onTopicIdPassed: (String?) -> Unit = {},
 ) {
     val shouldShowGradientBackground =
         appState.currentTopLevelDestination == TopLevelDestination.FOR_YOU
@@ -118,6 +119,7 @@ fun NiaApp(
                 onSettingsDismissed = { showSettingsDialog = false },
                 onTopAppBarActionClick = { showSettingsDialog = true },
                 windowAdaptiveInfo = windowAdaptiveInfo,
+//                onTopicIdPassed = onTopicIdPassed,
             )
         }
     }
@@ -139,6 +141,7 @@ internal fun NiaApp(
     onTopAppBarActionClick: () -> Unit,
     modifier: Modifier = Modifier,
     windowAdaptiveInfo: WindowAdaptiveInfo = currentWindowAdaptiveInfo(),
+//    onTopicIdPassed: (String?) -> Unit = {},
 ) {
     val unreadDestinations by appState.topLevelDestinationsWithUnreadResources
         .collectAsStateWithLifecycle()
@@ -320,6 +323,7 @@ internal fun NiaApp(
                                 duration = Short,
                             ) == ActionPerformed
                         },
+//                        onTopicIdPassed = onTopicIdPassed,
                     )
                 }
 

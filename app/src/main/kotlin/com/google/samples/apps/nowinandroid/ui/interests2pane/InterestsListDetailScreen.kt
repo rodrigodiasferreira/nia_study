@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.ui.interests2pane
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
@@ -35,7 +36,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -43,6 +46,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.samples.apps.nowinandroid.feature.interests.InterestsRoute
 import com.google.samples.apps.nowinandroid.feature.interests.navigation.INTERESTS_ROUTE
+import com.google.samples.apps.nowinandroid.feature.interests.navigation.INTERESTS_ROUTE_BASE
 import com.google.samples.apps.nowinandroid.feature.interests.navigation.TOPIC_ID_ARG
 import com.google.samples.apps.nowinandroid.feature.topic.TopicDetailPlaceholder
 import com.google.samples.apps.nowinandroid.feature.topic.navigation.TOPIC_ROUTE
@@ -53,7 +57,17 @@ import java.util.UUID
 
 private const val DETAIL_PANE_NAVHOST_ROUTE = "detail_pane_route"
 
-fun NavGraphBuilder.interestsListDetailScreen() {
+fun NavController.navigateToInterests(topicId: String? = null, navOptions: NavOptions? = null) {
+    val route = topicId?.let {
+        Log.d("Rodrigo", "route: navigateToInterests: $INTERESTS_ROUTE_BASE?$TOPIC_ID_ARG=$topicId")
+        "$INTERESTS_ROUTE_BASE?$TOPIC_ID_ARG=$topicId"
+    } ?: INTERESTS_ROUTE_BASE
+    navigate(route, navOptions)
+}
+
+fun NavGraphBuilder.interestsListDetailScreen(
+//    onTopicIdPassed: (String?) -> Unit = {},
+) {
     composable(
         route = INTERESTS_ROUTE,
         arguments = listOf(
@@ -63,19 +77,37 @@ fun NavGraphBuilder.interestsListDetailScreen() {
                 nullable = true
             },
         ),
-    ) {
-        InterestsListDetailScreen()
+    ) { backStackEntry ->
+        val selectedTopicId: String? = backStackEntry.arguments?.getString(TOPIC_ID_ARG)
+        Log.e("Rodrigo", "route: navigateToInterests: selectedTopicId: $selectedTopicId")
+//        onTopicIdPassed(selectedTopicId)
+        InterestsListDetailScreen(
+//            selectedTopicId = selectedTopicId,
+//            onTopicIdPassed = onTopicIdPassed,
+        )
     }
 }
 
 @Composable
 internal fun InterestsListDetailScreen(
+//    selectedTopicId: String? = null,
     viewModel: Interests2PaneViewModel = hiltViewModel(),
-) {
+//    onTopicIdPassed: (String?) -> Unit = {},
+
+    ) {
+//    viewModel.onTopicClick(selectedTopicId)
     val selectedTopicId by viewModel.selectedTopicId.collectAsStateWithLifecycle()
+    Log.d(
+        "Rodrigo",
+        "route: navigateToInterests: InterestsListDetailScreen: selectedTopicId: $selectedTopicId",
+    )
     InterestsListDetailScreen(
         selectedTopicId = selectedTopicId,
         onTopicClick = viewModel::onTopicClick,
+//        { selectedTopicId ->
+//            onTopicIdPassed(selectedTopicId)
+//            viewModel.onTopicClick(selectedTopicId)
+//        },
     )
 }
 
@@ -85,6 +117,7 @@ internal fun InterestsListDetailScreen(
     selectedTopicId: String?,
     onTopicClick: (String) -> Unit,
 ) {
+    Log.d("Rodrigo", "route: navigateToInterests: InterestsListDetailScreen: InterestsListDetailScreen: selectedTopicId: $selectedTopicId")
     val listDetailNavigator = rememberListDetailPaneScaffoldNavigator(
         initialDestinationHistory = listOfNotNull(
             ThreePaneScaffoldDestinationItem(ListDetailPaneScaffoldRole.List),
@@ -119,6 +152,7 @@ internal fun InterestsListDetailScreen(
             }
         } else {
             // Otherwise, recreate the NavHost entirely, and start at the new destination
+            Log.d("Rodrigo", "route: navigateToInterests: InterestsListDetailScreen: InterestsListDetailScreen: createTopicRoute(topicId): ${createTopicRoute(topicId)}")
             nestedNavHostStartDestination = createTopicRoute(topicId)
             nestedNavKey = UUID.randomUUID()
         }

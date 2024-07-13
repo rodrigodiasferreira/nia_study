@@ -136,10 +136,12 @@ class MainActivity : ComponentActivity() {
                 onDispose {}
             }
 
+//            val lastSelectedTopic by viewModel.selectedTopicId.collectAsStateWithLifecycle()
             val appState = rememberNiaAppState(
                 networkMonitor = networkMonitor,
                 userNewsResourceRepository = userNewsResourceRepository,
                 timeZoneMonitor = timeZoneMonitor,
+//                lastSelectedTopic,
             )
 
             val currentTimeZone by appState.currentTimeZone.collectAsStateWithLifecycle()
@@ -155,6 +157,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                     @OptIn(ExperimentalMaterial3AdaptiveApi::class)
                     NiaApp(appState)
+//                    { selectedTopicId ->
+//                        viewModel.onTopicClick(selectedTopicId)
+//                    }
                 }
             }
         }

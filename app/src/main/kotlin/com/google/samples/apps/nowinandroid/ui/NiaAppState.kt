@@ -16,10 +16,12 @@
 
 package com.google.samples.apps.nowinandroid.ui
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -28,6 +30,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import androidx.tracing.trace
+import com.google.samples.apps.nowinandroid.MainActivityViewModel
 import com.google.samples.apps.nowinandroid.core.data.repository.UserNewsResourceRepository
 import com.google.samples.apps.nowinandroid.core.data.util.NetworkMonitor
 import com.google.samples.apps.nowinandroid.core.data.util.TimeZoneMonitor
@@ -37,12 +40,12 @@ import com.google.samples.apps.nowinandroid.feature.bookmarks.navigation.navigat
 import com.google.samples.apps.nowinandroid.feature.foryou.navigation.FOR_YOU_ROUTE
 import com.google.samples.apps.nowinandroid.feature.foryou.navigation.navigateToForYou
 import com.google.samples.apps.nowinandroid.feature.interests.navigation.INTERESTS_ROUTE
-import com.google.samples.apps.nowinandroid.feature.interests.navigation.navigateToInterests
 import com.google.samples.apps.nowinandroid.feature.search.navigation.navigateToSearch
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.BOOKMARKS
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.FOR_YOU
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.INTERESTS
+import com.google.samples.apps.nowinandroid.ui.interests2pane.navigateToInterests
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -56,6 +59,7 @@ fun rememberNiaAppState(
     networkMonitor: NetworkMonitor,
     userNewsResourceRepository: UserNewsResourceRepository,
     timeZoneMonitor: TimeZoneMonitor,
+//    lastSelectedTopic: String? = null,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navController: NavHostController = rememberNavController(),
 ): NiaAppState {
@@ -66,6 +70,7 @@ fun rememberNiaAppState(
         networkMonitor,
         userNewsResourceRepository,
         timeZoneMonitor,
+//        lastSelectedTopic,
     ) {
         NiaAppState(
             navController = navController,
@@ -73,6 +78,7 @@ fun rememberNiaAppState(
             networkMonitor = networkMonitor,
             userNewsResourceRepository = userNewsResourceRepository,
             timeZoneMonitor = timeZoneMonitor,
+//            lastSelectedTopic = lastSelectedTopic,
         )
     }
 }
@@ -84,6 +90,7 @@ class NiaAppState(
     networkMonitor: NetworkMonitor,
     userNewsResourceRepository: UserNewsResourceRepository,
     timeZoneMonitor: TimeZoneMonitor,
+//    private val lastSelectedTopic: String? = null
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController
@@ -158,9 +165,11 @@ class NiaAppState(
      */
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         trace("Navigation: ${topLevelDestination.name}") {
+//            Log.i("Rodrigo", "route: navigateToTopLevelDestination: lastSelectedTopic: $lastSelectedTopic")
             when (topLevelDestination) {
                 FOR_YOU -> navController.navigateToForYou(topLevelNavOptions())
                 BOOKMARKS -> navController.navigateToBookmarks(topLevelNavOptions())
+//                INTERESTS -> navController.navigateToInterests(lastSelectedTopic, topLevelNavOptions(false))
                 INTERESTS -> navController.navigateToInterests(null, topLevelNavOptions())
             }
         }
