@@ -17,16 +17,20 @@
 package com.google.samples.apps.nowinandroid.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph
 import androidx.navigation.compose.NavHost
+import androidx.navigation.createGraph
 import com.google.samples.apps.nowinandroid.feature.bookmarks.navigation.bookmarksScreen
 import com.google.samples.apps.nowinandroid.feature.foryou.navigation.FOR_YOU_ROUTE
 import com.google.samples.apps.nowinandroid.feature.foryou.navigation.forYouScreen
-import com.google.samples.apps.nowinandroid.feature.interests.navigation.navigateToInterests
 import com.google.samples.apps.nowinandroid.feature.search.navigation.searchScreen
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.INTERESTS
 import com.google.samples.apps.nowinandroid.ui.NiaAppState
 import com.google.samples.apps.nowinandroid.ui.interests2pane.interestsListDetailScreen
+import com.google.samples.apps.nowinandroid.ui.interests2pane.navigateToInterests
 
 /**
  * Top-level navigation graph. Navigation is organized as explained at
@@ -41,23 +45,59 @@ fun NiaNavHost(
     onShowSnackBar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
     startDestination: String = FOR_YOU_ROUTE,
+//    niaNavHostViewModel: NiaNavHostViewModel = hiltViewModel(),
+//    onTopicIdPassed: (String?) -> Unit = {},
 ) {
     val navController = appState.navController
+//    val selectedTopic by niaNavHostViewModel.selectedTopicId.collectAsStateWithLifecycle()
+    val navGraph: NavGraph = remember {
+        navController.createGraph(startDestination = startDestination) {
+            forYouScreen(
+                onTopicClick = {
+//                    niaNavHostViewModel.onTopicClick(it)
+//                    navController.navigateToInterests(selectedTopic, appState.topLevelNavOptions(false))
+                    navController.navigateToInterests(it, appState.topLevelNavOptions(false))
+                },
+            )
+            bookmarksScreen(
+                onTopicClick = {
+//                    navController.navigateToInterests(selectedTopic, appState.topLevelNavOptions(false))
+                    navController.navigateToInterests(it, appState.topLevelNavOptions(false))
+                },
+                onShowSnackBar = onShowSnackBar,
+            )
+            searchScreen(
+                onBackClick = navController::popBackStack,
+                onInterestsClick = { appState.navigateToTopLevelDestination(INTERESTS) },
+//                onTopicClick = { navController.navigateToInterests(selectedTopic, appState.topLevelNavOptions(false)) },
+                onTopicClick = { navController.navigateToInterests(it, appState.topLevelNavOptions(false)) },
+            )
+            interestsListDetailScreen()
+//            (
+//                onTopicIdPassed = onqTopicIdPassed,
+//            )
+        }
+    }
     NavHost(
         navController = navController,
-        startDestination = startDestination,
+        graph = navGraph,
         modifier = modifier,
-    ) {
-        forYouScreen(onTopicClick = { navController.navigateToInterests(it, appState.topLevelNavOptions(false)) })
-        bookmarksScreen(
-            onTopicClick = { navController.navigateToInterests(it, appState.topLevelNavOptions(false)) },
-            onShowSnackBar = onShowSnackBar,
-        )
-        searchScreen(
-            onBackClick = navController::popBackStack,
-            onInterestsClick = { appState.navigateToTopLevelDestination(INTERESTS) },
-            onTopicClick = { navController.navigateToInterests(it, appState.topLevelNavOptions(false)) },
-        )
-        interestsListDetailScreen()
-    }
+    )
+//    NavHost(
+//        navController = navController,
+//        startDestination = startDestination,
+//        modifier = modifier,
+//    ) {
+//        forYouScreen(onTopicClick = { navController.navigateToInterests(it, appState.topLevelNavOptions(false)) })
+//        bookmarksScreen(
+//            onTopicClick = { navController.navigateToInterests(it, appState.topLevelNavOptions(false)) },
+//            onShowSnackBar = onShowSnackBar,
+//        )
+//        searchScreen(
+//            onBackClick = navController::popBackStack,
+//            onInterestsClick = { appState.navigateToTopLevelDestination(INTERESTS) },
+//            onTopicClick = { navController.navigateToInterests(it, appState.topLevelNavOptions(false)) },
+//        )
+//        interestsListDetailScreen()
+//    }
 }

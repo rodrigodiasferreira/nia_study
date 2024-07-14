@@ -71,9 +71,9 @@ import com.google.samples.apps.nowinandroid.core.ui.NewsFeedUiState
 import com.google.samples.apps.nowinandroid.core.ui.NewsFeedUiState.Loading
 import com.google.samples.apps.nowinandroid.core.ui.NewsFeedUiState.Success
 import com.google.samples.apps.nowinandroid.core.ui.TrackScreenViewEvent
-import com.google.samples.apps.nowinandroid.core.ui.TrackScrollJank
 import com.google.samples.apps.nowinandroid.core.ui.UserNewsResourcePreviewParameterProvider
 import com.google.samples.apps.nowinandroid.core.ui.newsFeed
+import com.google.samples.apps.nowinandroid.core.ui.trackJank
 
 @Composable
 internal fun BookmarksRoute(
@@ -168,7 +168,8 @@ private fun BookmarksGrid(
     modifier: Modifier = Modifier,
 ) {
     val scrollableState = rememberLazyStaggeredGridState()
-    TrackScrollJank(scrollableState = scrollableState, stateName = "bookmarks:grid")
+//    TrackScrollJank(scrollableState = scrollableState, stateName = "bookmarks:grid")
+    scrollableState.trackJank(stateName = "bookmarks:grid")
     Box(
         modifier = modifier
             .fillMaxSize(),
