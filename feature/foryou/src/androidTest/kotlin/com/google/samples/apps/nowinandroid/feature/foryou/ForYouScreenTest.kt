@@ -16,9 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.feature.foryou
 
-import android.annotation.SuppressLint
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled

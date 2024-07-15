@@ -16,7 +16,6 @@
 
 package com.google.samples.apps.nowinandroid
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.samples.apps.nowinandroid.MainActivityUiState.Loading
