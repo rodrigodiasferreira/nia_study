@@ -68,6 +68,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -285,9 +286,11 @@ fun EmptySearchResultBody(
                 withLink(
                     LinkAnnotation.Clickable(
                         tag = interests,
-                        style = SpanStyle(
-                            textDecoration = TextDecoration.Underline,
-                            fontWeight = FontWeight.Bold,
+                        styles = TextLinkStyles(
+                            style = SpanStyle(
+                                textDecoration = TextDecoration.Underline,
+                                fontWeight = FontWeight.Bold,
+                            ),
                         ),
                         linkInteractionListener = { onInterestsClick() },
                     ),

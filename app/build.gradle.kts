@@ -25,6 +25,7 @@ plugins {
     id("com.google.android.gms.oss-licenses-plugin")
     alias(libs.plugins.baselineprofile)
     alias(libs.plugins.roborazzi)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -105,6 +106,7 @@ dependencies {
     implementation(libs.coil.kt)
     implementation(libs.kotlinx.datetime)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.kotlinx.serialization.core)
 
     implementation(libs.androidx.metrics)
 
