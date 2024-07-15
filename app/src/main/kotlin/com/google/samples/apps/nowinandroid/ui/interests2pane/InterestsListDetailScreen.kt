@@ -39,63 +39,81 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import com.google.samples.apps.nowinandroid.feature.interests.InterestsRoute
-import com.google.samples.apps.nowinandroid.feature.interests.navigation.INTERESTS_ROUTE
-import com.google.samples.apps.nowinandroid.feature.interests.navigation.INTERESTS_ROUTE_BASE
-import com.google.samples.apps.nowinandroid.feature.interests.navigation.TOPIC_ID_ARG
 import com.google.samples.apps.nowinandroid.feature.topic.TopicDetailPlaceholder
 import com.google.samples.apps.nowinandroid.feature.topic.navigation.TOPIC_ROUTE
 import com.google.samples.apps.nowinandroid.feature.topic.navigation.createTopicRoute
 import com.google.samples.apps.nowinandroid.feature.topic.navigation.navigateToTopic
 import com.google.samples.apps.nowinandroid.feature.topic.navigation.topicScreen
+import kotlinx.serialization.Serializable
 import java.util.UUID
 
 private const val DETAIL_PANE_NAVHOST_ROUTE = "detail_pane_route"
 
-fun NavController.navigateToInterests(topicId: String? = null, navOptions: NavOptions? = null) {
-    val route = topicId?.let {
-        Log.d("Rodrigo", "route: navigateToInterests: $INTERESTS_ROUTE_BASE?$TOPIC_ID_ARG=$topicId")
-        "$INTERESTS_ROUTE_BASE?$TOPIC_ID_ARG=$topicId"
-    } ?: INTERESTS_ROUTE_BASE
-    navigate(route, navOptions)
+@Serializable
+data class Interest(
+    val topicId: String? = null,
+)
+
+// fun NavController.navigateToInterests(topicId: String? = null, navOptions: NavOptions? = null) {
+fun NavController.navigateToInterests(interest: Interest = Interest(), navOptions: NavOptions? = null) {
+//    val route = interest.topicId?.let { topicId ->
+//        Log.d("Rodrigo", "route: navigateToInterests: $INTERESTS_ROUTE_BASE?$TOPIC_ID_ARG=$topicId")
+//        "$INTERESTS_ROUTE_BASE?$TOPIC_ID_ARG=$topicId"
+//    } ?: INTERESTS_ROUTE_BASE
+    navigate(interest, navOptions)
+//    navigate(interest)
 }
 
 fun NavGraphBuilder.interestsListDetailScreen(
 //    onTopicIdPassed: (String?) -> Unit = {},
 ) {
-    composable(
-        route = INTERESTS_ROUTE,
-        arguments = listOf(
-            navArgument(TOPIC_ID_ARG) {
-                type = NavType.StringType
-                defaultValue = null
-                nullable = true
-            },
-        ),
-    ) { backStackEntry ->
-        val selectedTopicId: String? = backStackEntry.arguments?.getString(TOPIC_ID_ARG)
-        Log.e("Rodrigo", "route: navigateToInterests: selectedTopicId: $selectedTopicId")
+    composable<Interest> { backStackEntry ->
+        val interest: Interest = backStackEntry.toRoute()
+        Log.e("Rodrigo", "route: navigateToInterests: interest: ${interest.topicId}")
+//        val selectedTopicId: String? = backStackEntry.arguments?.getString(TOPIC_ID_ARG)
+//        Log.e("Rodrigo", "route: navigateToInterests: selectedTopicId: $selectedTopicId")
 //        onTopicIdPassed(selectedTopicId)
         InterestsListDetailScreen(
-//            selectedTopicId = selectedTopicId,
+            selectedTopicId = interest.topicId,
 //            onTopicIdPassed = onTopicIdPassed,
         )
     }
+
+//    composable(
+//        route = INTERESTS_ROUTE,
+//        arguments = listOf(
+//            navArgument(TOPIC_ID_ARG) {
+//                type = NavType.StringType
+//                defaultValue = null
+//                nullable = true
+//            },
+//        ),
+//    ) { backStackEntry ->
+//        val selectedTopicId: String? = backStackEntry.arguments?.getString(TOPIC_ID_ARG)
+//        Log.e("Rodrigo", "route: navigateToInterests: selectedTopicId: $selectedTopicId")
+// //        onTopicIdPassed(selectedTopicId)
+//        InterestsListDetailScreen(
+// //            selectedTopicId = selectedTopicId,
+// //            onTopicIdPassed = onTopicIdPassed,
+//        )
+//    }
 }
 
 @Composable
 internal fun InterestsListDetailScreen(
-//    selectedTopicId: String? = null,
+    selectedTopicId: String? = null,
     viewModel: Interests2PaneViewModel = hiltViewModel(),
 //    onTopicIdPassed: (String?) -> Unit = {},
 
 ) {
-//    viewModel.onTopicClick(selectedTopicId)
+    selectedTopicId?.let {
+        viewModel.onTopicClick(selectedTopicId)
+    }
     val selectedTopicId by viewModel.selectedTopicId.collectAsStateWithLifecycle()
     Log.d(
         "Rodrigo",

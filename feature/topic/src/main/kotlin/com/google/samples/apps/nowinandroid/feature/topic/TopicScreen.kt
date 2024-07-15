@@ -130,7 +130,9 @@ internal fun TopicScreen(
                     )
                 }
 
-                TopicUiState.Error -> TODO()
+                TopicUiState.Error -> {
+//                    TODO()
+                }
                 is TopicUiState.Success -> {
                     item {
                         TopicToolbar(

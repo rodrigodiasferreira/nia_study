@@ -42,6 +42,7 @@ import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.BOOKMARKS
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.FOR_YOU
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.INTERESTS
+import com.google.samples.apps.nowinandroid.ui.interests2pane.Interest
 import com.google.samples.apps.nowinandroid.ui.interests2pane.navigateToInterests
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -167,7 +168,7 @@ class NiaAppState(
                 FOR_YOU -> navController.navigateToForYou(topLevelNavOptions())
                 BOOKMARKS -> navController.navigateToBookmarks(topLevelNavOptions())
 //                INTERESTS -> navController.navigateToInterests(lastSelectedTopic, topLevelNavOptions(false))
-                INTERESTS -> navController.navigateToInterests(null, topLevelNavOptions())
+                INTERESTS -> navController.navigateToInterests(Interest(), topLevelNavOptions())
             }
         }
     }

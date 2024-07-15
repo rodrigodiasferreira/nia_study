@@ -29,6 +29,7 @@ import com.google.samples.apps.nowinandroid.feature.foryou.navigation.forYouScre
 import com.google.samples.apps.nowinandroid.feature.search.navigation.searchScreen
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.INTERESTS
 import com.google.samples.apps.nowinandroid.ui.NiaAppState
+import com.google.samples.apps.nowinandroid.ui.interests2pane.Interest
 import com.google.samples.apps.nowinandroid.ui.interests2pane.interestsListDetailScreen
 import com.google.samples.apps.nowinandroid.ui.interests2pane.navigateToInterests
 
@@ -56,13 +57,13 @@ fun NiaNavHost(
                 onTopicClick = {
 //                    niaNavHostViewModel.onTopicClick(it)
 //                    navController.navigateToInterests(selectedTopic, appState.topLevelNavOptions(false))
-                    navController.navigateToInterests(it, appState.topLevelNavOptions(false))
+                    navController.navigateToInterests(Interest(it), appState.topLevelNavOptions(false))
                 },
             )
             bookmarksScreen(
                 onTopicClick = {
 //                    navController.navigateToInterests(selectedTopic, appState.topLevelNavOptions(false))
-                    navController.navigateToInterests(it, appState.topLevelNavOptions(false))
+                    navController.navigateToInterests(Interest(it), appState.topLevelNavOptions(false))
                 },
                 onShowSnackBar = onShowSnackBar,
             )
@@ -70,7 +71,7 @@ fun NiaNavHost(
                 onBackClick = navController::popBackStack,
                 onInterestsClick = { appState.navigateToTopLevelDestination(INTERESTS) },
 //                onTopicClick = { navController.navigateToInterests(selectedTopic, appState.topLevelNavOptions(false)) },
-                onTopicClick = { navController.navigateToInterests(it, appState.topLevelNavOptions(false)) },
+                onTopicClick = { navController.navigateToInterests(Interest(it), appState.topLevelNavOptions(false)) },
             )
             interestsListDetailScreen()
 //            (
