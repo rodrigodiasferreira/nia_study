@@ -107,6 +107,7 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.androidx.compose.material3)
     implementation(libs.kotlinx.serialization.core)
+//    implementation(libs.androidx.dynamic.navigation.compose)
 
     implementation(libs.androidx.metrics)
 

@@ -40,4 +40,17 @@ fun NavGraphBuilder.searchScreen(
             onTopicClick = onTopicClick,
         )
     }
+//    activity(route = "bla") {
+//
+//    }
+//    dialog(route = "ble") {
+//
+//    }
+//    navigation(
+//        route = "sdlkfj",
+//        startDestination = "",
+//    ) {
+//
+//    }
+
 }
