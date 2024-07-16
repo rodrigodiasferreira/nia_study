@@ -93,6 +93,7 @@ class MainActivity : ComponentActivity() {
             viewModel.uiState
                 .flowWithLifecycle(lifecycle)
                 .collect { uiState = it }
+
 //            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
 //                viewModel.uiState
 //                    .onEach { uiState = it }
