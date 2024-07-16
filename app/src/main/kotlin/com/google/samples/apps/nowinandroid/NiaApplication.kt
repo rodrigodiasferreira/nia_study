@@ -19,6 +19,7 @@ package com.google.samples.apps.nowinandroid
 import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
+import com.google.samples.apps.nowinandroid.core.data.util.SyncManager
 import com.google.samples.apps.nowinandroid.sync.initializers.Sync
 import com.google.samples.apps.nowinandroid.util.ProfileVerifierLogger
 import dagger.hilt.android.HiltAndroidApp
@@ -38,10 +39,14 @@ class NiaApplication : Application(), ImageLoaderFactory {
     @Inject
     lateinit var sync: Sync
 
+//    @Inject
+//    lateinit var syncManager: SyncManager
+
     override fun onCreate() {
         super.onCreate()
         // Initialize Sync; the system responsible for keeping data in the app up to date.
         sync.initialize()
+//        syncManager.requestSync()
         profileVerifierLogger()
     }
 

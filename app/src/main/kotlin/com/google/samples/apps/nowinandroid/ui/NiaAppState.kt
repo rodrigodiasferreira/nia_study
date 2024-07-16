@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.nowinandroid.ui
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -37,6 +38,7 @@ import com.google.samples.apps.nowinandroid.feature.bookmarks.navigation.navigat
 import com.google.samples.apps.nowinandroid.feature.foryou.navigation.FOR_YOU_ROUTE
 import com.google.samples.apps.nowinandroid.feature.foryou.navigation.navigateToForYou
 import com.google.samples.apps.nowinandroid.feature.interests.navigation.INTERESTS_ROUTE
+import com.google.samples.apps.nowinandroid.feature.interests.navigation.TOPIC_ID_ARG
 import com.google.samples.apps.nowinandroid.feature.search.navigation.navigateToSearch
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.BOOKMARKS
@@ -182,8 +184,9 @@ class NiaAppState(
 @Composable
 private fun NavigationTrackingSideEffect(navController: NavHostController) {
     TrackDisposableJank(navController) { metricsHolder ->
-        val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
+        val listener = NavController.OnDestinationChangedListener { _, destination, arguments ->
             metricsHolder.state?.putState("Navigation", destination.route.toString())
+            Log.d("Rodrigo", "destination.route: ${destination.route}, arguments?.get(TOPIC_ID_ARG): ${arguments?.get(TOPIC_ID_ARG)}")
         }
 
         navController.addOnDestinationChangedListener(listener)
