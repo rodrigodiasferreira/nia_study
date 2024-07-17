@@ -34,6 +34,11 @@ fun NavGraphBuilder.searchScreen(
     // TODO: Handle back stack for each top-level destination. At the moment each top-level
     // destination may have own search screen's back stack.
     composable(route = SEARCH_ROUTE) {
+//        deepLink {
+//            uriPattern = "http://www.example.com/plants/"
+//            action = "android.intent.action.MY_ACTION"
+//            mimeType = "image/*"
+//        }
         SearchRoute(
             onBackClick = onBackClick,
             onInterestsClick = onInterestsClick,

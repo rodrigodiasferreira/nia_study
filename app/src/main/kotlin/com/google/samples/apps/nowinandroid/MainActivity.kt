@@ -17,6 +17,7 @@
 package com.google.samples.apps.nowinandroid
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -75,11 +76,18 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var userNewsResourceRepository: UserNewsResourceRepository
 
+//    private lateinit var navController: NavHostController
+
     val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+
+        Log.d("Rodrigo", "onCreate: intent: $intent")
+        intent?.let {
+            Log.d("Rodrigo", "onCreate: intent.data: ${it.data}")
+        }
 
 //        val version = android.database.sqlite.SQLiteDatabase.create(null).use {
 //            android.database.DatabaseUtils.stringForQuery(it, "SELECT sqlite_version()", null)
@@ -138,11 +146,16 @@ class MainActivity : ComponentActivity() {
             }
 
 //            val lastSelectedTopic by viewModel.selectedTopicId.collectAsStateWithLifecycle()
+//            navController = rememberNavController()
+//            navController.createDeepLink().setDestination()createPendingIntent(
+//
+//            )
             val appState = rememberNiaAppState(
                 networkMonitor = networkMonitor,
                 userNewsResourceRepository = userNewsResourceRepository,
                 timeZoneMonitor = timeZoneMonitor,
 //                lastSelectedTopic,
+//                navController = navController,
             )
 
             val currentTimeZone by appState.currentTimeZone.collectAsStateWithLifecycle()
@@ -175,6 +188,15 @@ class MainActivity : ComponentActivity() {
         super.onPause()
         lazyStats.get().isTrackingEnabled = false
     }
+
+//    override fun onNewIntent(intent: Intent?) {
+//        super.onNewIntent(intent)
+//        Log.d("Rodrigo", "onNewIntent: intent: $intent")
+//        intent?.let{
+//            Log.d("Rodrigo", "onNewIntent: intent.data: ${it.data}")
+//        }
+//        navController.handleDeepLink(intent)
+//    }
 }
 
 /**

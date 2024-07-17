@@ -42,6 +42,9 @@ fun NavGraphBuilder.forYouScreen(onTopicClick: (String) -> Unit) {
             navArgument(LINKED_NEWS_RESOURCE_ID) { type = NavType.StringType },
         ),
     ) {
+//        deepLink {
+//            uriPattern = "https://www.nowinandroid.apps.samples.google.com"
+//        }
         ForYouRoute(onTopicClick)
     }
 }
