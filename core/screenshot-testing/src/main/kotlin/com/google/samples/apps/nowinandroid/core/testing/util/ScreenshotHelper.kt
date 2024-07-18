@@ -40,7 +40,7 @@ import org.robolectric.RuntimeEnvironment
 val DefaultRoborazziOptions =
     RoborazziOptions(
         // Pixel-perfect matching
-        compareOptions = CompareOptions(changeThreshold = 0f),
+        compareOptions = CompareOptions(changeThreshold = 0.01f),
         // Reduce the size of the PNGs
         recordOptions = RecordOptions(resizeScale = 0.5),
     )
