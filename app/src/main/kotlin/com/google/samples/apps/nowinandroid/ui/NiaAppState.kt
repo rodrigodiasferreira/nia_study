@@ -37,13 +37,13 @@ import com.google.samples.apps.nowinandroid.feature.bookmarks.navigation.BOOKMAR
 import com.google.samples.apps.nowinandroid.feature.bookmarks.navigation.navigateToBookmarks
 import com.google.samples.apps.nowinandroid.feature.foryou.navigation.FOR_YOU_ROUTE
 import com.google.samples.apps.nowinandroid.feature.foryou.navigation.navigateToForYou
-import com.google.samples.apps.nowinandroid.feature.interests.navigation.INTERESTS_ROUTE
 import com.google.samples.apps.nowinandroid.feature.interests.navigation.TOPIC_ID_ARG
 import com.google.samples.apps.nowinandroid.feature.search.navigation.navigateToSearch
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.BOOKMARKS
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.FOR_YOU
 import com.google.samples.apps.nowinandroid.navigation.TopLevelDestination.INTERESTS
+import com.google.samples.apps.nowinandroid.ui.interests2pane.INTERESTS_ROUTE
 import com.google.samples.apps.nowinandroid.ui.interests2pane.Interest
 import com.google.samples.apps.nowinandroid.ui.interests2pane.navigateToInterests
 import kotlinx.coroutines.CoroutineScope
@@ -97,11 +97,14 @@ class NiaAppState(
             .currentBackStackEntryAsState().value?.destination
 
     val currentTopLevelDestination: TopLevelDestination?
-        @Composable get() = when (currentDestination?.route) {
-            FOR_YOU_ROUTE -> FOR_YOU
-            BOOKMARKS_ROUTE -> BOOKMARKS
-            INTERESTS_ROUTE -> INTERESTS
-            else -> null
+        @Composable get() {
+            Log.d("Rodrigo", "currentDestination?.route: ${currentDestination?.route}")
+            return when (currentDestination?.route) {
+                FOR_YOU_ROUTE -> FOR_YOU
+                BOOKMARKS_ROUTE -> BOOKMARKS
+                INTERESTS_ROUTE -> INTERESTS
+                else -> null
+            }
         }
 
     val isOffline = networkMonitor.isOnline
@@ -147,7 +150,9 @@ class NiaAppState(
         // avoid building up a large stack of destinations
         // on the back stack as users select items
         popUpTo(navController.graph.findStartDestination().id) {
+//        popUpTo(route = "ROOT") {
             saveState = true
+//            inclusive = true
         }
         // Avoid multiple copies of the same destination when
         // reselecting the same item

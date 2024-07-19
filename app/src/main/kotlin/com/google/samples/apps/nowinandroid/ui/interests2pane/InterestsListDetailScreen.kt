@@ -44,6 +44,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.google.samples.apps.nowinandroid.feature.interests.InterestsRoute
+import com.google.samples.apps.nowinandroid.feature.interests.navigation.TOPIC_ID_ARG
 import com.google.samples.apps.nowinandroid.feature.topic.TopicDetailPlaceholder
 import com.google.samples.apps.nowinandroid.feature.topic.navigation.TOPIC_ROUTE
 import com.google.samples.apps.nowinandroid.feature.topic.navigation.createTopicRoute
@@ -53,6 +54,8 @@ import kotlinx.serialization.Serializable
 import java.util.UUID
 
 private const val DETAIL_PANE_NAVHOST_ROUTE = "detail_pane_route"
+
+val INTERESTS_ROUTE = "${Interest::class.qualifiedName}?$TOPIC_ID_ARG={$TOPIC_ID_ARG}"
 
 @Serializable
 data class Interest(

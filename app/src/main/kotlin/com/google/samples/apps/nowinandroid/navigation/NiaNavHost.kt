@@ -52,7 +52,10 @@ fun NiaNavHost(
     val navController = appState.navController
 //    val selectedTopic by niaNavHostViewModel.selectedTopicId.collectAsStateWithLifecycle()
     val navGraph: NavGraph = remember {
-        navController.createGraph(startDestination = startDestination) {
+        navController.createGraph(
+            startDestination = startDestination,
+            route = "ROOT"
+        ) {
             forYouScreen(
                 onTopicClick = {
 //                    niaNavHostViewModel.onTopicClick(it)
@@ -79,6 +82,7 @@ fun NiaNavHost(
 //            )
         }
     }
+//    navGraph.setStartDestination(Interest())
     NavHost(
         navController = navController,
         graph = navGraph,
