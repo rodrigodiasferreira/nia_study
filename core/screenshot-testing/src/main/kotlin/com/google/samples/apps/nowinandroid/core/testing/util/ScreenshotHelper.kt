@@ -30,6 +30,7 @@ import androidx.compose.ui.test.DeviceConfigurationOverride
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onRoot
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.github.takahirom.roborazzi.RoborazziOptions
 import com.github.takahirom.roborazzi.RoborazziOptions.CompareOptions
 import com.github.takahirom.roborazzi.RoborazziOptions.RecordOptions
@@ -37,10 +38,10 @@ import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.samples.apps.nowinandroid.core.designsystem.theme.NiaTheme
 import org.robolectric.RuntimeEnvironment
 
-val DefaultRoborazziOptions =
+@OptIn(ExperimentalRoborazziApi::class) val DefaultRoborazziOptions =
     RoborazziOptions(
         // Pixel-perfect matching
-        compareOptions = CompareOptions(changeThreshold = 0.1f),
+        compareOptions = CompareOptions(changeThreshold = 0f),
         // Reduce the size of the PNGs
         recordOptions = RecordOptions(resizeScale = 0.5),
     )
