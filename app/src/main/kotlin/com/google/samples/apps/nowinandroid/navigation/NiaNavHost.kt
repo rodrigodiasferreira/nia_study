@@ -54,7 +54,7 @@ fun NiaNavHost(
     val navGraph: NavGraph = remember {
         navController.createGraph(
             startDestination = startDestination,
-            route = "ROOT"
+            route = "ROOT",
         ) {
             forYouScreen(
                 onTopicClick = {

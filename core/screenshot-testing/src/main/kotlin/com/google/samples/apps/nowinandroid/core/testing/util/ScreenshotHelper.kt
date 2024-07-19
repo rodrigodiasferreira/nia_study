@@ -38,7 +38,8 @@ import com.github.takahirom.roborazzi.captureRoboImage
 import com.google.samples.apps.nowinandroid.core.designsystem.theme.NiaTheme
 import org.robolectric.RuntimeEnvironment
 
-@OptIn(ExperimentalRoborazziApi::class) val DefaultRoborazziOptions =
+@OptIn(ExperimentalRoborazziApi::class)
+val DefaultRoborazziOptions =
     RoborazziOptions(
         // Pixel-perfect matching
         compareOptions = CompareOptions(changeThreshold = 0f),
