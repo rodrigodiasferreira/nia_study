@@ -28,6 +28,7 @@ import com.google.samples.apps.nowinandroid.core.datastore.NiaPreferencesDataSou
 import com.google.samples.apps.nowinandroid.core.datastore.test.testUserPreferencesDataStore
 import com.google.samples.apps.nowinandroid.core.model.data.Topic
 import com.google.samples.apps.nowinandroid.core.network.model.NetworkTopic
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -80,6 +81,7 @@ class OfflineFirstTopicsRepositoryTest {
                 subject.getTopics()
                     .first(),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -103,6 +105,7 @@ class OfflineFirstTopicsRepositoryTest {
                 network.latestChangeListVersion(CollectionType.Topics),
                 synchronizer.getChangeListVersions().topicVersion,
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -134,6 +137,7 @@ class OfflineFirstTopicsRepositoryTest {
                 network.latestChangeListVersion(CollectionType.Topics),
                 synchronizer.getChangeListVersions().topicVersion,
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -175,5 +179,6 @@ class OfflineFirstTopicsRepositoryTest {
                 network.latestChangeListVersion(CollectionType.Topics),
                 synchronizer.getChangeListVersions().topicVersion,
             )
+            coroutineContext.cancelChildren()
         }
 }

@@ -22,6 +22,7 @@ import com.google.samples.apps.nowinandroid.core.datastore.test.testUserPreferen
 import com.google.samples.apps.nowinandroid.core.model.data.DarkThemeConfig
 import com.google.samples.apps.nowinandroid.core.model.data.ThemeBrand
 import com.google.samples.apps.nowinandroid.core.model.data.UserData
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.TestScope
@@ -75,6 +76,7 @@ class OfflineFirstUserDataRepositoryTest {
                 ),
                 subject.userData.first(),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -106,6 +108,7 @@ class OfflineFirstUserDataRepositoryTest {
                     .map { it.followedTopics }
                     .first(),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -128,6 +131,7 @@ class OfflineFirstUserDataRepositoryTest {
                     .map { it.followedTopics }
                     .first(),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -159,6 +163,7 @@ class OfflineFirstUserDataRepositoryTest {
                     .map { it.bookmarkedNewsResources }
                     .first(),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -210,6 +215,7 @@ class OfflineFirstUserDataRepositoryTest {
                     .map { it.themeBrand }
                     .first(),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -230,6 +236,7 @@ class OfflineFirstUserDataRepositoryTest {
                     .map { it.useDynamicColor }
                     .first(),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -250,6 +257,7 @@ class OfflineFirstUserDataRepositoryTest {
                     .map { it.darkThemeConfig }
                     .first(),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -261,5 +269,6 @@ class OfflineFirstUserDataRepositoryTest {
 
             subject.setFollowedTopicIds(emptySet())
             assertFalse(subject.userData.first().shouldHideOnboarding)
+            coroutineContext.cancelChildren()
         }
 }
