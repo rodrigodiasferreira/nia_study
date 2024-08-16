@@ -17,6 +17,7 @@
 package com.google.samples.apps.nowinandroid.core.datastore
 
 import com.google.samples.apps.nowinandroid.core.datastore.test.testUserPreferencesDataStore
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -47,12 +48,14 @@ class NiaPreferencesDataSourceTest {
     @Test
     fun shouldHideOnboardingIsFalseByDefault() = testScope.runTest {
         assertFalse(subject.userData.first().shouldHideOnboarding)
+        coroutineContext.cancelChildren()
     }
 
     @Test
     fun userShouldHideOnboardingIsTrueWhenSet() = testScope.runTest {
         subject.setShouldHideOnboarding(true)
         assertTrue(subject.userData.first().shouldHideOnboarding)
+        coroutineContext.cancelChildren()
     }
 
     @Test
@@ -67,6 +70,7 @@ class NiaPreferencesDataSourceTest {
 
             // Then: onboarding should be shown again
             assertFalse(subject.userData.first().shouldHideOnboarding)
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -81,16 +85,19 @@ class NiaPreferencesDataSourceTest {
 
             // Then: onboarding should be shown again
             assertFalse(subject.userData.first().shouldHideOnboarding)
+            coroutineContext.cancelChildren()
         }
 
     @Test
     fun shouldUseDynamicColorFalseByDefault() = testScope.runTest {
         assertFalse(subject.userData.first().useDynamicColor)
+        coroutineContext.cancelChildren()
     }
 
     @Test
     fun userShouldUseDynamicColorIsTrueWhenSet() = testScope.runTest {
         subject.setDynamicColorPreference(true)
         assertTrue(subject.userData.first().useDynamicColor)
+        coroutineContext.cancelChildren()
     }
 }

@@ -38,6 +38,7 @@ import com.google.samples.apps.nowinandroid.core.model.data.Topic
 import com.google.samples.apps.nowinandroid.core.network.model.NetworkChangeList
 import com.google.samples.apps.nowinandroid.core.network.model.NetworkNewsResource
 import com.google.samples.apps.nowinandroid.core.testing.notifications.TestNotifier
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -102,6 +103,7 @@ class OfflineFirstNewsRepositoryTest {
                 subject.getNewsResources()
                     .first(),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -131,6 +133,7 @@ class OfflineFirstNewsRepositoryTest {
                 )
                     .first(),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -161,6 +164,7 @@ class OfflineFirstNewsRepositoryTest {
 
             // Notifier should not have been called
             assertTrue(notifier.addedNewsResources.isEmpty())
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -208,6 +212,8 @@ class OfflineFirstNewsRepositoryTest {
 
             // Notifier should not have been called
             assertTrue(notifier.addedNewsResources.isEmpty())
+
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -253,6 +259,8 @@ class OfflineFirstNewsRepositoryTest {
 
             // Notifier should not have been called
             assertTrue(notifier.addedNewsResources.isEmpty())
+
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -270,6 +278,7 @@ class OfflineFirstNewsRepositoryTest {
                     .first()
                     .sortedBy(TopicEntity::toString),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -286,6 +295,7 @@ class OfflineFirstNewsRepositoryTest {
                 actual = newsResourceDao.topicCrossReferences
                     .sortedBy(NewsResourceTopicCrossRef::toString),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -297,6 +307,7 @@ class OfflineFirstNewsRepositoryTest {
                 network.getNewsResources().map { it.id }.toSet(),
                 niaPreferencesDataSource.userData.first().viewedNewsResources,
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -313,6 +324,7 @@ class OfflineFirstNewsRepositoryTest {
                 emptySet(),
                 niaPreferencesDataSource.userData.first().viewedNewsResources,
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -350,6 +362,7 @@ class OfflineFirstNewsRepositoryTest {
                 expected = followedNewsResourceIdsFromNetwork,
                 actual = notifier.addedNewsResources.first().map(NewsResource::id).sorted(),
             )
+            coroutineContext.cancelChildren()
         }
 
     @Test
@@ -379,5 +392,6 @@ class OfflineFirstNewsRepositoryTest {
 
             // Notifier should not have been called bc all news resources existed previously
             assertTrue(notifier.addedNewsResources.isEmpty())
+            coroutineContext.cancelChildren()
         }
 }
