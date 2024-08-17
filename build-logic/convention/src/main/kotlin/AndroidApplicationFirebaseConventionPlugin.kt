@@ -19,6 +19,7 @@ import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import com.google.samples.apps.nowinandroid.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
@@ -34,9 +35,15 @@ class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
             dependencies {
                 val bom = libs.findLibrary("firebase-bom").get()
                 add("implementation", platform(bom))
-                "implementation"(libs.findLibrary("firebase.analytics").get())
-                "implementation"(libs.findLibrary("firebase.performance").get())
-                "implementation"(libs.findLibrary("firebase.crashlytics").get())
+                "implementation"(libs.findLibrary("firebase.analytics").get()) {
+                    excludeProtoBufJavaLite()
+                }
+                "implementation"(libs.findLibrary("firebase.performance").get()) {
+                    excludeProtoBufJavaLite()
+                }
+                "implementation"(libs.findLibrary("firebase.crashlytics").get()) {
+                    excludeProtoBufJavaLite()
+                }
             }
 
             extensions.configure<ApplicationExtension> {
@@ -51,4 +58,13 @@ class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
             }
         }
     }
+
+    // TODO Monitor issue: https://github.com/firebase/firebase-android-sdk/issues/5997
+    //  and remove below code when it is fixed on firebase library
+    private fun ModuleDependency.excludeProtoBufJavaLite() = exclude(
+        mapOf(
+            "group" to "com.google.firebase",
+            "module" to "protolite-well-known-types",
+        ),
+    )
 }

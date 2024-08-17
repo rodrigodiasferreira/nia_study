@@ -108,9 +108,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.kotlinx.serialization.core)
 //    implementation(libs.androidx.dynamic.navigation.compose)
-    implementation("com.google.firebase:firebase-firestore") {
-        exclude(group = "com.google.firebase", module = "protolite-well-known-types")
-    }
 
     implementation(libs.androidx.metrics)
 
